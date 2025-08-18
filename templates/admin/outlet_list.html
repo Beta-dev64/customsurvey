@@ -1,0 +1,130 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block title %}Outlet Management - Dangote Cement{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="admin-title mb-0">Outlet Management</h1>
+    <div>
+        <a href="{{ url_for('admin.outlet_import') }}" class="btn btn-outline-primary me-2">
+            <i class="fas fa-file-import me-1"></i> Import Outlets
+        </a>
+        <a href="{{ url_for('admin.outlet_new') }}" class="btn btn-primary">
+            <i class="fas fa-plus-circle me-1"></i> Add New Outlet
+        </a>
+    </div>
+</div>
+
+<div class="card admin-card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="card-title mb-0">Outlets</h5>
+        <div class="input-group" style="width: 300px">
+            <input type="text" class="form-control form-control-sm" id="outletSearch" placeholder="Search outlets...">
+            <button class="btn btn-sm btn-outline-secondary" type="button">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover admin-table mb-0" id="outletTable">
+                <thead>
+                    <tr>
+                        <th>URN</th>
+                        <th>Outlet Name</th>
+                        <th>Customer Name</th>
+                        <th>Region</th>
+                        <th>State</th>
+                        <th>Local Govt</th>
+                        <th>Type</th>
+                        <th style="width: 150px">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for outlet in outlets %}
+                    <tr>
+                        <td><small>{{ outlet.urn }}</small></td>
+                        <td>{{ outlet.outlet_name }}</td>
+                        <td>{{ outlet.customer_name }}</td>
+                        <td>{{ outlet.region }}</td>
+                        <td>{{ outlet.state }}</td>
+                        <td>{{ outlet.local_govt }}</td>
+                        <td>
+                            {% if outlet.outlet_type == 'Shop' %}
+                                <span class="badge bg-primary">Shop</span>
+                            {% elif outlet.outlet_type == 'CONTAINER' %}
+                                <span class="badge bg-success">Container</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ outlet.outlet_type }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('admin.outlet_edit', outlet_id=outlet.id) }}" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            
+                            <!-- Delete button (with confirmation) -->
+                            <button type="button" class="btn btn-sm btn-outline-danger" 
+                                    data-bs-toggle="modal" data-bs-target="#deleteModal{{ outlet.id }}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            
+                            <!-- Delete Modal -->
+                            <div class="modal fade" id="deleteModal{{ outlet.id }}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Confirm Deletion</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to delete outlet <strong>{{ outlet.outlet_name }}</strong>?</p>
+                                            <p class="text-danger">This action cannot be undone.</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <form action="{{ url_for('admin.outlet_delete', outlet_id=outlet.id) }}" method="post">
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="8" class="text-center py-3">No outlets found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Simple search functionality
+        const searchInput = document.getElementById('outletSearch');
+        const table = document.getElementById('outletTable');
+        const rows = table.querySelectorAll('tbody tr');
+        
+        searchInput.addEventListener('keyup', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

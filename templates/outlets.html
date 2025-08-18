@@ -1,0 +1,448 @@
+{% extends 'base.html' %}
+
+{% block title %}Outlets - Dangote POSM{% endblock %}
+
+{% block head_extra %}
+<style>
+    /* Mobile optimization styles */
+    @media (max-width: 767.98px) {
+        .outlet-card {
+            margin-bottom: 10px;
+            border-left: 4px solid {{ profile.primary_color }};
+        }
+        
+        .outlet-card .card-body {
+            padding: 0.75rem;
+        }
+        
+        .outlet-detail {
+            font-size: 0.85rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .outlet-name {
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .outlet-address {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .outlet-badge {
+            font-size: 0.7rem;
+            padding: 0.25rem 0.5rem;
+        }
+        
+        .outlet-action {
+            margin-top: 0.5rem;
+        }
+        
+        .mobile-filter-btn {
+            position: fixed;
+            bottom: 70px;
+            right: 10px;
+            z-index: 999;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.25rem;
+        }
+        
+        .filter-dialog .modal-body {
+            padding-bottom: 80px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0">Outlet Directory</h1>
+        <div class="d-flex">
+            <!-- Search box - visible on all devices -->
+            <div class="input-group me-2" style="width: 250px;">
+                <input type="text" class="form-control" id="searchInput" name="search" placeholder="Search outlets..." value="{{ request.args.get('search', '') }}">
+                <button class="btn btn-outline-secondary" type="button" id="searchButton">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
+            <!-- Desktop filter button -->
+            <button class="btn btn-outline-secondary me-2 d-none d-md-inline-block" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
+                <i class="fas fa-filter me-1"></i> Filters
+            </button>
+            
+            <!-- Mobile filter button -->
+            <button class="btn bg-primary-dangote mobile-filter-btn d-md-none" type="button" data-bs-toggle="modal" data-bs-target="#filterModal">
+                <i class="fas fa-filter text-white"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Desktop Filters -->
+    <div class="collapse mb-4 d-none d-md-block" id="filterCollapse">
+        <div class="card card-body">
+            <form id="desktopFilterForm" action="{{ url_for('outlets') }}" method="GET">
+                <div class="row">
+                    <!-- Add hidden search field to preserve search when filtering -->
+                    <input type="hidden" name="search" id="hiddenSearchField" value="{{ request.args.get('search', '') }}">
+                    
+                    <div class="col-md-3 mb-2">
+                        <label for="regionFilter" class="form-label">Region</label>
+                        <select class="form-select" id="regionFilter" name="region">
+                            <option value="">All Regions</option>
+                            <option value="SW" {% if request.args.get('region') == 'SW' %}selected{% endif %}>South West</option>
+                            <option value="SE" {% if request.args.get('region') == 'SE' %}selected{% endif %}>South East</option>
+                            <option value="NC" {% if request.args.get('region') == 'NC' %}selected{% endif %}>North Central</option>
+                            <option value="NW" {% if request.args.get('region') == 'NW' %}selected{% endif %}>North West</option>
+                            <option value="NE" {% if request.args.get('region') == 'NE' %}selected{% endif %}>North East</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label for="stateFilter" class="form-label">State</label>
+                        <select class="form-select" id="stateFilter" name="state">
+                            <option value="">All States</option>
+                            <option value="EDO" {% if request.args.get('state') == 'EDO' %}selected{% endif %}>Edo</option>
+                            <option value="LAGOS" {% if request.args.get('state') == 'LAGOS' %}selected{% endif %}>Lagos</option>
+                            <option value="ABUJA" {% if request.args.get('state') == 'ABUJA' %}selected{% endif %}>Abuja</option>
+                            <option value="KANO" {% if request.args.get('state') == 'KANO' %}selected{% endif %}>Kano</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label for="localGovtFilter" class="form-label">Local Government</label>
+                        <select class="form-select" id="localGovtFilter" name="local_govt">
+                            <option value="">All Local Governments</option>
+                            <option value="EGOR" {% if request.args.get('local_govt') == 'EGOR' %}selected{% endif %}>Egor</option>
+                            <option value="OVIA NORTH EAST" {% if request.args.get('local_govt') == 'OVIA NORTH EAST' %}selected{% endif %}>Ovia North East</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label for="outletTypeFilter" class="form-label">Outlet Type</label>
+                        <select class="form-select" id="outletTypeFilter" name="outlet_type">
+                            <option value="">All Types</option>
+                            <option value="Shop" {% if request.args.get('outlet_type') == 'Shop' %}selected{% endif %}>Shop</option>
+                            <option value="Container" {% if request.args.get('outlet_type') == 'Container' %}selected{% endif %}>Container</option>
+                            <option value="Pallet" {% if request.args.get('outlet_type') == 'Pallet' %}selected{% endif %}>Pallet</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary" id="applyFilters">Apply Filters</button>
+                        <a href="{{ url_for('outlets') }}" class="btn btn-outline-secondary ms-2" id="resetFilters">Reset</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mobile Filter Modal -->
+    <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-sm-down filter-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="filterModalLabel">Filter Outlets</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="mobileFilterForm" action="{{ url_for('outlets') }}" method="GET">
+                    <div class="modal-body">
+                        <!-- Add search field to mobile filter -->
+                        <div class="mb-3">
+                            <label for="mobileSearchInput" class="form-label">Search</label>
+                            <input type="text" class="form-control" id="mobileSearchInput" name="search" 
+                                   placeholder="Search by name, address, URN..." 
+                                   value="{{ request.args.get('search', '') }}">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="mobileRegionFilter" class="form-label">Region</label>
+                            <select class="form-select" id="mobileRegionFilter" name="region">
+                                <option value="">All Regions</option>
+                                <option value="SW" {% if request.args.get('region') == 'SW' %}selected{% endif %}>South West</option>
+                                <option value="SE" {% if request.args.get('region') == 'SE' %}selected{% endif %}>South East</option>
+                                <option value="NC" {% if request.args.get('region') == 'NC' %}selected{% endif %}>North Central</option>
+                                <option value="NW" {% if request.args.get('region') == 'NW' %}selected{% endif %}>North West</option>
+                                <option value="NE" {% if request.args.get('region') == 'NE' %}selected{% endif %}>North East</option>
+                            </select>
+                        </div>
+                        <!-- Other mobile filters with similar changes -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="mobileApplyFilters">Apply Filters</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Desktop Outlets List - Table View -->
+    <div class="card d-none d-md-block">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>URN</th>
+                            <th>Outlet Name</th>
+                            <th>Customer Name</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>Type</th>
+                            <th>Location</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for outlet in outlets %}
+                        <tr>
+                            <td><small>{{ outlet.urn }}</small></td>
+                            <td>{{ outlet.outlet_name }}</td>
+                            <td>{{ outlet.customer_name }}</td>
+                            <td><small>{{ outlet.address }}</small></td>
+                            <td>{{ outlet.phone }}</td>
+                            <td>
+                                {% if outlet.outlet_type == 'Shop' %}
+                                    <span class="badge bg-primary">Shop</span>
+                                {% elif outlet.outlet_type == 'CONTAINER' %}
+                                    <span class="badge bg-success">Container</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">{{ outlet.outlet_type }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ outlet.state }}, {{ outlet.local_govt }}</td>
+                            <td>
+                                <a href="{{ url_for('new_execution', outlet_id=outlet.id) }}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-clipboard-check me-1"></i> Execute
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination Controls - Desktop -->
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <div>
+                    <small class="text-muted">Showing {{ outlets|length }} of {{ total_outlets }} outlets</small>
+                </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        {% if page > 1 %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for('outlets', page=page-1, region=region, state=state, local_govt=local_govt, outlet_type=outlet_type, search=request.args.get('search', '')) }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% for p in range(max(1, page-2), min(total_pages+1, page+3)) %}
+                        <li class="page-item {% if p == page %}active{% endif %}">
+                            <a class="page-link" href="{{ url_for('outlets', page=p, region=region, state=state, local_govt=local_govt, outlet_type=outlet_type, search=request.args.get('search', '')) }}">{{ p }}</a>
+                        </li>
+                        {% endfor %}
+                        
+                        {% if page < total_pages %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{ url_for('outlets', page=page+1, region=region, state=state, local_govt=local_govt, outlet_type=outlet_type, search=request.args.get('search', '')) }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Outlets List - Card View -->
+    <div class="d-md-none">
+        {% for outlet in outlets %}
+        <div class="card outlet-card mb-2">
+            <div class="card-body">
+                <h5 class="outlet-name">{{ outlet.outlet_name }}</h5>
+                <p class="outlet-address">{{ outlet.address }}</p>
+                <div class="outlet-detail"><strong>URN:</strong> {{ outlet.urn }}</div>
+                <div class="outlet-detail"><strong>Customer:</strong> {{ outlet.customer_name }}</div>
+                <div class="outlet-detail"><strong>Phone:</strong> {{ outlet.phone }}</div>
+                <div class="outlet-detail">
+                    <strong>Type:</strong> <span class="badge bg-light text-dark outlet-badge">{{ outlet.outlet_type }}</span>
+                </div>
+                <div class="outlet-detail"><strong>Location:</strong> {{ outlet.local_govt }}, {{ outlet.state }}</div>
+                <div class="outlet-action">
+                    <a href="{{ url_for('new_execution', outlet_id=outlet.id) }}" class="btn btn-sm btn-primary w-100">
+                        <i class="fas fa-clipboard-check me-1"></i> Execute
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        
+        <!-- Pagination Controls - Mobile -->
+        <nav aria-label="Page navigation" class="mt-3">
+            <ul class="pagination pagination-sm justify-content-center">
+                {% if page > 1 %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('outlets', page=page-1, region=region, state=state, local_govt=local_govt, outlet_type=outlet_type, search=request.args.get('search', '')) }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+                
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Page {{ page }} of {{ total_pages }}</a>
+                </li>
+                
+                {% if page < total_pages %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('outlets', page=page+1, region=region, state=state, local_govt=local_govt, outlet_type=outlet_type, search=request.args.get('search', '')) }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Add this before your script section -->
+<script src="{{ url_for('static', filename='js/nigeria-data.js') }}"></script>
+
+<!-- Then in your script section -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get filter elements
+    const regionFilter = document.getElementById('regionFilter');
+    const stateFilter = document.getElementById('stateFilter');
+    
+    // Populate region dropdown with current selection
+    populateRegionDropdown(regionFilter, true);
+    
+    // Set the selected region if it exists in the request
+    const currentRegion = "{{ request.args.get('region', '') }}";
+    if (currentRegion) {
+        regionFilter.value = currentRegion;
+    }
+    
+    // Populate state dropdown based on current region
+    populateStateDropdown(stateFilter, regionFilter.value, true);
+    
+    // Set the selected state if it exists in the request
+    const currentState = "{{ request.args.get('state', '') }}";
+    if (currentState) {
+        stateFilter.value = currentState;
+    }
+    
+    // Setup relationship between region and state filters
+    setupRegionStateRelationship(regionFilter, stateFilter);
+    
+    // Mobile detection
+    const isMobile = window.innerWidth < 768;
+    
+    // Search functionality
+    const searchInput = document.getElementById('searchInput');
+    const searchButton = document.getElementById('searchButton');
+    const hiddenSearchField = document.getElementById('hiddenSearchField');
+    
+    // Update hidden search field when search input changes
+    if (searchInput && hiddenSearchField) {
+        searchInput.addEventListener('input', function() {
+            hiddenSearchField.value = this.value;
+        });
+    }
+    
+    // Handle search button click
+    if (searchButton && searchInput) {
+        searchButton.addEventListener('click', function() {
+            // Get current URL and parameters
+            const url = new URL(window.location.href);
+            const params = new URLSearchParams(url.search);
+            
+            // Update or add search parameter
+            params.set('search', searchInput.value);
+            
+            // Reset to page 1 when searching
+            params.set('page', '1');
+            
+            // Redirect to the new URL
+            window.location.href = `${url.pathname}?${params.toString()}`;
+        });
+        
+        // Also trigger search on Enter key
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchButton.click();
+                e.preventDefault();
+            }
+        });
+    }
+    
+    // Mobile search functionality (for client-side filtering)
+    const mobileSearchInput = document.getElementById('mobileSearchInput');
+    if (mobileSearchInput) {
+        mobileSearchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const outletCards = document.querySelectorAll('.outlet-card');
+            
+            outletCards.forEach(card => {
+                const outletName = card.querySelector('.outlet-name').textContent.toLowerCase();
+                const outletAddress = card.querySelector('.outlet-address').textContent.toLowerCase();
+                const outletURN = card.querySelector('.outlet-detail:nth-child(3)').textContent.toLowerCase();
+                
+                if (outletName.includes(searchTerm) || 
+                    outletAddress.includes(searchTerm) || 
+                    outletURN.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    }
+    
+    // Reset filters button for mobile
+    const mobileResetFilters = document.getElementById('mobileResetFilters');
+    if (mobileResetFilters) {
+        mobileResetFilters.addEventListener('click', function() {
+            window.location.href = "{{ url_for('outlets') }}";
+        });
+    }
+});
+</script>
+{% endblock %}

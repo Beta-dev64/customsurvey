@@ -1,0 +1,124 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block title %}Admin Dashboard - Dangote Cement{% endblock %}
+
+{% block admin_content %}
+<h1 class="admin-title">Admin Dashboard</h1>
+
+<!-- Stats Row -->
+<div class="row">
+    <div class="col-md-4">
+        <div class="admin-dashboard-stat">
+            <i class="fas fa-users"></i>
+            <div class="stat-value">{{ user_count }}</div>
+            <div class="stat-label">Total Users</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="admin-dashboard-stat">
+            <i class="fas fa-store"></i>
+            <div class="stat-value">{{ outlet_count }}</div>
+            <div class="stat-label">Total Outlets</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="admin-dashboard-stat">
+            <i class="fas fa-clipboard-check"></i>
+            <div class="stat-value">{{ execution_count }}</div>
+            <div class="stat-label">Total Executions</div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Recent Activity -->
+    <div class="col-lg-8">
+        <div class="card admin-card">
+            <div class="card-header">
+                <h5 class="card-title">Recent Activity</h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th>Date & Time</th>
+                                <th>Agent</th>
+                                <th>Outlet</th>
+                                <th>Region</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for activity in recent_activity %}
+                            <tr>
+                                <td>{{ activity.execution_date }}</td>
+                                <td>{{ activity.agent }}</td>
+                                <td>{{ activity.outlet_name }}</td>
+                                <td>{{ activity.region }}</td>
+                                <td>
+                                    <a href="{{ url_for('execution_detail', execution_id=activity.id) }}" class="btn btn-sm btn-outline-primary">
+                                        View
+                                    </a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center py-3">No recent activity</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quick Links -->
+    <div class="col-lg-4">
+        <div class="card admin-card">
+            <div class="card-header">
+                <h5 class="card-title">Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <a href="{{ url_for('admin.user_new') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-user-plus me-2"></i> Add New User
+                    </a>
+                    <a href="{{ url_for('admin.outlet_new') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-plus-circle me-2"></i> Add New Outlet
+                    </a>
+                    <a href="{{ url_for('admin.user_import') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-file-import me-2"></i> Import Users
+                    </a>
+                    <a href="{{ url_for('admin.outlet_import') }}" class="list-group-item list-group-item-action">
+                        <i class="fas fa-file-import me-2"></i> Import Outlets
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card admin-card">
+            <div class="card-header">
+                <h5 class="card-title">System Info</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Database</span>
+                        <span class="badge bg-success">Connected</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Application Version</span>
+                        <span>1.0.0</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>Last Update</span>
+                        <span>{{ now.strftime('%Y-%m-%d') }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

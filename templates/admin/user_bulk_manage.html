@@ -1,0 +1,365 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block title %}Bulk Manage Users - Dangote Cement{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="admin-title mb-0">Bulk Manage Users</h1>
+    <div>
+        <a href="{{ url_for('admin.user_list') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-1"></i> Back to Users
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card admin-card">
+            <div class="card-header bg-danger text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Bulk Delete Users
+                </h5>
+            </div>
+            <div class="card-body">
+                <form id="bulkDeleteForm" method="post" action="{{ url_for('admin.user_bulk_delete') }}">
+                    <div class="mb-3">
+                        <label class="form-label admin-form-label">Delete By</label>
+                        <select class="form-select" id="deleteBy" name="delete_by" required>
+                            <option value="">Select Criteria</option>
+                            <option value="region">Region</option>
+                            <option value="state">State</option>
+                            <option value="lga">Local Government Area (LGA)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3" id="regionSection" style="display: none;">
+                        <label class="form-label admin-form-label">Region</label>
+                        <select class="form-select" name="region">
+                            <option value="">Select Region</option>
+                            <option value="SW">South West (SW)</option>
+                            <option value="SE">South East (SE)</option>
+                            <option value="SS">South South (SS)</option>
+                            <option value="NC">North Central (NC)</option>
+                            <option value="NE">North East (NE)</option>
+                            <option value="NW">North West (NW)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3" id="stateSection" style="display: none;">
+                        <label class="form-label admin-form-label">State</label>
+                        <select class="form-select" name="state" id="stateSelect">
+                            <option value="">Select State</option>
+                            <!-- South West -->
+                            <optgroup label="South West">
+                                <option value="LAGOS">Lagos</option>
+                                <option value="OGUN">Ogun</option>
+                                <option value="OYO">Oyo</option>
+                                <option value="OSUN">Osun</option>
+                                <option value="ONDO">Ondo</option>
+                                <option value="EKITI">Ekiti</option>
+                            </optgroup>
+                            <!-- South East -->
+                            <optgroup label="South East">
+                                <option value="ABIA">Abia</option>
+                                <option value="ANAMBRA">Anambra</option>
+                                <option value="EBONYI">Ebonyi</option>
+                                <option value="ENUGU">Enugu</option>
+                                <option value="IMO">Imo</option>
+                            </optgroup>
+                            <!-- South South -->
+                            <optgroup label="South South">
+                                <option value="AKWA_IBOM">Akwa Ibom</option>
+                                <option value="BAYELSA">Bayelsa</option>
+                                <option value="CROSS_RIVER">Cross River</option>
+                                <option value="DELTA">Delta</option>
+                                <option value="EDO">Edo</option>
+                                <option value="RIVERS">Rivers</option>
+                            </optgroup>
+                            <!-- North Central -->
+                            <optgroup label="North Central">
+                                <option value="BENUE">Benue</option>
+                                <option value="FCT">FCT</option>
+                                <option value="KOGI">Kogi</option>
+                                <option value="KWARA">Kwara</option>
+                                <option value="NASARAWA">Nasarawa</option>
+                                <option value="NIGER">Niger</option>
+                                <option value="PLATEAU">Plateau</option>
+                            </optgroup>
+                            <!-- North East -->
+                            <optgroup label="North East">
+                                <option value="ADAMAWA">Adamawa</option>
+                                <option value="BAUCHI">Bauchi</option>
+                                <option value="BORNO">Borno</option>
+                                <option value="GOMBE">Gombe</option>
+                                <option value="TARABA">Taraba</option>
+                                <option value="YOBE">Yobe</option>
+                            </optgroup>
+                            <!-- North West -->
+                            <optgroup label="North West">
+                                <option value="KADUNA">Kaduna</option>
+                                <option value="KANO">Kano</option>
+                                <option value="KATSINA">Katsina</option>
+                                <option value="KEBBI">Kebbi</option>
+                                <option value="JIGAWA">Jigawa</option>
+                                <option value="SOKOTO">Sokoto</option>
+                                <option value="ZAMFARA">Zamfara</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3" id="lgaSection" style="display: none;">
+                        <label class="form-label admin-form-label">Local Government Area (LGA)</label>
+                        <input type="text" class="form-control" name="lga" placeholder="Enter LGA name">
+                        <small class="form-text text-muted">Be careful with spelling - only exact matches will be deleted</small>
+                    </div>
+                    
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="skipWithExecutions" name="skip_with_executions" checked>
+                        <label class="form-check-label" for="skipWithExecutions">Skip users with executions</label>
+                    </div>
+                    
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="skipAdmins" name="skip_admins" checked>
+                        <label class="form-check-label" for="skipAdmins">Skip admin users</label>
+                    </div>
+                    
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Warning:</strong> This operation cannot be undone. All matching users will be permanently deleted.
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label admin-form-label">Confirm by typing "DELETE"</label>
+                        <input type="text" class="form-control" id="confirmDelete" required pattern="DELETE">
+                        <div class="invalid-feedback">
+                            Please type "DELETE" to confirm
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-danger" id="bulkDeleteBtn" disabled>
+                        <i class="fas fa-trash me-1"></i> Delete Users
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-8">
+        <div class="card admin-card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Selection Preview</h5>
+            </div>
+            <div class="card-body">
+                <div id="previewLoading" class="text-center py-5">
+                    <p class="text-muted">Select criteria to preview users</p>
+                </div>
+                
+                <div id="previewResults" style="display: none;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="mb-0">Matching Users: <span id="matchCount" class="fw-bold">0</span></h6>
+                        <div>
+                            <span class="text-success me-2"><i class="fas fa-check-circle"></i> Can delete: <span id="canDeleteCount">0</span></span>
+                            <span class="text-danger me-2"><i class="fas fa-times-circle"></i> With executions: <span id="withExecutionsCount">0</span></span>
+                            <span class="text-primary"><i class="fas fa-shield-alt"></i> Admins: <span id="adminCount">0</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Full Name</th>
+                                    <th>Role</th>
+                                    <th>Region</th>
+                                    <th>State</th>
+                                    <th>LGA</th>
+                                    <th>Executions</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="previewBody">
+                                <!-- Will be populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div id="noResults" style="display: none;" class="text-center py-5">
+                    <i class="fas fa-info-circle fa-2x mb-3 text-muted"></i>
+                    <p>No users match your selection criteria</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteBySelect = document.getElementById('deleteBy');
+        const regionSection = document.getElementById('regionSection');
+        const stateSection = document.getElementById('stateSection');
+        const lgaSection = document.getElementById('lgaSection');
+        const confirmDeleteInput = document.getElementById('confirmDelete');
+        const bulkDeleteBtn = document.getElementById('bulkDeleteBtn');
+        const previewLoading = document.getElementById('previewLoading');
+        const previewResults = document.getElementById('previewResults');
+        const noResults = document.getElementById('noResults');
+        const previewBody = document.getElementById('previewBody');
+        const matchCount = document.getElementById('matchCount');
+        const canDeleteCount = document.getElementById('canDeleteCount');
+        const withExecutionsCount = document.getElementById('withExecutionsCount');
+        const adminCount = document.getElementById('adminCount');
+        const bulkDeleteForm = document.getElementById('bulkDeleteForm');
+        
+        // Show/hide sections based on selection
+        deleteBySelect.addEventListener('change', function() {
+            regionSection.style.display = 'none';
+            stateSection.style.display = 'none';
+            lgaSection.style.display = 'none';
+            
+            if (this.value === 'region') {
+                regionSection.style.display = 'block';
+            } else if (this.value === 'state') {
+                stateSection.style.display = 'block';
+            } else if (this.value === 'lga') {
+                lgaSection.style.display = 'block';
+            }
+            
+            // Reset the preview
+            previewLoading.style.display = 'block';
+            previewResults.style.display = 'none';
+            noResults.style.display = 'none';
+        });
+        
+        // Enable/disable delete button based on confirmation input
+        confirmDeleteInput.addEventListener('input', function() {
+            bulkDeleteBtn.disabled = this.value !== 'DELETE';
+        });
+        
+        // Preview function
+        function updatePreview() {
+            const deleteBy = deleteBySelect.value;
+            if (!deleteBy) return;
+            
+            let criteria = {};
+            criteria.delete_by = deleteBy;
+            
+            if (deleteBy === 'region') {
+                criteria.value = document.querySelector('select[name="region"]').value;
+                if (!criteria.value) return;
+            } else if (deleteBy === 'state') {
+                criteria.value = document.querySelector('select[name="state"]').value;
+                if (!criteria.value) return;
+            } else if (deleteBy === 'lga') {
+                criteria.value = document.querySelector('input[name="lga"]').value;
+                if (!criteria.value) return;
+            }
+            
+            // Show loading
+            previewLoading.style.display = 'block';
+            previewResults.style.display = 'none';
+            noResults.style.display = 'none';
+            
+            // Fetch preview data
+            fetch(`/admin/users/preview?delete_by=${criteria.delete_by}&value=${criteria.value}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.users.length === 0) {
+                        previewLoading.style.display = 'none';
+                        noResults.style.display = 'block';
+                        return;
+                    }
+                    
+                    // Update counts
+                    matchCount.textContent = data.users.length;
+                    
+                    const canDelete = data.users.filter(u => u.executions === 0 && u.role !== 'admin');
+                    const withExecutions = data.users.filter(u => u.executions > 0);
+                    const admins = data.users.filter(u => u.role === 'admin');
+                    
+                    canDeleteCount.textContent = canDelete.length;
+                    withExecutionsCount.textContent = withExecutions.length;
+                    adminCount.textContent = admins.length;
+                    
+                    // Update table
+                    previewBody.innerHTML = '';
+                    data.users.forEach(user => {
+                        const tr = document.createElement('tr');
+                        
+                        if (user.executions > 0) {
+                            tr.classList.add('table-danger');
+                        } else if (user.role === 'admin') {
+                            tr.classList.add('table-primary');
+                        }
+                        
+                        const statusBadge = user.executions > 0 ? 
+                            '<span class="badge bg-danger">Has executions</span>' : 
+                            (user.role === 'admin' ? 
+                                '<span class="badge bg-primary">Admin</span>' : 
+                                '<span class="badge bg-success">Can delete</span>');
+                        
+                        tr.innerHTML = `
+                            <td>${user.username}</td>
+                            <td>${user.full_name}</td>
+                            <td>${user.role === 'admin' ? 
+                                '<span class="badge bg-danger">Admin</span>' : 
+                                '<span class="badge bg-info">Field Agent</span>'}</td>
+                            <td>${user.region}</td>
+                            <td>${user.state || '-'}</td>
+                            <td>${user.lga || '-'}</td>
+                            <td>${user.executions}</td>
+                            <td>${statusBadge}</td>
+                        `;
+                        
+                        previewBody.appendChild(tr);
+                    });
+                    
+                    // Show results
+                    previewLoading.style.display = 'none';
+                    previewResults.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error fetching preview:', error);
+                    previewLoading.style.display = 'none';
+                    previewResults.style.display = 'none';
+                    noResults.style.display = 'block';
+                });
+        }
+        
+        // Add event listeners for preview updates
+        document.querySelector('select[name="region"]').addEventListener('change', updatePreview);
+        document.querySelector('select[name="state"]').addEventListener('change', updatePreview);
+        
+        const lgaInput = document.querySelector('input[name="lga"]');
+        let lgaTimeout;
+        lgaInput.addEventListener('input', function() {
+            clearTimeout(lgaTimeout);
+            lgaTimeout = setTimeout(updatePreview, 500);
+        });
+        
+        // Form submission confirmation
+        bulkDeleteForm.addEventListener('submit', function(e) {
+            const deleteBy = deleteBySelect.value;
+            let criteria = {};
+            
+            if (deleteBy === 'region') {
+                criteria.value = document.querySelector('select[name="region"]').value;
+            } else if (deleteBy === 'state') {
+                criteria.value = document.querySelector('select[name="state"]').value;
+            } else if (deleteBy === 'lga') {
+                criteria.value = document.querySelector('input[name="lga"]').value;
+            }
+            
+            if (!confirm(`Are you sure you want to delete all users in ${criteria.value}?\nThis action cannot be undone.`)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    });
+</script>
+{% endblock %}

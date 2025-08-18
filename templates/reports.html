@@ -1,0 +1,1557 @@
+{% extends 'base.html' %} {% block title %}Reports - Dangote POSM{% endblock %}
+{% block head_extra %}
+<style>
+	.report-card {
+		transition: transform 0.3s;
+		border-left: 4px solid {{ profile.primary_color }};
+		cursor: pointer;
+	}
+
+	.report-card:hover {
+		transform: translateY(-5px);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	.report-section {
+		display: none;
+	}
+
+	.active-report {
+		display: block;
+	}
+
+	.chart-container {
+		height: 300px;
+		margin-bottom: 20px;
+	}
+
+	.report-nav-item {
+		cursor: pointer;
+		padding: 10px 15px;
+		margin-bottom: 5px;
+		border-radius: 5px;
+		transition: all 0.2s;
+	}
+
+	.report-nav-item:hover {
+		background-color: #f8f9fa;
+	}
+
+	.report-nav-item.active {
+		background-color: {{ profile.primary_color }};
+		color: white;
+	}
+
+	.report-nav-item i {
+		width: 20px;
+		text-align: center;
+		margin-right: 8px;
+	}
+
+	.compliance-score {
+		font-size: 3rem;
+		font-weight: bold;
+	}
+
+	.comparison-image {
+		max-height: 200px;
+		object-fit: cover;
+		border-radius: 8px;
+		transition: transform 0.3s;
+		cursor: pointer;
+	}
+
+	.comparison-image:hover {
+		transform: scale(1.05);
+	}
+
+	/* rgba(255, 102, 0, 0.8) */
+
+	.image-label {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		background-color: {{ profile.primary_color }};
+		color: white;
+		padding: 3px 8px;
+		border-radius: 3px;
+		font-size: 0.8rem;
+	}
+
+	/* Mobile optimizations */
+	@media (max-width: 767.98px) {
+		.chart-container {
+			height: 250px;
+		}
+
+		.compliance-score {
+			font-size: 2rem;
+		}
+
+		.report-nav-item {
+			padding: 8px 10px;
+			margin-bottom: 3px;
+		}
+
+		.comparison-image {
+			max-height: 150px;
+		}
+	}
+</style>
+{% endblock %} {% block content %}
+<div class="container-fluid">
+	<div class="d-flex justify-content-between align-items-center mb-3">
+		<h1 class="h3 mb-0">Reports & Analytics</h1>
+		<div>
+			{% if role == 'admin' or role == 'general_subadmin' %}
+			<button class="btn btn-outline-secondary" id="exportReportBtn">
+				<i class="fas fa-file-export me-1"></i> Export
+			</button>
+			{% endif %}
+		</div>
+	</div>
+
+	<div class="row">
+		<!-- Report Navigation Sidebar -->
+		<div class="col-md-3 mb-4">
+			<div class="card">
+				<div class="card-header bg-white">
+					<h5 class="card-title mb-0">Reports</h5>
+				</div>
+				<div class="card-body p-2">
+					<div class="list-group list-group-flush">
+						{% if role == 'field_agent' %}
+						<div
+							class="report-nav-item active"
+							data-report="agentPerformanceReportSection"
+						>
+							<i class="fas fa-user-check"></i> Agent Performance
+						</div>
+						{% elif role == 'admin' or role.endswith('subadmin') %}
+						<div
+							class="report-nav-item active"
+							data-report="productAvailabilityReportSection"
+						>
+							<i class="fas fa-boxes"></i> POSM Deployed
+						</div>
+						<div
+							class="report-nav-item"
+							data-report="executionSummaryReportSection"
+						>
+							<i class="fas fa-chart-pie"></i> Execution Summary
+						</div>
+						<div
+							class="report-nav-item"
+							data-report="imageAnalysisReportSection"
+						>
+							<i class="fas fa-images"></i> Image Analysis
+						</div>
+						<div
+							class="report-nav-item"
+							data-report="agentPerformanceReportSection"
+						>
+							<i class="fas fa-user-check"></i> Agent Performance
+						</div>
+						<div class="report-nav-item">
+							<a href="{{ url_for('reports.report_upload') }}" class="text-decoration-none text-dark d-block">
+								<i class="fas fa-file-upload"></i> Upload Reports
+							</a>
+						</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+
+			<div class="card mt-3 d-none d-md-block">
+				<div class="card-header bg-white">
+					<h5 class="card-title mb-0">Filters</h5>
+				</div>
+				<div class="card-body">
+					<div class="mb-3">
+						<label class="form-label">Date Range</label>
+						<select class="form-select" id="dateRangeFilter">
+							<option value="week">This Week</option>
+							<option value="month" selected>This Month</option>
+							<option value="quarter">This Quarter</option>
+							<option value="year">This Year</option>
+							<option value="custom">Custom Range</option>
+						</select>
+					</div>
+					<!-- <div class="mb-3">
+                        <label class="form-label">Region</label>
+                        <select class="form-select" id="regionFilter">
+                            <option value="all" selected>All Regions</option>
+                            <option value="SW">South West</option>
+                            <option value="SE">South East</option>
+                            <option value="NC">North Central</option>
+                            <option value="NW">North West</option>
+                            <option value="NE">North East</option>
+                        </select>
+                    </div> -->
+					<div class="mb-3">
+						<label class="form-label">State</label>
+						<select class="form-select" id="stateFilter">
+							<option value="all" selected>All States</option>
+							{% for state in [ {'name': 'Ekiti', 'region': 'SW'}, {'name':
+							'Lagos', 'region': 'SW'}, {'name': 'Ogun', 'region': 'SW'},
+							{'name': 'Ondo', 'region': 'SW'}, {'name': 'Osun', 'region':
+							'SW'}, {'name': 'Oyo', 'region': 'SW'}, {'name': 'Abia', 'region':
+							'SE'}, {'name': 'Anambra', 'region': 'SE'}, {'name': 'Ebonyi',
+							'region': 'SE'}, {'name': 'Enugu', 'region': 'SE'}, {'name':
+							'Imo', 'region': 'SE'}, {'name': 'Akwa Ibom', 'region': 'SS'},
+							{'name': 'Bayelsa', 'region': 'SS'}, {'name': 'Cross River',
+							'region': 'SS'}, {'name': 'Delta', 'region': 'SS'}, {'name':
+							'Edo', 'region': 'SS'}, {'name': 'Rivers', 'region': 'SS'},
+							{'name': 'Benue', 'region': 'NC'}, {'name': 'FCT', 'region':
+							'NC'}, {'name': 'Kogi', 'region': 'NC'}, {'name': 'Kwara',
+							'region': 'NC'}, {'name': 'Nasarawa', 'region': 'NC'}, {'name':
+							'Niger', 'region': 'NC'}, {'name': 'Plateau', 'region': 'NC'},
+							{'name': 'Adamawa', 'region': 'NE'}, {'name': 'Bauchi', 'region':
+							'NE'}, {'name': 'Borno', 'region': 'NE'}, {'name': 'Gombe',
+							'region': 'NE'}, {'name': 'Taraba', 'region': 'NE'}, {'name':
+							'Yobe', 'region': 'NE'}, {'name': 'Jigawa', 'region': 'NW'},
+							{'name': 'Kaduna', 'region': 'NW'}, {'name': 'Kano', 'region':
+							'NW'}, {'name': 'Katsina', 'region': 'NW'}, {'name': 'Kebbi',
+							'region': 'NW'}, {'name': 'Sokoto', 'region': 'NW'}, {'name':
+							'Zamfara', 'region': 'NW'} ] %}
+							<option value="{{ state.name }}" data-region="{{ state.region }}">
+								{{ state.name }}
+							</option>
+							{% endfor %}
+						</select>
+					</div>
+					<div class="d-grid">
+						<button class="btn btn-primary" id="applyFiltersBtn">
+							Apply Filters
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Report Content Area -->
+		<div class="col-md-9">
+			<!-- Product Availability Report -->
+
+
+			<!-- In your reports.html file, update the productAvailabilityReportSection div -->
+
+            <div class="report-section {% if role != 'field_agent' %}active-report{% endif %}" id="productAvailabilityReportSection">
+                <div class="card mb-4">
+                    <div class="card-header bg-white d-flex" style="justify-content: space-between;">
+                        <h5 class="card-title mb-0">POSM Deployed Report</h5>
+
+                        <!-- <button id="exportPOSMBtn" class="btn btn-sm btn-success">
+                            <i class="fas fa-file-export me-1"></i> Export to CSV
+                        </button> -->
+
+                        <button id="exportPosmBtn" class="btn btn-info">
+                            <i class="fas fa-download"></i> Export Data
+                          </button>
+
+                        
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="posmDeployedTable">
+                                <thead>
+                                    <tr>
+                                        <th>Agent Name</th>
+                                        <th>URN</th>
+                                        <th>Outlet Name</th>
+                                        <th>Address</th>
+                                        <th>Phone</th>
+                                        <th>Outlet Type</th>
+                                        <th>Region</th>
+                                        <th>State</th>
+                                        <th>LGA</th>
+                                        <th>Executions</th>
+                                        <th>Assigned</th>
+                                        <th>Visited</th>
+                                        <th>Coverage</th>
+                                        <th>Table</th>
+                                        <th>Chair</th>
+                                        <th>Parasol</th>
+                                        <th>Tarpaulin</th>
+                                        <th>Hawker Jacket</th>
+                                        <th>Cup</th>
+                                        <th>Geolocation</th>
+                                        <th>Before Image</th>
+                                        <th>After Image</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="posmDeployedTableBody">
+                                    <!-- Data will be loaded here -->
+                                    <tr>
+                                        <td colspan="22" class="text-center">
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </div>
+                                            <span class="ms-2">Loading POSM deployment data...</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+            
+                        <!-- Pagination controls remain unchanged -->
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div>
+                                <span id="posmPaginationInfo">Showing 0-0 of 0 executions</span>
+                            </div>
+                            <nav aria-label="POSM deployment pagination">
+                                <ul class="pagination" id="posmPagination">
+                                    <!-- Pagination will be generated here -->
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+			<!-- Execution Summary Report -->
+			<div class="report-section" id="executionSummaryReportSection">
+				<div class="card mb-4">
+					<div class="card-header bg-white">
+						<h5 class="card-title mb-0">Execution Summary Report</h5>
+					</div>
+					<div class="card-body">
+						<div id="executionSummaryReport">
+							<!-- Report content will be loaded dynamically by JavaScript -->
+						</div>
+					</div>
+				</div>
+
+				<div class="card mb-4">
+					<div class="card-header bg-white">
+						<h5 class="card-title mb-0">Key Insights</h5>
+					</div>
+					<div class="card-body">
+						<div class="alert alert-info">
+							<i class="fas fa-lightbulb me-2"></i>
+							<strong>Execution Summary Insights:</strong>
+							<ul class="mb-0 mt-2">
+								<li>Average number of executions per outlet: 1.3</li>
+								<li>
+									South West region has the highest execution coverage rate
+								</li>
+								<li>
+									North East region requires additional attention to improve
+									coverage
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Image Analysis Report -->
+			<div class="report-section" id="imageAnalysisReportSection">
+				<div class="card mb-4">
+					<div class="card-header bg-white">
+						<h5 class="card-title mb-0">Image Analysis Report</h5>
+					</div>
+					<div class="card-body">
+						<div id="imageAnalysisReport">
+							<!-- Report content will be loaded dynamically by JavaScript -->
+						</div>
+					</div>
+				</div>
+
+				<div class="card mb-4">
+					<div class="card-header bg-white">
+						<h5 class="card-title mb-0">Key Insights</h5>
+					</div>
+					<div class="card-body">
+						<div class="alert alert-info">
+							<i class="fas fa-lightbulb me-2"></i>
+							<strong>Image Analysis Insights:</strong>
+							<ul class="mb-0 mt-2">
+								<li>Overall cleanliness shows the highest compliance score</li>
+								<li>Stock organization needs improvement across all regions</li>
+								<li>
+									South West and North West regions show the best branding
+									visibility
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Agent Performance Report -->
+			<div
+				class="report-section {% if role == 'field_agent' %}active-report{% endif %}"
+				id="agentPerformanceReportSection"
+			>
+				<div class="card mb-4">
+					<div
+						class="card-header bg-white d-flex justify-content-between align-items-center"
+					>
+						<h5 class="card-title mb-0">Agent Performance Report</h5>
+						<div class="input-group" style="max-width: 300px">
+							<input
+								type="text"
+								class="form-control"
+								id="agentSearchInput"
+								placeholder="Search agents..."
+							/>
+							<button
+								class="btn btn-outline-secondary"
+								type="button"
+								id="agentSearchBtn"
+							>
+								<i class="fas fa-search"></i>
+							</button>
+						</div>
+					</div>
+					<div class="card-body">
+						<div id="agentPerformanceTableContainer">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Name</th>
+										<th>Username</th>
+										<th>Role</th>
+										<th>Region</th>
+										<th>State</th>
+										<th>LGA</th>
+										<th>Executions Performed</th>
+										<th>Outlets Assigned</th>
+										<th>Outlets Visited</th>
+										<th>Coverage (%)</th>
+									</tr>
+								</thead>
+								<tbody id="agentPerformanceTableBody">
+									<!-- Data will be loaded here -->
+									<tr>
+										<td colspan="11" class="text-center">
+											<div class="spinner-border text-primary" role="status">
+												<span class="visually-hidden">Loading...</span>
+											</div>
+											<span class="ms-2">Loading agent data...</span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+							<!-- Pagination controls -->
+							<div
+								class="d-flex justify-content-between align-items-center mt-3"
+							>
+								<div>
+									<span id="agentPaginationInfo">Showing 0-0 of 0 agents</span>
+								</div>
+								<nav aria-label="Agent performance pagination">
+									<ul class="pagination" id="agentPerformancePagination">
+										<!-- Pagination will be generated here -->
+									</ul>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %} {% block scripts %}
+<!-- Chart helpers and utilities -->
+<script src="{{ url_for('static', filename='js/chart-helpers.js') }}"></script>
+<script src="{{ url_for('static', filename='js/report-utils.js') }}"></script>
+
+<!-- Report-specific modules -->
+<script src="{{ url_for('static', filename='js/product-report.js') }}"></script>
+<script src="{{ url_for('static', filename='js/execution-report.js') }}"></script>
+<script src="{{ url_for('static', filename='js/image-report.js') }}"></script>
+
+<!-- Add this before your other script imports -->
+<script src="{{ url_for('static', filename='js/nigeria-data.js') }}"></script>
+
+<!-- Then in your existing script section, replace the state/region handling code with: -->
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		// Get filter elements
+		const regionFilter = document.getElementById("regionFilter");
+		const stateFilter = document.getElementById("stateFilter");
+
+		// Populate region and state filters using the centralized data
+		populateRegionDropdown(regionFilter);
+		populateStateDropdown(stateFilter);
+
+		// Setup relationship between region and state filters
+		setupRegionStateRelationship(regionFilter, stateFilter);
+
+		// Set the active report section based on user role
+		const userRole = "{{ role|default('') }}";
+		const userRegion = "{{ user_region|default('') }}";
+		const userState = "{{ user_state|default('') }}";
+
+		// For field agents, always set agent performance as active report
+		if (userRole === "field_agent") {
+			// Remove active-report class from all report sections
+			document.querySelectorAll(".report-section").forEach((section) => {
+				section.classList.remove("active-report");
+			});
+
+			// Add active-report class to agent performance section
+			document
+				.getElementById("agentPerformanceReportSection")
+				.classList.add("active-report");
+
+			// Update the navigation item active state
+			document.querySelectorAll(".report-nav-item").forEach((nav) => {
+				nav.classList.remove("active");
+			});
+			document
+				.querySelector(
+					'.report-nav-item[data-report="agentPerformanceReportSection"]'
+				)
+				.classList.add("active");
+
+			// Load agent performance data
+			setTimeout(function () {
+				loadAgentPerformance();
+			}, 500);
+		} else {
+			// For admin/managers/subadmins, load product availability report by default
+			setTimeout(function () {
+				loadProductAvailabilityReport();
+			}, 500);
+		}
+
+		// Report navigation - fix the duplicate event listener issue
+		document.querySelectorAll(".report-nav-item").forEach((item) => {
+			item.addEventListener("click", function () {
+				// Update active nav item
+				document.querySelectorAll(".report-nav-item").forEach((nav) => {
+					nav.classList.remove("active");
+				});
+				this.classList.add("active");
+
+				// Show selected report section
+				const reportId = this.getAttribute("data-report");
+
+				document.querySelectorAll(".report-section").forEach((section) => {
+					section.classList.remove("active-report");
+				});
+				document.getElementById(reportId).classList.add("active-report");
+
+				// Load report data if needed
+				if (reportId === "executionSummaryReportSection") {
+					loadExecutionSummaryReport();
+				} else if (reportId === "imageAnalysisReportSection") {
+					loadImageAnalysisReport();
+				} else if (reportId === "productAvailabilityReportSection") {
+					loadProductAvailabilityReport();
+				} else if (reportId === "agentPerformanceReportSection") {
+					loadAgentPerformance();
+				}
+			});
+		});
+
+		// Filter application
+		document
+			.getElementById("applyFiltersBtn")
+			.addEventListener("click", function () {
+				const dateRange = document.getElementById("dateRangeFilter").value;
+				let state = document.getElementById("stateFilter").value;
+
+				// For state subadmin, always use their assigned state
+				if (userRole === "state_subadmin") {
+					state = userState;
+				}
+
+				// Always get region from state
+				let region = "all";
+
+				// For regional subadmin, always use their assigned region
+				if (userRole === "regional_subadmin") {
+					region = userRegion;
+				} else if (state !== "all") {
+					// Find the state in our array to get its region
+					const stateObj = NIGERIA_STATES.find((s) => s.name === state);
+					if (stateObj) {
+						region = stateObj.region;
+					}
+				}
+
+				// Reload current report with filters
+				const activeReport = document.querySelector(
+					".report-section.active-report"
+				).id;
+
+				// For field agents, only load agent performance regardless of active report
+				if (userRole === "field_agent") {
+					loadAgentPerformance(dateRange, region, state);
+				} else {
+					// For admin/managers/subadmins, load the appropriate report based on selection
+					if (activeReport === "productAvailabilityReportSection") {
+						loadProductAvailabilityReport(dateRange, region, state);
+					} else if (activeReport === "executionSummaryReportSection") {
+						loadExecutionSummaryReport(dateRange, region, state);
+					} else if (activeReport === "imageAnalysisReportSection") {
+						loadImageAnalysisReport(dateRange, region, state);
+					} else if (activeReport === "agentPerformanceReportSection") {
+						loadAgentPerformance(dateRange, region, state);
+					}
+				}
+
+				// Show notification
+				let filterText = `${dateRange}`;
+				filterText += `, ${state}`;
+
+				alert(`Filters applied: ${filterText}`);
+			});
+
+		// Export report button
+		document
+			.getElementById("exportReportBtn")
+			.addEventListener("click", function () {
+				const activeReport = document.querySelector(
+					".report-section.active-report"
+				).id;
+				let reportName = "Dangote_Cement_Report";
+				let data = [];
+				let headers = [];
+
+				// Determine which report is active and prepare its data
+				if (activeReport === "productAvailabilityReportSection") {
+					reportName = "Product_Availability_Report";
+					// Extract data from product availability charts
+					const productCharts = document.querySelectorAll(
+						"#productAvailabilityReport .chart-container"
+					);
+					if (productCharts.length > 0) {
+						headers = ["Product", "Availability Percentage"];
+						// Extract data from chart if available
+						try {
+							const chartData = window.productAvailabilityData || [];
+							data = chartData.map((item) => [item.product, item.percentage]);
+						} catch (e) {
+							console.error("Error extracting product data:", e);
+						}
+					}
+				} else if (activeReport === "executionSummaryReportSection") {
+					reportName = "Execution_Summary_Report";
+					// Extract data from execution summary
+					const summaryElements = document.querySelectorAll(
+						"#executionSummaryReport .card"
+					);
+					headers = ["Metric", "Value"];
+					summaryElements.forEach((el) => {
+						const title = el.querySelector(".card-title")?.textContent.trim();
+						const value = el.querySelector(".h3")?.textContent.trim();
+						if (title && value) {
+							data.push([title, value]);
+						}
+					});
+				} else if (activeReport === "imageAnalysisReportSection") {
+					reportName = "Image_Analysis_Report";
+					// Extract data from image analysis
+					headers = ["Metric", "Score"];
+					const metrics = document.querySelectorAll(
+						"#imageAnalysisReport .card"
+					);
+					metrics.forEach((metric) => {
+						const title = metric
+							.querySelector(".card-title")
+							?.textContent.trim();
+						const score = metric
+							.querySelector(".compliance-score")
+							?.textContent.trim();
+						if (title && score) {
+							data.push([title, score]);
+						}
+					});
+				} else if (activeReport === "agentPerformanceReportSection") {
+					reportName = "Agent_Performance_Report";
+					// Extract data from agent performance table
+					const table = document.querySelector(
+						"#agentPerformanceReportSection table"
+					);
+					if (table) {
+						headers = Array.from(table.querySelectorAll("thead th")).map((th) =>
+							th.textContent.trim()
+						);
+						const rows = table.querySelectorAll("tbody tr");
+						data = Array.from(rows).map((row) => {
+							return Array.from(row.querySelectorAll("td")).map((cell) =>
+								cell.textContent.trim()
+							);
+						});
+					}
+				}
+
+				// If we have data, create and download CSV
+				if (headers.length > 0) {
+					// Create CSV content
+					let csvContent = headers.join(",") + "\n";
+					data.forEach((row) => {
+						// Escape commas in the data
+						const escapedRow = row.map((cell) => {
+							// If cell contains commas, quotes, or newlines, wrap in quotes
+							if (
+								cell.includes(",") ||
+								cell.includes('"') ||
+								cell.includes("\n")
+							) {
+								// Replace quotes with double quotes for CSV format
+								return `"${cell.replace(/"/g, '""')}"`;
+							}
+							return cell;
+						});
+						csvContent += escapedRow.join(",") + "\n";
+					});
+
+					// Create download link
+					const blob = new Blob([csvContent], {
+						type: "text/csv;charset=utf-8;",
+					});
+					const url = URL.createObjectURL(blob);
+					const link = document.createElement("a");
+					link.setAttribute("href", url);
+					link.setAttribute(
+						"download",
+						`${reportName}_${new Date().toISOString().slice(0, 10)}.csv`
+					);
+					link.style.visibility = "hidden";
+
+					// Trigger download
+					document.body.appendChild(link);
+					link.click();
+					document.body.removeChild(link);
+				} else {
+					alert("No data available to export for this report.");
+				}
+			});
+	});
+</script>
+<ul class="nav nav-tabs" id="reportTabs" role="tablist">
+	<!-- ... other tabs ... -->
+	<li class="nav-item" role="presentation">
+		<button
+			class="nav-link"
+			id="agent-performance-tab"
+			data-bs-toggle="tab"
+			data-bs-target="#agent-performance"
+			type="button"
+			role="tab"
+			aria-controls="agent-performance"
+			aria-selected="false"
+		>
+			Agent Performance
+		</button>
+	</li>
+</ul>
+<div class="tab-content" id="reportTabsContent">
+	<!-- ... other tab panes ... -->
+	<div
+		class="tab-pane fade"
+		id="agent-performance"
+		role="tabpanel"
+		aria-labelledby="agent-performance-tab"
+	>
+		<h3 class="mt-3">Agent Performance Overview</h3>
+		<div id="agentPerformanceTableContainer">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Username</th>
+						<th>Role</th>
+						<th>Region</th>
+						<th>State</th>
+						<th>LGA</th>
+						<th>Executions Performed</th>
+						<th>Outlets Assigned</th>
+						<th>Outlets Visited</th>
+						<th>Coverage (%)</th>
+					</tr>
+				</thead>
+				<tbody id="agentPerformanceTableBody">
+					<!-- Data will be loaded here -->
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<!-- Export Modal -->
+<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exportModalLabel">Export POSM Deployments</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Date Range</label>
+                        <select class="form-select" id="exportDateRange">
+                            <option value="all">All Time</option>
+                            <option value="week">Last Week</option>
+                            <option value="month">Last Month</option>
+                            <option value="quarter">Last Quarter</option>
+                            <option value="year">Last Year</option>
+                            <option value="custom">Custom Range</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6" id="customDateRange" style="display: none;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Start Date</label>
+                                <input type="date" class="form-control" id="exportStartDate">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">End Date</label>
+                                <input type="date" class="form-control" id="exportEndDate">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Region</label>
+                        <select class="form-select" id="exportRegion">
+                            <option value="all">All Regions</option>
+                            <option value="SW">South West</option>
+                            <option value="SE">South East</option>
+                            <option value="SS">South South</option>
+                            <option value="NC">North Central</option>
+                            <option value="NE">North East</option>
+                            <option value="NW">North West</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">State</label>
+                        <select class="form-select" id="exportState">
+                            <option value="all">All States</option>
+                            <!-- States will be populated dynamically based on selected region -->
+                        </select>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <p class="mb-3">Select export format:</p>
+                <div class="btn-group-vertical w-100">
+                    <button class="btn btn-primary export-btn" data-type="csv">
+                        <i class="fas fa-file-csv"></i> Export as CSV
+                    </button>
+                    <!-- <button class="btn btn-success export-btn" data-type="xlsx">
+                        <i class="fas fa-file-excel"></i> Export as Excel
+                    </button> -->
+                    <button class="btn btn-danger export-btn" data-type="pdf">
+                        <i class="fas fa-file-pdf"></i> Export as PDF
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Download Modal -->
+
+<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exportModalLabel">Export POSM Deployments</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Select export format:</p>
+          <div class="btn-group-vertical w-100">
+            <button class="btn btn-primary export-btn" data-type="csv" onclick="exportPOSMDataToCSV()">
+              <i class="fas fa-file-csv"></i> Export as CSV
+            </button>
+            <!-- <button class="btn btn-success export-btn" data-type="xlsx">
+              <i class="fas fa-file-excel"></i> Export as Excel
+            </button> -->
+            <button class="btn btn-danger export-btn" data-type="pdf" onclick="">
+              <i class="fas fa-file-pdf"></i> Export as PDF
+            </button>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Pagination and data for agent performance
+        let agentPerformanceCurrentPage = 1;
+        const agentPerformancePageSize = 20;
+        let totalAgents = 0;
+        let totalPages = 1;
+
+		const regionSelect = document.getElementById('exportRegion');
+		const stateSelect = document.getElementById('exportState');
+		const dateRangeSelect = document.getElementById('exportDateRange');
+		const customDateRange = document.getElementById('customDateRange');
+
+		// Handle date range selection
+		dateRangeSelect.addEventListener('change', function() {
+			if (this.value === 'custom') {
+				customDateRange.style.display = 'block';
+			} else {
+				customDateRange.style.display = 'none';
+			}
+		});
+
+		// Handle region-state relationship
+		// ... existing code ...
+		regionSelect.addEventListener('change', function() {
+			const selectedRegion = this.value;
+			stateSelect.innerHTML = '<option value="all">All States</option>';
+			
+			if (selectedRegion !== 'all') {
+				// Use getStatesByRegion from nigeria-data.js
+				const states = getStatesByRegion(selectedRegion);
+				states.forEach(state => {
+					const option = document.createElement('option');
+					option.value = state.name;
+					option.textContent = state.name;
+					stateSelect.appendChild(option);
+				});
+			}
+		});
+
+
+// ... existing code ...
+
+
+        function loadAgentPerformance(dateRange, region, state, page = 1) {
+            // Get the current user ID from a data attribute
+            const currentAgentId = "{{ user_id|default('null')|tojson }}";
+            const userRole = "{{ role|default('') }}";
+            const userRegion = "{{ user_region|default('') }}";
+            const userState = "{{ user_state|default('') }}";
+
+            // Show loading state
+            const tableBody = document.getElementById("agentPerformanceTableBody");
+            tableBody.innerHTML = '<tr><td colspan="11" class="text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div><span class="ms-2">Loading agent data...</span></td></tr>';
+
+            // Build query parameters
+            let queryParams = new URLSearchParams();
+            if (dateRange) queryParams.append("date_range", dateRange);
+            if (region && region !== "all") queryParams.append("region", region);
+            if (state && state !== "all") queryParams.append("state", state);
+            queryParams.append("page", page);
+            queryParams.append("per_page", agentPerformancePageSize);
+
+            fetch(`/api/agent_performance?${queryParams.toString()}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    // Update pagination info
+                    totalAgents = data.pagination.total_count;
+                    totalPages = data.pagination.total_pages;
+                    agentPerformanceCurrentPage = page;
+
+                    const paginationInfo = document.getElementById("agentPaginationInfo");
+                    if (paginationInfo) {
+                        const start = (page - 1) * agentPerformancePageSize + 1;
+                        const end = Math.min(
+                            start + agentPerformancePageSize - 1,
+                            totalAgents
+                        );
+                        paginationInfo.textContent = `Showing ${start}-${end} of ${totalAgents} agents`;
+                    }
+
+                    // Render the table with the current page data
+                    renderAgentPerformanceTable(data.agents);
+
+                    // Update pagination controls
+                    renderAgentPerformancePagination(page, totalPages);
+                })
+                .catch((error) => {
+                    console.error("Error fetching agent performance data:", error);
+                    tableBody.innerHTML =
+                        '<tr><td colspan="11" class="text-center text-danger">Error loading data. Please try again.</td></tr>';
+                });
+        }
+
+        function renderAgentPerformanceTable(agents) {
+            const tbody = document.getElementById("agentPerformanceTableBody");
+            tbody.innerHTML = "";
+
+            if (!agents || agents.length === 0) {
+                tbody.innerHTML =
+                    '<tr><td colspan="11" class="text-center">No agents found</td></tr>';
+                return;
+            }
+
+            agents.forEach((agent) => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${agent.id}</td>
+                    <td>${agent.full_name || ""}</td>
+                    <td>${agent.username || ""}</td>
+                    <td>${agent.role || "field_agent"}</td>
+                    <td>${agent.region || ""}</td>
+                    <td>${agent.state || ""}</td>
+                    <td>${agent.lga || ""}</td>
+                    <td>${agent.executions_performed}</td>
+                    <td>${agent.outlets_assigned || 0}</td>
+                    <td>${agent.outlets_visited}</td>
+                    <td>${agent.coverage_percentage}%</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderAgentPerformancePagination(currentPage, totalPages) {
+            const pagination = document.getElementById("agentPerformancePagination");
+            pagination.innerHTML = "";
+
+            if (totalPages <= 1) return;
+
+            // Previous button
+            const prevLi = document.createElement("li");
+            prevLi.className = "page-item" + (currentPage === 1 ? " disabled" : "");
+            const prevBtn = document.createElement("a");
+            prevBtn.className = "page-link";
+            prevBtn.href = "#";
+            prevBtn.innerHTML = "&laquo;";
+            prevBtn.addEventListener("click", function (e) {
+                e.preventDefault();
+                if (currentPage > 1) {
+                    loadAgentPerformance(null, null, null, currentPage - 1);
+                }
+            });
+            prevLi.appendChild(prevBtn);
+            pagination.appendChild(prevLi);
+
+            // Page numbers - show limited page numbers with ellipsis for better UX
+            const maxPagesToShow = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+            let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+            // Adjust start page if we're near the end
+            if (endPage - startPage + 1 < maxPagesToShow) {
+                startPage = Math.max(1, endPage - maxPagesToShow + 1);
+            }
+
+            // Add first page with ellipsis if needed
+            if (startPage > 1) {
+                const li = document.createElement("li");
+                li.className = "page-item";
+                const btn = document.createElement("a");
+                btn.className = "page-link";
+                btn.href = "#";
+                btn.textContent = "1";
+                btn.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    loadAgentPerformance(null, null, null, 1);
+                });
+                li.appendChild(btn);
+                pagination.appendChild(li);
+
+                if (startPage > 2) {
+                    const ellipsisLi = document.createElement("li");
+                    ellipsisLi.className = "page-item disabled";
+                    const ellipsisSpan = document.createElement("span");
+                    ellipsisSpan.className = "page-link";
+                    ellipsisSpan.innerHTML = "&hellip;";
+                    ellipsisLi.appendChild(ellipsisSpan);
+                    pagination.appendChild(ellipsisLi);
+                }
+            }
+
+            // Add page numbers
+            for (let i = startPage; i <= endPage; i++) {
+                const li = document.createElement("li");
+                li.className = "page-item" + (i === currentPage ? " active" : "");
+                const btn = document.createElement("a");
+                btn.className = "page-link";
+                btn.href = "#";
+                btn.textContent = i;
+                btn.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    loadAgentPerformance(null, null, null, i);
+                });
+                li.appendChild(btn);
+                pagination.appendChild(li);
+            }
+
+            // Add last page with ellipsis if needed
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    const ellipsisLi = document.createElement("li");
+                    ellipsisLi.className = "page-item disabled";
+                    const ellipsisSpan = document.createElement("span");
+                    ellipsisSpan.className = "page-link";
+                    ellipsisSpan.innerHTML = "&hellip;";
+                    ellipsisLi.appendChild(ellipsisSpan);
+                    pagination.appendChild(ellipsisLi);
+                }
+
+                const li = document.createElement("li");
+                li.className = "page-item" + (currentPage === totalPages ? " active" : "");
+                const btn = document.createElement("a");
+                btn.className = "page-link";
+                btn.href = "#";
+                btn.textContent = totalPages;
+                btn.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    loadAgentPerformance(null, null, null, totalPages);
+                });
+                li.appendChild(btn);
+                pagination.appendChild(li);
+            }
+
+            // Next button
+            const nextLi = document.createElement("li");
+            nextLi.className = "page-item" + (currentPage === totalPages ? " disabled" : "");
+            const nextBtn = document.createElement("a");
+            nextBtn.className = "page-link";
+            nextBtn.href = "#";
+            nextBtn.innerHTML = "&raquo;";
+            nextBtn.addEventListener("click", function (e) {
+                e.preventDefault();
+                if (currentPage < totalPages) {
+                    loadAgentPerformance(null, null, null, currentPage + 1);
+                }
+            });
+            nextLi.appendChild(nextBtn);
+            pagination.appendChild(nextLi);
+        }
+
+        // Initialize the agent performance report when the page loads
+        if (document.getElementById("agentPerformanceReportSection").classList.contains("active-report")) {
+            loadAgentPerformance();
+        }
+
+        // Handle report navigation clicks
+        document.querySelectorAll(".report-nav-item").forEach((item) => {
+            item.addEventListener("click", function () {
+                const reportId = this.getAttribute("data-report");
+                if (reportId === "agentPerformanceReportSection") {
+                    loadAgentPerformance();
+                }
+            });
+        });
+
+        // Handle filter application
+        document.getElementById("applyFiltersBtn").addEventListener("click", function () {
+            const dateRange = document.getElementById("dateRangeFilter").value;
+            const state = document.getElementById("stateFilter").value;
+            loadAgentPerformance(null, null, state);
+        });
+    });
+
+
+
+// Add this to your existing script section
+function loadPOSMDeployedReport(dateRange, region, state, page = 1) {
+    const tableBody = document.getElementById("posmDeployedTableBody");
+    tableBody.innerHTML = '<tr><td colspan="22" class="text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div><span class="ms-2">Loading POSM deployment data...</span></td></tr>';
+
+    const perPage = 10;
+    let queryParams = new URLSearchParams();
+    if (dateRange) queryParams.append("date_range", dateRange);
+    if (region && region !== "all") queryParams.append("region", region);
+    if (state && state !== "all") queryParams.append("state", state.toUpperCase());
+    queryParams.append("page", page);
+    queryParams.append("per_page", perPage);
+
+    fetch(`/api/posm_deployments?${queryParams.toString()}`)
+        .then(response => response.json())
+        .then(data => {
+            tableBody.innerHTML = '';
+
+            if (!data.executions || data.executions.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="22" class="text-center">No POSM deployment data found</td></tr>';
+                return;
+            }
+
+            data.executions.forEach(execution => {
+                const products = execution.products_available ? JSON.parse(execution.products_available) : {};
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${execution.agent_name || ''}</td>
+                    <td>${execution.urn || ''}</td>
+                    <td>${execution.outlet_name || ''}</td>
+                    <td>${execution.address || ''}</td>
+                    <td>${execution.phone || ''}</td>
+                    <td>${execution.outlet_type || ''}</td>
+                    <td>${execution.outlet_region || execution.region || ''}</td>
+                    <td>${execution.outlet_state || execution.state || ''}</td>
+                    <td>${execution.outlet_lga || execution.lga || ''}</td>
+                    <td>${execution.executions_performed || 0}</td>
+                    <td>${execution.outlets_assigned || 0}</td>
+                    <td>${execution.outlets_visited || 0}</td>
+                    <td>${execution.coverage_percentage || 0}%</td>
+                    <td>${products['Table'] ? '✔️' : '❌'}</td>
+                    <td>${products['Chair'] ? '✔️' : '❌'}</td>
+                    <td>${products['Parasol'] ? '✔️' : '❌'}</td>
+                    <td>${products['Tarpaulin'] ? '✔️' : '❌'}</td>
+                    <td>${products['Hawker Jacket'] ? '✔️' : '❌'}</td>
+                    <td>${products['Cup'] ? '✔️' : '❌'}</td>
+                    <td>
+                        ${execution.latitude && execution.longitude ?
+                            `<a href="https://maps.google.com/?q=${execution.latitude},${execution.longitude}" target="_blank">View</a>` :
+                            'N/A'}
+                    </td>
+                    <td>
+                        ${execution.before_image ?
+                            `<a href="/static/uploads/${execution.before_image}" download="before_${execution.id}.jpg">
+                                <img src="/static/uploads/${execution.before_image}" style="max-width: 100px; max-height: 100px;" class="img-thumbnail">
+                            </a>` :
+                            'N/A'}
+                    </td>
+                    <td>
+                        ${execution.after_image ?
+                            `<a href="/static/uploads/${execution.after_image}" download="after_${execution.id}.jpg">
+                                <img src="/static/uploads/${execution.after_image}" style="max-width: 100px; max-height: 100px;" class="img-thumbnail">
+                            </a>` :
+                            'N/A'}
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            // Update pagination
+            const totalPages = data.pagination.total_pages;
+            const totalCount = data.pagination.total_count;
+            const start = (page - 1) * perPage + 1;
+            const end = Math.min(start + perPage - 1, totalCount);
+
+            document.getElementById('posmPaginationInfo').textContent = `Showing ${start}-${end} of ${totalCount} executions`;
+            renderPOSMPagination(page, totalPages, null, null, state);
+        })
+        .catch(error => {
+            console.error('Error loading POSM deployment data:', error);
+            tableBody.innerHTML = '<tr><td colspan="22" class="text-center text-danger">Error loading data. Please try again.</td></tr>';
+        });
+}
+
+function renderPOSMPagination(currentPage, totalPages, dateRange, region, state) {
+    const pagination = document.getElementById('posmPagination');
+    pagination.innerHTML = '';
+
+    if (totalPages <= 1) return;
+
+    // Previous button
+    const prevLi = document.createElement('li');
+    prevLi.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+    const prevLink = document.createElement('a');
+    prevLink.className = 'page-link';
+    prevLink.href = '#';
+    prevLink.innerHTML = '&laquo;';
+    prevLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (currentPage > 1) loadPOSMDeployedReport(null, null, state, currentPage - 1);
+    });
+    prevLi.appendChild(prevLink);
+    pagination.appendChild(prevLi);
+
+    // Page numbers - show limited page numbers with ellipsis for better UX
+    const maxPagesToShow = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+    let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+    // Adjust start page if we're near the end
+    if (endPage - startPage + 1 < maxPagesToShow) {
+        startPage = Math.max(1, endPage - maxPagesToShow + 1);
+    }
+
+    // Add first page with ellipsis if needed
+    if (startPage > 1) {
+        const firstPageLi = document.createElement('li');
+        firstPageLi.className = 'page-item';
+        const firstPageLink = document.createElement('a');
+        firstPageLink.className = 'page-link';
+        firstPageLink.href = '#';
+        firstPageLink.textContent = '1';
+        firstPageLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            loadPOSMDeployedReport(null, null, state, 1);
+        });
+        firstPageLi.appendChild(firstPageLink);
+        pagination.appendChild(firstPageLi);
+
+        if (startPage > 2) {
+            const ellipsisLi = document.createElement('li');
+            ellipsisLi.className = 'page-item disabled';
+            const ellipsisSpan = document.createElement('span');
+            ellipsisSpan.className = 'page-link';
+            ellipsisSpan.innerHTML = '&hellip;';
+            ellipsisLi.appendChild(ellipsisSpan);
+            pagination.appendChild(ellipsisLi);
+        }
+    }
+
+    // Add page numbers for the current batch
+    for (let i = startPage; i <= endPage; i++) {
+        const pageLi = document.createElement('li');
+        pageLi.className = `page-item ${i === currentPage ? 'active' : ''}`;
+        const pageLink = document.createElement('a');
+        pageLink.className = 'page-link';
+        pageLink.href = '#';
+        pageLink.textContent = i;
+        pageLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            loadPOSMDeployedReport(null, null, state, i);
+        });
+        pageLi.appendChild(pageLink);
+        pagination.appendChild(pageLi);
+    }
+
+    // Add last page with ellipsis if needed
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+            const ellipsisLi = document.createElement('li');
+            ellipsisLi.className = 'page-item disabled';
+            const ellipsisSpan = document.createElement('span');
+            ellipsisSpan.className = 'page-link';
+            ellipsisSpan.innerHTML = '&hellip;';
+            ellipsisLi.appendChild(ellipsisSpan);
+            pagination.appendChild(ellipsisLi);
+        }
+
+        const lastPageLi = document.createElement('li');
+        lastPageLi.className = 'page-item';
+        const lastPageLink = document.createElement('a');
+        lastPageLink.className = 'page-link';
+        lastPageLink.href = '#';
+        lastPageLink.textContent = totalPages;
+        lastPageLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            loadPOSMDeployedReport(null, null, state, totalPages);
+        });
+        lastPageLi.appendChild(lastPageLink);
+        pagination.appendChild(lastPageLi);
+    }
+
+    // Next button
+    const nextLi = document.createElement('li');
+    nextLi.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+    const nextLink = document.createElement('a');
+    nextLink.className = 'page-link';
+    nextLink.href = '#';
+    nextLink.innerHTML = '&raquo;';
+    nextLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (currentPage < totalPages) loadPOSMDeployedReport(null, null, state, currentPage + 1);
+    });
+    nextLi.appendChild(nextLink);
+    pagination.appendChild(nextLi);
+}
+
+// Update your report navigation click handler to include POSM report loading
+document.querySelectorAll(".report-nav-item").forEach((item) => {
+    item.addEventListener("click", function () {
+        const reportId = this.getAttribute("data-report");
+        if (reportId === "productAvailabilityReportSection") {
+            loadPOSMDeployedReport();
+        }
+        // ... other report handlers
+    });
+});
+
+function exportPOSMDataToCSV() {
+    // Show loading indicator
+    // const exportBtn = document.getElementById('exportPOSMBtn');
+    // const originalBtnText = exportBtn.innerHTML;
+    // exportBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i> Exporting...';
+    // exportBtn.disabled = true;
+    
+    // Fetch all data (without pagination)
+    fetch('/api/posm_deployments?per_page=10000')
+        .then(response => response.json())
+        .then(async data => {
+            if (!data.executions || data.executions.length === 0) {
+                alert('No data available to export');
+                // exportBtn.innerHTML = originalBtnText;
+                // exportBtn.disabled = false;
+                return;
+            }
+            
+            // Prepare CSV headers
+            const headers = [
+                'Agent Name', 'URN', 'Outlet Name', 'Address', 'Phone', 'Outlet Type',
+                'Region', 'State', 'LGA', 'Executions', 'Assigned', 'Visited', 'Coverage (%)',
+                'Table', 'Chair', 'Parasol', 'Tarpaulin', 'Hawker Jacket', 'Cup',
+                'Latitude', 'Longitude', 'Before Image', 'After Image'
+            ];
+            
+            // Prepare CSV rows
+            const csvRows = [];
+            csvRows.push(headers.join(','));
+            
+            // Process each execution
+            for (const execution of data.executions) {
+                const products = execution.products_available ? JSON.parse(execution.products_available) : {};
+                
+                // Format row data
+                const rowData = [
+                    `"${(execution.agent_name || '').replace(/"/g, '""')}"`,
+                    `"${(execution.urn || '').replace(/"/g, '""')}"`,
+                    `"${(execution.outlet_name || '').replace(/"/g, '""')}"`,
+                    `"${(execution.address || '').replace(/"/g, '""')}"`,
+                    `"${(execution.phone || '').replace(/"/g, '""')}"`,
+                    `"${(execution.outlet_type || '').replace(/"/g, '""')}"`,
+                    `"${(execution.outlet_region || execution.region || '').replace(/"/g, '""')}"`,
+                    `"${(execution.outlet_state || execution.state || '').replace(/"/g, '""')}"`,
+                    `"${(execution.outlet_lga || execution.lga || '').replace(/"/g, '""')}"`,
+                    execution.executions_performed || 0,
+                    execution.outlets_assigned || 0,
+                    execution.outlets_visited || 0,
+                    execution.coverage_percentage || 0,
+                    products['Table'] ? 'Yes' : 'No',
+                    products['Chair'] ? 'Yes' : 'No',
+                    products['Parasol'] ? 'Yes' : 'No',
+                    products['Tarpaulin'] ? 'Yes' : 'No',
+                    products['Hawker Jacket'] ? 'Yes' : 'No',
+                    products['Cup'] ? 'Yes' : 'No',
+                    execution.latitude || '',
+                    execution.longitude || '',
+                    execution.before_image ? `${window.location.origin}/static/uploads/${execution.before_image}` : '',
+                    execution.after_image ? `${window.location.origin}/static/uploads/${execution.after_image}` : ''
+                ];
+                
+                csvRows.push(rowData.join(','));
+            }
+            
+            // Create and download CSV file
+            const csvContent = csvRows.join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', `POSM_Deployment_Report_${new Date().toISOString().slice(0, 10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Reset button
+            // exportBtn.innerHTML = originalBtnText;
+            // exportBtn.disabled = false;
+        })
+        .catch(error => {
+            console.error('Error exporting POSM data:', error);
+            alert('Error exporting data. Please try again.');
+            // exportBtn.innerHTML = originalBtnText;
+            // exportBtn.disabled = false;
+        });
+}
+
+// Add event listener for the export button
+document.addEventListener("DOMContentLoaded", function() {
+    // Add this to your existing DOMContentLoaded event handler
+    document.getElementById('exportPOSMBtn').addEventListener('click', exportPOSMDataToCSV);
+});
+
+
+
+
+// Initialize the POSM report when the page loads
+if (document.getElementById("productAvailabilityReportSection").classList.contains("active-report")) {
+    
+    loadPOSMDeployedReport();
+}
+
+document.getElementById("applyFiltersBtn").addEventListener("click", function() {
+    const dateRange = document.getElementById("dateRangeFilter").value;
+    const state = document.getElementById("stateFilter").value.toUpperCase(); // Convert to uppercase
+    
+    // Get region from state if needed
+    
+    loadPOSMDeployedReport(null, null, state, 1);
+});
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Get modal and button elements
+  const exportModal = new bootstrap.Modal(document.getElementById('exportModal'));
+  const exportPosmBtn = document.getElementById('exportPosmBtn');
+  const exportBtns = document.querySelectorAll('.export-btn');
+  
+  // Show export modal when export button is clicked
+  if (exportPosmBtn) {
+    exportPosmBtn.addEventListener('click', function() {
+      exportModal.show();
+    });
+  }
+
+  // Handle export button clicks
+  exportBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const exportType = this.dataset.type;
+      const currentFilters = getCurrentFilters();
+
+
+	  	const regionSelect = document.getElementById('exportRegion');
+		const stateSelect = document.getElementById('exportState');
+		const dateRangeSelect = document.getElementById('exportDateRange');
+		const customDateRange = document.getElementById('customDateRange');
+
+	  	const filters = {
+			region: regionSelect.value.toUpperCase(),
+			state: stateSelect.value.toUpperCase(),
+			date_range: dateRangeSelect.value.toLowerCase()
+		};
+
+		if (dateRangeSelect.value === 'custom') {
+			filters.start_date = document.getElementById('exportStartDate').value;
+			filters.end_date = document.getElementById('exportEndDate').value;
+		}
+
+	  // Handle different export types
+      if (exportType === "csv") {
+        // Use the custom CSV export function
+        exportPOSMDataToCSV();
+      } else if (exportType === "xlsx" || exportType === "pdf") {
+        // Build export URL with current filters for server-side exports
+        let exportUrl = '/api/posm_deployments/export?type=' + exportType + '&region=' + filters.region + '&state=' + filters.state + '&date_range=' + filters.date_range;
+
+        // if (currentFilters.region) exportUrl += '&region=' + currentFilters.region;
+        // if (currentFilters.state) exportUrl += '&state=' + currentFilters.state;
+        
+        // Trigger download
+		console.log("downlaoda: ", exportUrl);
+        window.location.href = exportUrl;
+      }
+      
+      // Close modal
+      exportModal.hide();
+    });
+  });
+
+  // Helper function to get current filters
+  function getCurrentFilters() {
+    return {
+      region: document.getElementById('regionFilter')?.value,
+      state: document.getElementById('stateFilter')?.value
+      // Add other filters as needed
+    };
+  }
+});
+
+
+
+    </script>
+{% endblock %}

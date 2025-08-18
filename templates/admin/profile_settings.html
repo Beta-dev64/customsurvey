@@ -1,0 +1,200 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Profile Settings - Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="fas fa-palette me-2"></i>Profile Settings</h2>
+            </div>
+
+            {# Flash Messages #}
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Customize System Branding</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('admin.profile_update') }}">
+                        {# Only include CSRF if user is using Flask-WTF #}
+                        {% if csrf_token is defined %}
+                            {{ csrf_token() }}
+                        {% endif %}
+
+                        <div class="row">
+                            <!-- Basic Information -->
+                            <div class="col-md-6">
+                                <h6 class="text-muted mb-3">Basic Information</h6>
+                                <div class="mb-3">
+                                    <label for="company_name" class="form-label">Company Name *</label>
+                                    <input type="text" class="form-control" id="company_name" name="company_name"
+                                           value="{{ profile.company_name }}" required>
+                                    <div class="form-text">This will appear in the navigation bar</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="app_title" class="form-label">Application Title *</label>
+                                    <input type="text" class="form-control" id="app_title" name="app_title"
+                                           value="{{ profile.app_title }}" required>
+                                    <div class="form-text">This will appear in the browser title and header</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Address</label>
+                                    <textarea class="form-control" id="address" name="address" rows="3">{{ profile.address or '' }}</textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone</label>
+                                    <input type="text" class="form-control" id="phone" name="phone"
+                                           value="{{ profile.phone or '' }}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                           value="{{ profile.email or '' }}">
+                                </div>
+                            </div>
+
+                            <!-- Branding & Colors -->
+                            <div class="col-md-6">
+                                <h6 class="text-muted mb-3">Branding & Colors</h6>
+
+                                <div class="mb-3">
+                                    <label for="primary_color" class="form-label">Primary Color</label>
+                                    <div class="input-group">
+                                        <input type="color" class="form-control form-control-color" id="primary_color"
+                                               name="primary_color" value="{{ profile.primary_color }}">
+                                        <input type="text" class="form-control" value="{{ profile.primary_color }}"
+                                               onchange="document.getElementById('primary_color').value = this.value">
+                                    </div>
+                                    <div class="form-text">Main brand color used for buttons, highlights, etc.</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="secondary_color" class="form-label">Secondary Color</label>
+                                    <div class="input-group">
+                                        <input type="color" class="form-control form-control-color" id="secondary_color"
+                                               name="secondary_color" value="{{ profile.secondary_color }}">
+                                        <input type="text" class="form-control" value="{{ profile.secondary_color }}"
+                                               onchange="document.getElementById('secondary_color').value = this.value">
+                                    </div>
+                                    <div class="form-text">Background and secondary elements</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="accent_color" class="form-label">Accent Color</label>
+                                    <div class="input-group">
+                                        <input type="color" class="form-control form-control-color" id="accent_color"
+                                               name="accent_color" value="{{ profile.accent_color }}">
+                                        <input type="text" class="form-control" value="{{ profile.accent_color }}"
+                                               onchange="document.getElementById('accent_color').value = this.value">
+                                    </div>
+                                    <div class="form-text">Text and accent elements</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="logo_path" class="form-label">Logo Path</label>
+                                    <input type="text" class="form-control" id="logo_path" name="logo_path"
+                                           value="{{ profile.logo_path }}">
+                                    <div class="form-text">Path to logo file in static folder (e.g., img/logo.png)</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="favicon_path" class="form-label">Favicon Path</label>
+                                    <input type="text" class="form-control" id="favicon_path" name="favicon_path"
+                                           value="{{ profile.favicon_path }}">
+                                    <div class="form-text">Path to favicon file in static folder</div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="footer_text" class="form-label">Footer Text</label>
+                                    <textarea class="form-control" id="footer_text" name="footer_text" rows="2">{{ profile.footer_text or '' }}</textarea>
+                                    <div class="form-text">Custom text to display in footer</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between">
+                                    <a href="{{ url_for('admin.admin_dashboard') }}" class="btn btn-secondary">
+                                        <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save me-1"></i> Save Changes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Preview Section -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Color Preview</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="p-3 rounded" style="background-color: {{ profile.primary_color }}; color: white;">
+                                <strong>Primary Color</strong><br>
+                                {{ profile.primary_color }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 rounded border" style="background-color: {{ profile.secondary_color }}; color: {{ profile.accent_color }};">
+                                <strong>Secondary Color</strong><br>
+                                {{ profile.secondary_color }}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 rounded" style="background-color: {{ profile.accent_color }}; color: white;">
+                                <strong>Accent Color</strong><br>
+                                {{ profile.accent_color }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const colorInputs = ['primary_color', 'secondary_color', 'accent_color'];
+
+    colorInputs.forEach(function(inputId) {
+        const colorPicker = document.getElementById(inputId);
+        const textInput = colorPicker.nextElementSibling;
+
+        colorPicker.addEventListener('change', function() {
+            textInput.value = this.value;
+        });
+
+        textInput.addEventListener('change', function() {
+            if (this.value.match(/^#[0-9A-F]{6}$/i)) {
+                colorPicker.value = this.value;
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

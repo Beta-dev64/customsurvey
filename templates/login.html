@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - Dangote POSM Retail Activation 2025{% endblock %}
+
+{% block head_extra %}
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    
+    .login-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    }
+    
+    .login-card {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        max-width: 400px;
+        width: 100%;
+    }
+    
+    .login-header {
+        background-color: {{ profile.primary_color }};
+        color: #333;
+        padding: 1.5rem;
+        text-align: center;
+    }
+    
+    .login-logo {
+        width: 80px;
+        /* height: 80px; */
+        margin-bottom: 15px;
+    }
+    
+    .login-title {
+        margin-bottom: 0;
+        font-weight: 700;
+    }
+    
+    .login-body {
+        padding: 2rem;
+    }
+    
+    .form-floating > label {
+        color: #6c757d;
+    }
+    
+    .login-footer {
+        padding: 1rem;
+        background-color: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+    }
+    
+    .brand-logo {
+        margin-bottom: 1.5rem;
+    }
+    
+    .app-version {
+        position: fixed;
+        bottom: 10px;
+        width: 100%;
+        text-align: center;
+        color: #adb5bd;
+        font-size: 0.75rem;
+    }
+    
+    /* Mobile optimizations */
+    @media (max-width: 767.98px) {
+        .login-card {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .login-header {
+            padding: 1rem;
+        }
+        
+        .login-body {
+            padding: 1.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            
+            {% if profile.logo_path %}
+                <img src="{{ url_for('static', filename=profile.logo_path) }}" alt="{{ profile.company_name }} Logo" class="login-logo">
+            {% else %}
+                <img src="{{ url_for('static', filename='img/dangote-logo.png') }}" alt="{{ profile.company_name }} Logo" class="login-logo">
+            {% endif %}
+            <h2 class="login-title">{{ profile.company_name }}</h2>
+            <div>{{ profile.tagline or 'POSM Retail Activation 2025' }}</div>
+        </div>
+        
+        <div class="login-body">
+            <form method="post">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                    <label for="username">Username</label>
+                </div>
+                
+                <div class="form-floating mb-4">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                    <label for="password">Password</label>
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <button class="btn btn-lg bg-primary-dangote" type="submit">Sign in</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- <div class="login-footer text-center">
+            <p class="text-muted mb-0">
+                <small>Demo credentials:</small><br>
+                <small>Admin: admin / admin123</small><br>
+                <small>Agent: agent1 / agent123</small>
+            </p>
+        </div> -->
+    </div>
+    
+    <div class="app-version">
+        <small>{{ profile.company_name }} {{ profile.tagline or 'POSM Retail Activation 2025' }} v1.0</small>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set focus to username field
+        document.getElementById('username').focus();
+        
+        // Add simple animation to improve UX
+        const loginCard = document.querySelector('.login-card');
+        loginCard.style.opacity = '0';
+        loginCard.style.transform = 'translateY(20px)';
+        loginCard.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        
+        setTimeout(function() {
+            loginCard.style.opacity = '1';
+            loginCard.style.transform = 'translateY(0)';
+        }, 100);
+    });
+</script>
+{% endblock %}

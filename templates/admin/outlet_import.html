@@ -1,0 +1,130 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block title %}Import Outlets - Dangote Cement{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="admin-title mb-0">Import Outlets</h1>
+    <div>
+        <a href="{{ url_for('admin.outlet_list') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-1"></i> Back to Outlets
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card admin-card">
+            <div class="card-header">
+                <h5 class="card-title">Upload CSV File</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="csv_file" class="form-label admin-form-label">CSV File</label>
+                        <input type="file" class="form-control" id="csv_file" name="csv_file" accept=".csv" required>
+                        <div class="form-text">Upload a CSV file with outlet data</div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <span>If an outlet with the same URN already exists, it will be updated.</span>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-upload me-1"></i> Upload and Import
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-6">
+        <div class="card admin-card">
+            <div class="card-header">
+                <h5 class="card-title">CSV Format Instructions</h5>
+            </div>
+            <div class="card-body">
+                <p>Your CSV file should have the following columns:</p>
+                
+                <ul class="mb-3">
+                    <li><strong>urn</strong> (required) - Unique Reference Number</li>
+                    <li><strong>outlet_name</strong> (required) - Name of the outlet</li>
+                    <li><strong>region</strong> (required) - Region code (SW, SE, NC, NW, NE)</li>
+                    <li><strong>customer_name</strong> (optional) - Customer name</li>
+                    <li><strong>address</strong> (optional) - Address</li>
+                    <li><strong>phone</strong> (optional) - Phone number</li>
+                    <li><strong>outlet_type</strong> (optional) - Type (Shop, CONTAINER, Pallet)</li>
+                    <li><strong>local_govt</strong> (optional) - Local government</li>
+                    <li><strong>state</strong> (optional) - State</li>
+                </ul>
+                
+                <div class="alert alert-info mb-3">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <span>The first row of your CSV should contain the column headers.</span>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header py-2">
+                        <h6 class="card-title mb-0">Example CSV Format</h6>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-sm mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>urn</th>
+                                        <th>outlet_name</th>
+                                        <th>customer_name</th>
+                                        <th>region</th>
+                                        <th>state</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in sample_data %}
+                                    <tr>
+                                        {% for cell in row %}
+                                        <td>{{ cell }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-3">
+                    <a href="#" class="btn btn-sm btn-outline-secondary" onclick="downloadSampleCSV(); return false;">
+                        <i class="fas fa-download me-1"></i> Download Sample CSV
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    function downloadSampleCSV() {
+        // Define CSV content
+        const csvContent = `urn,outlet_name,customer_name,address,phone,outlet_type,local_govt,state,region
+DCP/22/SW/ED/1000009,SAMPLE OUTLET,JOHN DOE,123 SAMPLE STREET,08012345678,Shop,EGOR,EDO,SW
+DCP/22/SE/AN/2000001,ANOTHER OUTLET,JANE SMITH,456 ANOTHER ROAD,09087654321,CONTAINER,NNEWI,ANAMBRA,SE
+DCP/22/NW/KN/3000001,THIRD OUTLET,AHMED YUSUF,789 THIRD AVENUE,07023456789,Pallet,KANO,KANO,NW`;
+        
+        // Create a download link
+        const element = document.createElement('a');
+        element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent));
+        element.setAttribute('download', 'sample_outlets.csv');
+        
+        // Simulate click and remove element
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block title %}
+{% if outlet %}Edit Outlet - {{ outlet.outlet_name }}{% else %}Add New Outlet{% endif %} - Dangote Cement
+{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="admin-title mb-0">{% if outlet %}Edit Outlet{% else %}Add New Outlet{% endif %}</h1>
+    <div>
+        <a href="{{ url_for('admin.outlet_list') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-1"></i> Back to Outlets
+        </a>
+    </div>
+</div>
+
+<div class="card admin-card">
+    <div class="card-header">
+        <h5 class="card-title">{% if outlet %}Edit Outlet Details{% else %}Outlet Details{% endif %}</h5>
+    </div>
+    <div class="card-body">
+        <form method="post" class="row g-3">
+            <div class="col-md-6">
+                <label for="urn" class="form-label admin-form-label">URN</label>
+                <input type="text" class="form-control" id="urn" name="urn" 
+                       value="{{ outlet.urn if outlet else '' }}" required>
+                <div class="form-text text-muted">Unique Reference Number (e.g., DCP/19/SW/ED/1000001)</div>
+            </div>
+            
+            <div class="col-md-6">
+                <label for="outlet_name" class="form-label admin-form-label">Outlet Name</label>
+                <input type="text" class="form-control" id="outlet_name" name="outlet_name" 
+                       value="{{ outlet.outlet_name if outlet else '' }}" required>
+            </div>
+            
+            <div class="col-md-6">
+                <label for="customer_name" class="form-label admin-form-label">Customer Name</label>
+                <input type="text" class="form-control" id="customer_name" name="customer_name" 
+                       value="{{ outlet.customer_name if outlet else '' }}">
+            </div>
+            
+            <div class="col-md-6">
+                <label for="phone" class="form-label admin-form-label">Phone Number</label>
+                <input type="text" class="form-control" id="phone" name="phone" 
+                       value="{{ outlet.phone if outlet else '' }}">
+            </div>
+            
+            <div class="col-md-12">
+                <label for="address" class="form-label admin-form-label">Address</label>
+                <input type="text" class="form-control" id="address" name="address" 
+                       value="{{ outlet.address if outlet else '' }}">
+            </div>
+            
+            <div class="col-md-4">
+                <label for="outlet_type" class="form-label admin-form-label">Outlet Type</label>
+                <select class="form-select" id="outlet_type" name="outlet_type">
+                    <option value="">Select Type</option>
+                    <option value="Shop" {% if outlet and outlet.outlet_type == 'Shop' %}selected{% endif %}>Shop</option>
+                    <option value="CONTAINER" {% if outlet and outlet.outlet_type == 'CONTAINER' %}selected{% endif %}>Container</option>
+                    <option value="Pallet" {% if outlet and outlet.outlet_type == 'Pallet' %}selected{% endif %}>Pallet</option>
+                </select>
+            </div>
+            
+            <div class="col-md-4">
+                <label for="region" class="form-label admin-form-label">Region</label>
+                <select class="form-select" id="region" name="region" required>
+                    <option value="">Select Region</option>
+                    <option value="SW" {% if outlet and outlet.region == 'SW' %}selected{% endif %}>South West (SW)</option>
+                    <option value="SE" {% if outlet and outlet.region == 'SE' %}selected{% endif %}>South East (SE)</option>
+                    <option value="SS" {% if outlet and outlet.region == 'SS' %}selected{% endif %}>South South (SS)</option>
+                    <option value="NC" {% if outlet and outlet.region == 'NC' %}selected{% endif %}>North Central (NC)</option>
+                    <option value="NE" {% if outlet and outlet.region == 'NE' %}selected{% endif %}>North East (NE)</option>
+                    <option value="NW" {% if outlet and outlet.region == 'NW' %}selected{% endif %}>North West (NW)</option>
+                </select>
+            </div>
+            
+            <div class="col-md-4">
+                <label for="state" class="form-label admin-form-label">State</label>
+                <input type="text" class="form-control" id="state" name="state" 
+                       value="{{ outlet.state if outlet else '' }}">
+            </div>
+            
+            <div class="col-md-4">
+                <label for="local_govt" class="form-label admin-form-label">Local Government</label>
+                <input type="text" class="form-control" id="local_govt" name="local_govt" 
+                       value="{{ outlet.local_govt if outlet else '' }}">
+            </div>
+            
+            <div class="col-12 mt-4">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-1"></i> {% if outlet %}Update{% else %}Create{% endif %} Outlet
+                </button>
+                <a href="{{ url_for('admin.outlet_list') }}" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

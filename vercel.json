@@ -1,0 +1,193 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "app.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "app.py"
+    }
+  ],
+  "build": {
+    "env": {
+      "PYTHON_VERSION": "3.9"
+    }
+  }
+}
+
+
+
+
+
+
+from sage.all import *
+import time
+
+
+###Question Number One
+
+# Define 5 pairs of primes with increasing sizes
+prime_pairs = [
+    (next_prime(10^3), previous_prime(10^3)),   # ~3 digits
+    (next_prime(10^5), previous_prime(10^5)),   # ~5 digits
+    (next_prime(10^7), previous_prime(10^7)),   # ~7 digits
+    (next_prime(10^9), previous_prime(10^9)),   # ~9 digits
+    (next_prime(10^11), previous_prime(10^11))  # ~11 digits
+]
+
+results = []
+for p, q in prime_pairs:
+    n = p * q
+    # Time factorization
+    start_time = time.time()
+    factors = factor(n)
+    time_taken = time.time() - start_time
+    results.append((p.bit_length(), q.bit_length(), n, time_taken))
+    
+    
+    
+# Plotting
+import matplotlib.pyplot as plt
+bits = [r[0] for r in results]  # p's bit-length
+times = [r[3] for r in results]  # Time taken
+
+plt.plot(bits, times, 'bo-')
+plt.xlabel('Prime Size (bits)')
+plt.ylabel('Factorization Time (seconds)')
+plt.title('RSA Security: Prime Size vs. Factorization Time')
+plt.grid()
+plt.savefig('rsa_security_graph.png')
+plt.show()
+
+
+
+
+
+### Question Number Two
+
+from sage.crypto.block_cipher.miniaes import MiniAES
+from sage.crypto.util import ascii_to_bin
+from sage.rings.integer import Integer
+from sage.matrix.constructor import Matrix
+from sage.rings.finite_rings.finite_field_constructor import GF
+
+# Example: Name "Salem" → last 2 letters = "em"
+session_key_str = "em"  
+bin = BinaryStrings()
+key_binary = bin.encoding(session_key_str)  # Binary representation
+key_integer = int(str(key_binary), 2) #ZZ(list(key_binary), 2)      # Integer representation
+print("AES Key (Binary):", key_binary)
+print("AES Key (Integer):", key_integer)
+
+
+# My student ID
+student_id = 1234567  
+p = next_prime(student_id)
+q = previous_prime(student_id)
+n = p * q
+phi = (p - 1) * (q - 1)
+
+# Choose e (coprime to phi)
+e = ZZ.random_element(phi)
+while gcd(e, phi) != 1:
+    e = ZZ.random_element(phi)
+
+# Compute d (modular inverse of e)
+bezout = xgcd(e, phi)
+d = Integer(mod(bezout[1], phi))
+
+print("Public Key (e, n):", (e, n))
+print("Private Key (d, n):", (d, n))
+
+
+
+#### Question Number three
+
+
+partner_public_key = (65537, 999999999)  # Replace with partner's (e, n)
+ciphertext = pow(key_integer, partner_public_key[0], partner_public_key[1])
+print("Encrypted AES Key:", ciphertext)
+
+
+
+
+# Partner sends you their ciphertext (RSA-encrypted AES key)
+received_ciphertext = 123456789  # Example - replace with actual value
+
+# 1. Decrypt with your private key (d, n)
+partner_key_integer = pow(received_ciphertext, d, n)
+
+# 2. Convert to binary (ensure proper length for MiniAES)
+partner_key_binary = format(int(partner_key_integer), '016b') #bin(int(partner_key_integer))[2:].zfill(16)
+
+print("Decrypted Partner's AES Key (Binary):", partner_key_binary)
+
+
+
+#### Question Number 4
+
+
+
+# Initialize MiniAES and finite field
+maes = MiniAES()
+K = GF(16, 'x')  # Create GF(16) field with generator 'x'
+
+def string_to_matrix(text):
+    """Convert string to 2x2 matrix over GF(16)"""
+    # Pad text to exactly 4 characters
+    text = text.ljust(4, '\0')[:4]
+    
+    # Convert each character to two 4-bit nibbles
+    nibbles = []
+    for c in text:
+        ascii_val = ord(c)
+        nibbles.append(ascii_val >> 4)    # High nibble
+        nibbles.append(ascii_val & 0xF)   # Low nibble
+    
+    # Create matrix (convert integers to GF(16) elements)
+    return Matrix(K, 2, 2, [K.fetch_int(n) for n in nibbles[:4]])
+
+def binary_to_matrix(bin_str):
+    """Convert 16-bit binary string to 2x2 matrix over GF(16)"""
+    # Pad to exactly 16 bits
+    bin_str = bin_str.zfill(16)[:16]
+    
+    # Split into 4-bit nibbles
+    nibbles = [int(bin_str[i:i+4], 2) for i in range(0, 16, 4)]
+    
+    # Create matrix (convert integers to GF(16) elements)
+    return Matrix(K, 2, 2, [K.fetch_int(n) for n in nibbles[:4]])
+
+def matrix_to_string(matrix):
+    """Convert 2x2 matrix back to string"""
+    # Convert GF(16) elements back to integers
+    nibbles = [e.integer_representation() for e in matrix.list()]
+    
+    # Combine nibbles into characters
+    chars = []
+    for i in range(0, 4, 2):
+        byte = (nibbles[i] << 4) | nibbles[i+1]
+        chars.append(chr(byte))
+    return ''.join(chars).replace('\x00', '')  # Remove padding nulls
+
+# Example Usage:
+# 1. Prepare plaintext and key
+full_name = "Sodi"  # First 4 characters only
+partner_key_binary = "0101010101010011"  # 16-bit binary key from Task 3
+
+# 2. Convert to matrices
+plaintext_matrix = string_to_matrix(full_name)
+key_matrix = binary_to_matrix(partner_key_binary)
+
+# 3. Encrypt
+ciphertext_matrix = maes.encrypt(plaintext_matrix, key_matrix)
+print("Encrypted Matrix:\n", ciphertext_matrix)
+
+# 4. Decrypt
+decrypted_matrix = maes.decrypt(key_matrix, ciphertext_matrix)
+decrypted_text = matrix_to_string(decrypted_matrix)
+print("Decrypted Text:", decrypted_text)

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{% block title %}{{ profile.app_title }}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename=profile.favicon_path) }}">
+    <style>
+        :root {
+            --primary-color: {{ profile.primary_color }};
+            --secondary-color: {{ profile.secondary_color }};
+            --accent-color: {{ profile.accent_color }};
+        }
+        
+        body {
+            touch-action: manipulation;
+        }
+        
+        .sidebar {
+            min-height: calc(100vh - 56px);
+            background-color: var(--secondary-color);
+        }
+        
+        .nav-link {
+            color: #333;
+            padding: 12px 15px;
+        }
+        
+        .nav-link.active {
+            background-color: #e2e6ea;
+        }
+        
+        .navbar-brand img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo-text {
+            font-weight: bold;
+        }
+        
+        /* Dynamic primary color classes */
+        .bg-primary-dangote {
+            background-color: var(--primary-color) !important;
+        }
+        
+        .text-primary-dangote {
+            color: var(--primary-color) !important;
+        }
+        
+        .btn-primary-dangote {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #333;
+        }
+        
+        .btn-primary-dangote:hover {
+            background-color: color-mix(in srgb, var(--primary-color) 85%, black);
+            border-color: color-mix(in srgb, var(--primary-color) 85%, black);
+            color: #333;
+        }
+        
+        .stat-card {
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .mobile-nav-item.active {
+            color: var(--primary-color);
+        }
+        
+        .color-primary {
+            color: var(--primary-color);
+        }
+        
+        .bg-primary-dangote {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .custom-card {
+            transition: transform 0.3s;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .custom-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .stat-icon {
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-right: 15px;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .stat-title {
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .chart-container {
+            height: 300px;
+            margin-bottom: 20px;
+        }
+        
+        .execution-img {
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .execution-img-container {
+            position: relative;
+        }
+        
+        .execution-img-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(255, 102, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 767.98px) {
+            .stat-card {
+                padding: 10px;
+            }
+            
+            .stat-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            
+            .stat-value {
+                font-size: 22px;
+            }
+            
+            .stat-title {
+                font-size: 12px;
+            }
+            
+            .chart-container {
+                height: 250px;
+            }
+            
+            .btn {
+                padding: 0.375rem 0.5rem;
+            }
+            
+            .card-body {
+                padding: 1rem;
+            }
+            
+            .h3, h3 {
+                font-size: 1.5rem;
+            }
+            
+            .table th, .table td {
+                padding: 0.5rem;
+                font-size: 0.875rem;
+            }
+            
+            /* Bottom navigation for mobile */
+            .mobile-bottom-nav {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                background: white;
+                border-top: 1px solid #ddd;
+                z-index: 1000;
+                display: flex;
+                justify-content: space-around;
+                padding: 8px 0;
+            }
+            
+            .mobile-nav-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-decoration: none;
+                color: #666;
+                font-size: 0.75rem;
+            }
+            
+            .mobile-nav-item i {
+                font-size: 1.25rem;
+                margin-bottom: 2px;
+            }
+            
+            .mobile-nav-item.active {
+                color: var(--primary-color);
+            }
+            
+            /* Add bottom padding to content on mobile */
+            .main-content {
+                padding-bottom: 60px;
+            }
+        }
+    </style>
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary-dangote">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <span class="logo-text">{{ profile.company_name }} POSM</span> <span class="d-none d-md-inline">{{ profile.app_title.split('POSM')[-1].strip() if 'POSM' in profile.app_title else 'Retail Activation 2025' }}</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if session.user_id %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i> {{ session.full_name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            {% if session.role == 'admin' %}
+                            <li><a class="dropdown-item" href="{{ url_for('admin.admin_dashboard') }}"><i class="fas fa-cogs me-1"></i> Admin Panel</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            {% endif %}
+                            <li><a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt me-1"></i> Logout</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            {% if session.user_id %}
+            <!-- Desktop Sidebar -->
+            <div class="col-md-2 sidebar p-0 d-none d-md-block">
+                <div class="d-flex flex-column p-3">
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="{{ url_for('index') }}" class="nav-link {% if request.path == url_for('index') %}active{% endif %}">
+                                <i class="fas fa-chart-line me-2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url_for('outlets') }}" class="nav-link {% if request.path == url_for('outlets') %}active{% endif %}">
+                                <i class="fas fa-store me-2"></i> Outlets
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url_for('executions') }}" class="nav-link {% if request.path == url_for('executions') %}active{% endif %}">
+                                <i class="fas fa-clipboard-check me-2"></i> Executions
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url_for('reports') }}" class="nav-link {% if request.path == url_for('reports') %}active{% endif %}">
+                                <i class="fas fa-file-alt me-2"></i> Reports
+                            </a>
+                        </li>
+                        {% if session.role == 'admin' %}
+                        <li class="nav-item mt-2">
+                            <a href="{{ url_for('admin.admin_dashboard') }}" class="nav-link {% if '/admin' in request.path %}active{% endif %}">
+                                <i class="fas fa-cogs me-2"></i> Admin Panel
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-10 pt-3 main-content">
+            {% else %}
+            <div class="col-12 pt-3 main-content">
+            {% endif %}
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                
+                {% block content %}{% endblock %}
+                
+                <!-- Mobile Bottom Navigation -->
+                {% if session.user_id %}
+                <div class="mobile-bottom-nav d-md-none">
+                    <a href="{{ url_for('index') }}" class="mobile-nav-item {% if request.path == url_for('index') %}active{% endif %}">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="{{ url_for('outlets') }}" class="mobile-nav-item {% if request.path == url_for('outlets') %}active{% endif %}">
+                        <i class="fas fa-store"></i>
+                        <span>Outlets</span>
+                    </a>
+                    <a href="{{ url_for('executions') }}" class="mobile-nav-item {% if request.path == url_for('executions') %}active{% endif %}">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span>Executions</span>
+                    </a>
+                    <a href="{{ url_for('reports') }}" class="mobile-nav-item {% if request.path == url_for('reports') %}active{% endif %}">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Reports</span>
+                    </a>
+                    {% if session.role == 'admin' %}
+                    <a href="{{ url_for('admin.admin_dashboard') }}" class="mobile-nav-item {% if '/admin' in request.path %}active{% endif %}">
+                        <i class="fas fa-cogs"></i>
+                        <span>Admin</span>
+                    </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Common JavaScript functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize tooltips
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+            
+            // Mobile-specific optimizations
+            if (window.innerWidth < 768) {
+                // Collapse any open accordions or collapsible elements initially
+                document.querySelectorAll('.collapse.show').forEach(elem => {
+                    if (!elem.classList.contains('dont-collapse-sm')) {
+                        bootstrap.Collapse.getInstance(elem)?.hide();
+                    }
+                });
+                
+                // Add additional fastclick behavior for better mobile responsiveness
+                document.addEventListener('touchstart', function() {}, {passive: true});
+            }
+        });
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

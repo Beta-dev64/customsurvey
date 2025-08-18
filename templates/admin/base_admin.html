@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block head_extra %}
+<style>
+    .admin-sidebar {
+        background-color: #343a40;
+        min-height: calc(100vh - 56px);
+        padding-top: 1rem;
+    }
+    
+    .admin-sidebar .nav-link {
+        color: rgba(255,255,255,.75);
+        padding: .5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .admin-sidebar .nav-link:hover {
+        color: rgba(255,255,255,1);
+    }
+    
+    .admin-sidebar .nav-link.active {
+        color: #fff;
+        background-color: rgba(255,255,255,.1);
+        font-weight: 500;
+    }
+    
+    .admin-sidebar .nav-link i {
+        width: 20px;
+        text-align: center;
+        margin-right: 10px;
+    }
+    
+    .admin-content {
+        padding: 1.5rem;
+    }
+    
+    .admin-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: .5rem;
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    .admin-card {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        margin-bottom: 1.5rem;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        border: none;
+    }
+    
+    .admin-card .card-header {
+        background-color: #fff;
+        border-bottom: 1px solid rgba(0,0,0,.125);
+        padding: 1rem;
+    }
+    
+    .admin-card .card-title {
+        margin-bottom: 0;
+        color: #333;
+        font-size: 1.1rem;
+    }
+    
+    .admin-card .card-body {
+        padding: 1.25rem;
+    }
+    
+    .admin-table th {
+        font-weight: 500;
+        background-color: #f8f9fa;
+    }
+    
+    .admin-form-label {
+        font-weight: 500;
+    }
+    
+    .admin-dashboard-stat {
+        text-align: center;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        background-color: #fff;
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        margin-bottom: 1.5rem;
+    }
+    
+    .admin-dashboard-stat i {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: {{ profile.primary_color }};
+    }
+    
+    .admin-dashboard-stat .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #333;
+    }
+    
+    .admin-dashboard-stat .stat-label {
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+    
+    @media (max-width: 767.98px) {
+        .admin-sidebar {
+            min-height: auto;
+            padding-bottom: 1rem;
+        }
+        
+        .admin-content {
+            padding: 1rem;
+        }
+    }
+</style>
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-0">
+    <div class="row g-0">
+        <!-- Sidebar -->
+        <div class="col-md-2 admin-sidebar">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == url_for('admin.admin_dashboard') %}active{% endif %}" href="{{ url_for('admin.admin_dashboard') }}">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if '/admin/users' in request.path %}active{% endif %}" href="{{ url_for('admin.user_list') }}">
+                        <i class="fas fa-users"></i> Users
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if '/admin/outlets' in request.path %}active{% endif %}" href="{{ url_for('admin.outlet_list') }}">
+                        <i class="fas fa-store"></i> Outlets
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if '/admin/executions' in request.path %}active{% endif %}" href="{{ url_for('admin.execution_list') }}">
+                        <i class="fas fa-clipboard-check"></i> Executions
+                    </a>
+                </li>
+                <!-- Add this link to the admin navigation sidebar -->
+                <li class="nav-item">
+                    <a class="nav-link {{ 'active' if request.endpoint == 'admin.profile_settings' }}" 
+                       href="{{ url_for('admin.profile_settings') }}">
+                        <i class="fas fa-palette me-2"></i> Profile Settings
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('index') }}">
+                        <i class="fas fa-arrow-left"></i> Back to App
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="col-md-10 admin-content">
+            {% block admin_content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

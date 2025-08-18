@@ -1,0 +1,184 @@
+{% extends 'admin/base_admin.html' %}
+
+{% block title %}
+{% if user %}Edit User - {{ user.username }}{% else %}Add New User{% endif %} - Dangote Cement
+{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="admin-title mb-0">{% if user %}Edit User{% else %}Add New User{% endif %}</h1>
+    <div>
+        <a href="{{ url_for('admin.user_list') }}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-1"></i> Back to Users
+        </a>
+    </div>
+</div>
+
+<div class="card admin-card">
+    <div class="card-header">
+        <h5 class="card-title">{% if user %}Edit User Details{% else %}User Details{% endif %}</h5>
+    </div>
+    <div class="card-body">
+        <form method="post" class="row g-3">
+            <div class="col-md-6">
+                <label for="username" class="form-label admin-form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" 
+                       value="{{ user.username if user else '' }}" 
+                       {% if user %}readonly{% endif %} required>
+                {% if user %}
+                <div class="form-text text-muted">Username cannot be changed</div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+                <label for="password" class="form-label admin-form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" 
+                       {% if not user %}required{% endif %}>
+                {% if user %}
+                <div class="form-text text-muted">Leave blank to keep current password</div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+                <label for="full_name" class="form-label admin-form-label">Full Name</label>
+                <input type="text" class="form-control" id="full_name" name="full_name" 
+                       value="{{ user.full_name if user else '' }}" required>
+            </div>
+            
+            <div class="col-md-6">
+                <label for="role" class="form-label admin-form-label">Role</label>
+                <select class="form-select" id="role" name="role" required>
+                    <option value="">Select Role</option>
+                    <option value="admin" {% if user and user.role == 'admin' %}selected{% endif %}>Admin</option>
+                    <option value="field_agent" {% if user and user.role == 'field_agent' %}selected{% endif %}>Field Agent</option>
+                </select>
+            </div>
+            
+            <div class="col-md-6">
+                <label for="region" class="form-label admin-form-label">Region</label>
+                <select class="form-select" id="region" name="region">
+                    <option value="">Select Region</option>
+                    <option value="SW" {% if user and user.region == 'SW' %}selected{% endif %}>South West (SW)</option>
+                    <option value="SE" {% if user and user.region == 'SE' %}selected{% endif %}>South East (SE)</option>
+                    <option value="SS" {% if user and user.region == 'SS' %}selected{% endif %}>South South (SS)</option>
+                    <option value="NC" {% if user and user.region == 'NC' %}selected{% endif %}>North Central (NC)</option>
+                    <option value="NE" {% if user and user.region == 'NE' %}selected{% endif %}>North East (NE)</option>
+                    <option value="NW" {% if user and user.region == 'NW' %}selected{% endif %}>North West (NW)</option>
+                    <option value="ALL" {% if user and user.region == 'ALL' %}selected{% endif %}>All Regions</option>
+                </select>
+                <div class="form-text text-muted">Required for field agents</div>
+            </div>
+            
+            <div class="col-md-6">
+                <label for="state" class="form-label admin-form-label">State</label>
+                <select class="form-select" id="state" name="state">
+                    <option value="">Select State</option>
+                    <!-- South West -->
+                    <optgroup label="South West">
+                        <option value="LAGOS" {% if user and user.state == 'LAGOS' %}selected{% endif %}>Lagos</option>
+                        <option value="OGUN" {% if user and user.state == 'OGUN' %}selected{% endif %}>Ogun</option>
+                        <option value="OYO" {% if user and user.state == 'OYO' %}selected{% endif %}>Oyo</option>
+                        <option value="OSUN" {% if user and user.state == 'OSUN' %}selected{% endif %}>Osun</option>
+                        <option value="ONDO" {% if user and user.state == 'ONDO' %}selected{% endif %}>Ondo</option>
+                        <option value="EKITI" {% if user and user.state == 'EKITI' %}selected{% endif %}>Ekiti</option>
+                    </optgroup>
+                    <!-- South East -->
+                    <optgroup label="South East">
+                        <option value="ABIA" {% if user and user.state == 'ABIA' %}selected{% endif %}>Abia</option>
+                        <option value="ANAMBRA" {% if user and user.state == 'ANAMBRA' %}selected{% endif %}>Anambra</option>
+                        <option value="EBONYI" {% if user and user.state == 'EBONYI' %}selected{% endif %}>Ebonyi</option>
+                        <option value="ENUGU" {% if user and user.state == 'ENUGU' %}selected{% endif %}>Enugu</option>
+                        <option value="IMO" {% if user and user.state == 'IMO' %}selected{% endif %}>Imo</option>
+                    </optgroup>
+                    <!-- South South -->
+                    <optgroup label="South South">
+                        <option value="AKWA_IBOM" {% if user and user.state == 'AKWA_IBOM' %}selected{% endif %}>Akwa Ibom</option>
+                        <option value="BAYELSA" {% if user and user.state == 'BAYELSA' %}selected{% endif %}>Bayelsa</option>
+                        <option value="CROSS_RIVER" {% if user and user.state == 'CROSS_RIVER' %}selected{% endif %}>Cross River</option>
+                        <option value="DELTA" {% if user and user.state == 'DELTA' %}selected{% endif %}>Delta</option>
+                        <option value="EDO" {% if user and user.state == 'EDO' %}selected{% endif %}>Edo</option>
+                        <option value="RIVERS" {% if user and user.state == 'RIVERS' %}selected{% endif %}>Rivers</option>
+                    </optgroup>
+                    <!-- North Central -->
+                    <optgroup label="North Central">
+                        <option value="BENUE" {% if user and user.state == 'BENUE' %}selected{% endif %}>Benue</option>
+                        <option value="FCT" {% if user and user.state == 'FCT' %}selected{% endif %}>FCT</option>
+                        <option value="KOGI" {% if user and user.state == 'KOGI' %}selected{% endif %}>Kogi</option>
+                        <option value="KWARA" {% if user and user.state == 'KWARA' %}selected{% endif %}>Kwara</option>
+                        <option value="NASARAWA" {% if user and user.state == 'NASARAWA' %}selected{% endif %}>Nasarawa</option>
+                        <option value="NIGER" {% if user and user.state == 'NIGER' %}selected{% endif %}>Niger</option>
+                        <option value="PLATEAU" {% if user and user.state == 'PLATEAU' %}selected{% endif %}>Plateau</option>
+                    </optgroup>
+                    <!-- North East -->
+                    <optgroup label="North East">
+                        <option value="ADAMAWA" {% if user and user.state == 'ADAMAWA' %}selected{% endif %}>Adamawa</option>
+                        <option value="BAUCHI" {% if user and user.state == 'BAUCHI' %}selected{% endif %}>Bauchi</option>
+                        <option value="BORNO" {% if user and user.state == 'BORNO' %}selected{% endif %}>Borno</option>
+                        <option value="GOMBE" {% if user and user.state == 'GOMBE' %}selected{% endif %}>Gombe</option>
+                        <option value="TARABA" {% if user and user.state == 'TARABA' %}selected{% endif %}>Taraba</option>
+                        <option value="YOBE" {% if user and user.state == 'YOBE' %}selected{% endif %}>Yobe</option>
+                    </optgroup>
+                    <!-- North West -->
+                    <optgroup label="North West">
+                        <option value="KADUNA" {% if user and user.state == 'KADUNA' %}selected{% endif %}>Kaduna</option>
+                        <option value="KANO" {% if user and user.state == 'KANO' %}selected{% endif %}>Kano</option>
+                        <option value="KATSINA" {% if user and user.state == 'KATSINA' %}selected{% endif %}>Katsina</option>
+                        <option value="KEBBI" {% if user and user.state == 'KEBBI' %}selected{% endif %}>Kebbi</option>
+                        <option value="JIGAWA" {% if user and user.state == 'JIGAWA' %}selected{% endif %}>Jigawa</option>
+                        <option value="SOKOTO" {% if user and user.state == 'SOKOTO' %}selected{% endif %}>Sokoto</option>
+                        <option value="ZAMFARA" {% if user and user.state == 'ZAMFARA' %}selected{% endif %}>Zamfara</option>
+                    </optgroup>
+                </select>
+            </div>
+            
+            <div class="col-md-6">
+                <label for="lga" class="form-label admin-form-label">Local Government Area (LGA)</label>
+                <input type="text" class="form-control" id="lga" name="lga" 
+                       value="{{ user.lga if user else '' }}">
+            </div>
+            
+            <div class="col-12 mt-4">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save me-1"></i> {% if user %}Update{% else %}Create{% endif %} User
+                </button>
+                <a href="{{ url_for('admin.user_list') }}" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    // Auto-select region based on state selection
+    document.addEventListener('DOMContentLoaded', function() {
+        const stateSelect = document.getElementById('state');
+        const regionSelect = document.getElementById('region');
+        
+        stateSelect.addEventListener('change', function() {
+            const state = this.value;
+            let region = '';
+            
+            // Determine region based on state
+            if (['LAGOS', 'OGUN', 'OYO', 'OSUN', 'ONDO', 'EKITI'].includes(state)) {
+                region = 'SW';
+            } else if (['ABIA', 'ANAMBRA', 'EBONYI', 'ENUGU', 'IMO'].includes(state)) {
+                region = 'SE';
+            } else if (['AKWA_IBOM', 'BAYELSA', 'CROSS_RIVER', 'DELTA', 'EDO', 'RIVERS'].includes(state)) {
+                region = 'SS';
+            } else if (['BENUE', 'FCT', 'KOGI', 'KWARA', 'NASARAWA', 'NIGER', 'PLATEAU'].includes(state)) {
+                region = 'NC';
+            } else if (['ADAMAWA', 'BAUCHI', 'BORNO', 'GOMBE', 'TARABA', 'YOBE'].includes(state)) {
+                region = 'NE';
+            } else if (['KADUNA', 'KANO', 'KATSINA', 'KEBBI', 'JIGAWA', 'SOKOTO', 'ZAMFARA'].includes(state)) {
+                region = 'NW';
+            }
+            
+            if (region) {
+                regionSelect.value = region;
+            }
+        });
+    });
+</script>
+{% endblock %}
