@@ -16,6 +16,7 @@
         
         body {
             touch-action: manipulation;
+            background: linear-gradient(239deg, #fffce5, transparent) !important;
         }
         
         .sidebar {
@@ -26,10 +27,15 @@
         .nav-link {
             color: #333;
             padding: 12px 15px;
+            /* display: flex;
+            flex-direction: row-reverse; */
         }
+
         
         .nav-link.active {
-            background-color: #e2e6ea;
+            /* background-color: #e2e6ea; */
+            background-color: var(--accent-color) !important;
+            border-radius: 30px;
         }
         
         .navbar-brand img {
@@ -234,6 +240,7 @@
             /* Add bottom padding to content on mobile */
             .main-content {
                 padding-bottom: 60px;
+                background: linear-gradient(45deg, #f6eded, transparent) !important;
             }
         }
     </style>
@@ -243,7 +250,14 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary-dangote">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
-                <span class="logo-text">{{ profile.company_name }} POSM</span> <span class="d-none d-md-inline">{{ profile.app_title.split('POSM')[-1].strip() if 'POSM' in profile.app_title else 'Retail Activation 2025' }}</span>
+                
+                {% if profile.logo_path %}
+                    <img src="{{ url_for('static', filename=profile.logo_path) }}" alt="{{ profile.company_name }} Logo" class="login-logo">
+                {% else %}
+                    <img src="{{ url_for('static', filename='img/dangote-logo.png') }}" alt="{{ profile.company_name }} Logo" class="login-logo">
+                {% endif %}
+
+                <span class="logo-text">{{ profile.company_name }}</span> <span class="d-none d-md-inline">{{ profile.app_title.split('POSM')[-1].strip() if 'POSM' in profile.app_title else 'Retail Activation 2025' }}</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -278,28 +292,28 @@
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item">
                             <a href="{{ url_for('index') }}" class="nav-link {% if request.path == url_for('index') %}active{% endif %}">
-                                <i class="fas fa-chart-line me-2"></i> Dashboard
+                                Dashboard  <i class="fas fa-chart-line me-2"></i> 
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ url_for('outlets') }}" class="nav-link {% if request.path == url_for('outlets') %}active{% endif %}">
-                                <i class="fas fa-store me-2"></i> Outlets
+                                Outlets  <i class="fas fa-store me-2"></i> 
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ url_for('executions') }}" class="nav-link {% if request.path == url_for('executions') %}active{% endif %}">
-                                <i class="fas fa-clipboard-check me-2"></i> Executions
+                                Executions  <i class="fas fa-clipboard-check me-2"></i> 
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ url_for('reports') }}" class="nav-link {% if request.path == url_for('reports') %}active{% endif %}">
-                                <i class="fas fa-file-alt me-2"></i> Reports
+                                Reports  <i class="fas fa-file-alt me-2"></i> 
                             </a>
                         </li>
                         {% if session.role == 'admin' %}
                         <li class="nav-item mt-2">
                             <a href="{{ url_for('admin.admin_dashboard') }}" class="nav-link {% if '/admin' in request.path %}active{% endif %}">
-                                <i class="fas fa-cogs me-2"></i> Admin Panel
+                                Admin Panel  <i class="fas fa-cogs me-2"></i> 
                             </a>
                         </li>
                         {% endif %}

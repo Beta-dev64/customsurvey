@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
 
-{% block title %}Login - Dangote POSM Retail Activation 2025{% endblock %}
+{% block title %}Login - Retail Activation 2025{% endblock %}
 
 {% block head_extra %}
 <style>
     body {
-        background-color: #f8f9fa;
+        background: linear-gradient(135deg, rgba(255, 102, 0, 0.1), rgba(0, 0, 0, 0.3)),
+                    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="25" cy="25" r="0.5" fill="%23ffffff" opacity="0.05"/><circle cx="75" cy="75" r="0.8" fill="%23ffffff" opacity="0.08"/></pattern></defs><rect width="100%25" height="100%25" fill="url(%23grain)"/></svg>');
+        background-size: cover, 200px 200px;
+        background-attachment: fixed;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
     
     .login-container {
@@ -14,75 +19,205 @@
         align-items: center;
         justify-content: center;
         padding: 1rem;
+        position: relative;
+        background-image: url(/static/img/bg.jpg)
+    }
+    
+    .login-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        z-index: -1;
     }
     
     .login-card {
-        border-radius: 10px;
+        border-radius: 20px;
         overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        max-width: 400px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15), 
+                    0 0 0 1px rgba(255, 255, 255, 0.2),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        max-width: 420px;
         width: 100%;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        background: rgba(255, 255, 255, 0.95);
+        border: 2px solid rgba(255, 102, 0, 0.3);
+        position: relative;
+    }
+    
+    .login-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, {{ profile.primary_color }}, rgba(255, 102, 0, 0.7));
+        border-radius: 20px 20px 0 0;
     }
     
     .login-header {
-        background-color: {{ profile.primary_color }};
+        background: linear-gradient(135deg, {{ profile.primary_color }}, rgba(255, 102, 0, 0.9));
         color: #333;
-        padding: 1.5rem;
+        padding: 2rem 1.5rem;
         text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .login-header::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 2px;
     }
     
     .login-logo {
-        width: 80px;
-        /* height: 80px; */
+        width: 90px;
         margin-bottom: 15px;
+        filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
     }
     
     .login-title {
         margin-bottom: 0;
         font-weight: 700;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     
     .login-body {
-        padding: 2rem;
+        padding: 2.5rem 2rem;
+        background: rgba(255, 255, 255, 0.98);
+    }
+    
+    .form-floating {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-floating > .form-control {
+        border: 2px solid rgba(255, 102, 0, 0.2);
+        border-radius: 12px;
+        padding: 1rem 0.75rem;
+        background: rgba(255, 255, 255, 0.9);
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    
+    .form-floating > .form-control:focus {
+        border-color: {{ profile.primary_color }};
+        box-shadow: 0 0 0 0.2rem rgba(255, 102, 0, 0.15),
+                    0 4px 12px rgba(0,0,0,0.1);
+        background: rgba(255, 255, 255, 1);
+        transform: translateY(-2px);
     }
     
     .form-floating > label {
         color: #6c757d;
+        font-weight: 500;
     }
     
-    .login-footer {
-        padding: 1rem;
-        background-color: #f8f9fa;
-        border-top: 1px solid #dee2e6;
+    .btn-lg {
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        border: 2px solid {{ profile.primary_color }};
+        background: linear-gradient(135deg, {{ profile.primary_color }}, rgba(255, 102, 0, 0.9));
+        color: #333;
+        box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
     }
     
-    .brand-logo {
-        margin-bottom: 1.5rem;
+    .btn-lg::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+    }
+    
+    .btn-lg:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(255, 102, 0, 0.4),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 102, 0, 0.8);
+    }
+    
+    .btn-lg:hover::before {
+        left: 100%;
+    }
+    
+    .btn-lg:active {
+        transform: translateY(-1px);
     }
     
     .app-version {
         position: fixed;
-        bottom: 10px;
+        bottom: 15px;
         width: 100%;
         text-align: center;
-        color: #adb5bd;
-        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.8rem;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
     }
     
     /* Mobile optimizations */
     @media (max-width: 767.98px) {
         .login-card {
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            margin: 1rem;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
         }
         
         .login-header {
-            padding: 1rem;
+            padding: 1.5rem 1rem;
         }
         
         .login-body {
-            padding: 1.5rem;
+            padding: 2rem 1.5rem;
         }
+        
+        .form-floating > .form-control {
+            padding: 0.9rem 0.7rem;
+        }
+    }
+    
+    /* Animation for card entrance */
+    @keyframes cardSlideIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+    
+    .login-card {
+        animation: cardSlideIn 0.6s ease-out;
     }
 </style>
 {% endblock %}
@@ -129,7 +264,7 @@
     </div>
     
     <div class="app-version">
-        <small>{{ profile.company_name }} {{ profile.tagline or 'POSM Retail Activation 2025' }} v1.0</small>
+        <small>{{ profile.company_name }} {{ profile.tagline or 'POSM Retail Activation 2025' }} v1.0 - Powered By FuseLabs.IO</small>
     </div>
 </div>
 {% endblock %}
@@ -140,16 +275,21 @@
         // Set focus to username field
         document.getElementById('username').focus();
         
-        // Add simple animation to improve UX
+        // Enhanced animation with stagger effect
         const loginCard = document.querySelector('.login-card');
-        loginCard.style.opacity = '0';
-        loginCard.style.transform = 'translateY(20px)';
-        loginCard.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        const formElements = document.querySelectorAll('.form-floating, .btn-lg');
         
-        setTimeout(function() {
-            loginCard.style.opacity = '1';
-            loginCard.style.transform = 'translateY(0)';
-        }, 100);
+        // Stagger animation for form elements
+        formElements.forEach((element, index) => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            
+            setTimeout(() => {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, 200 + (index * 100));
+        });
     });
 </script>
 {% endblock %}
