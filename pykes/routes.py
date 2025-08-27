@@ -341,7 +341,7 @@ def init_routes(app):
                 
                 conn.commit()
 
-            flash('Execution recorded successfully', 'success')
+            flash('Visitation recorded successfully', 'success')
             return redirect(url_for('outlets'))
 
         # GET request - load outlet data
@@ -436,7 +436,7 @@ def init_routes(app):
             execution = cursor.fetchone()
 
         if not execution:
-            flash('Execution not found', 'danger')
+            flash('Visitation not found', 'danger')
             return redirect(url_for('executions'))
 
         products = json.loads(execution['products_available']) if execution['products_available'] else {}
@@ -767,7 +767,7 @@ def init_routes(app):
         df = df.rename(columns={
             'agent_name': 'Agent Name',
             'urn': 'URN',
-            'outlet_name': 'Outlet Name',
+            'outlet_name': 'Retail Point Name',
             'address': 'Address',
             'phone': 'Phone',
             'outlet_type': 'Outlet Type',
@@ -924,10 +924,10 @@ def init_routes(app):
         df = df.rename(columns={
             'agent_name': 'Agent Name',
             'urn': 'URN',
-            'outlet_name': 'Outlet Name',
+            'outlet_name': 'Retail Point Name',
             'address': 'Address',
             'phone': 'Phone',
-            'outlet_type': 'Outlet Type',
+            'outlet_type': 'Retail Point Type',
             'outlet_region': 'Region',
             'outlet_state': 'State',
             'outlet_lga': 'LGA',
@@ -1242,7 +1242,7 @@ def init_routes(app):
 
         # Define headers in correct order
         headers = [
-            'Agent Name', 'URN', 'Outlet Name', 'Address', 'Phone', 'Outlet Type',
+            'Agent Name', 'URN', 'Retail Point Name', 'Address', 'Phone', 'Retail Point Type',
             'Region', 'State', 'LGA', 'Executions', 'Assigned', 'Visited', 'Coverage (%)',
             'Table', 'Chair', 'Parasol', 'Tarpaulin', 'Hawker Jacket', 'Cup',
             'Latitude', 'Longitude', 'Before Image', 'After Image'
@@ -1255,10 +1255,10 @@ def init_routes(app):
         col_mapping = {
             'agent_name': 'Agent Name',
             'urn': 'URN',
-            'outlet_name': 'Outlet Name',
+            'outlet_name': 'Retail Point Name',
             'address': 'Address',
             'phone': 'Phone',
-            'outlet_type': 'Outlet Type',
+            'outlet_type': 'Retail Point Type',
             'region': 'Region',
             'state': 'State',
             'local_govt': 'LGA',

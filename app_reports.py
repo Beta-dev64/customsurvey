@@ -301,7 +301,7 @@ def report_upload():
 
 def detect_report_type(first_row):
     """Detect report type based on column headers"""
-    if 'URN' in first_row and 'Outlet Name' in first_row and 'Address' in first_row:
+    if 'URN' in first_row and 'Retail Point Name' in first_row and 'Address' in first_row:
         return 'outlet'
     elif 'Name' in first_row and 'Username' in first_row and 'Role' in first_row:
         return 'agent'
@@ -318,7 +318,7 @@ def process_outlet_data(report_data, cursor):
         try:
             # Extract and clean data
             urn = row.get('URN', '').strip()
-            outlet_name = row.get('Outlet Name', '').strip()
+            outlet_name = row.get('Retail Point Name', '').strip()
             address = row.get('Address', '').strip()
             phone = str(row.get('Phone', '')).strip()
             outlet_type = row.get('Outlet Type', '').strip()

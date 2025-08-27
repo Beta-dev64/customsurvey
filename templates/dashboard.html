@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}Dashboard - Dangote Cement{% endblock %}
+{% block title %}Dashboard - Retail System {% endblock %}
 
 {% block content %}
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">Dashboard</h1>
+        <h1 class="h3 mb-0">Overview</h1>
         <div>
             <div class="btn-group">
                 <button type="button" class="btn btn-outline-secondary" id="filter-week">Week</button>
@@ -25,7 +25,7 @@
                     </div>
                     <div>
                         <div class="stat-value" id="total-outlets">0</div>
-                        <div class="stat-title">All Outlets</div>
+                        <div class="stat-title">All Retail Points</div>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                     </div>
                     <div>
                         <div class="stat-value" id="executions-total">0</div>
-                        <div class="stat-title">All Executions</div>
+                        <div class="stat-title">All Visits</div>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                     </div>
                     <div>
                         <div class="stat-value" id="coverage-percentage">0%</div>
-                        <div class="stat-title">Outlet Coverage</div>
+                        <div class="stat-title">Retail Point Coverage</div>
                     </div>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                     </div>
                     <div>
                         <div class="stat-value" id="active-agents">0</div>
-                        <div class="stat-title">Agents (Active)</div>
+                        <div class="stat-title">Field Staff (Active)</div>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header bg-white">
-                    <h5 class="card-title mb-0">Executions</h5>
+                    <h5 class="card-title mb-0">Visits</h5>
                 </div>
                 <div class="card-body">
                     <div class="chart-container">
@@ -85,7 +85,7 @@
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header bg-white">
-                    <h5 class="card-title mb-0">Outlet Types</h5>
+                    <h5 class="card-title mb-0">Retail Point Types</h5>
                 </div>
                 <div class="card-body">
                     <div class="chart-container">
@@ -129,7 +129,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                    <h5 class="card-title mb-0">Recent Executions</h5>
+                    <h5 class="card-title mb-0">Recent Visits</h5>
                     <a href="{{ url_for('executions') }}" class="btn btn-sm btn-outline-primary">View All</a>
                 </div>
                 <div class="card-body">
@@ -138,11 +138,11 @@
                             <thead>
                                 <tr>
                                     <th>Date</th>
-                                    <th>Outlet</th>
-                                    <th>Location</th>
-                                    <th>Agent</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
+                                    <th>Retail Point</th>
+                                    <th>Area</th>
+                                    <th>Field Staff</th>
+                                    <th>Progress</th>
+                                    <th>Options</th>
                                 </tr>
                             </thead>
                             <tbody id="recent-executions">
@@ -188,11 +188,11 @@
         
         const ctx1 = document.getElementById('executionsChart').getContext('2d');
         new Chart(ctx1, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: executionsDates,
                 datasets: [{
-                    label: 'Executions',
+                    label: 'Visits',
                     data: executionsCounts,
                     backgroundColor: 'rgba(255, 102, 0, 0.2)',
                     borderColor: 'rgba(255, 102, 0, 1)',
@@ -217,7 +217,7 @@
         
         const ctx2 = document.getElementById('outletTypesChart').getContext('2d');
         new Chart(ctx2, {
-            type: 'doughnut',
+            type: 'pie',
             data: {
                 labels: outletTypes,
                 datasets: [{
@@ -266,15 +266,15 @@
             } else {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="6" class="text-center">No recent executions in the last 48 hours</td>
+                        <td colspan="6" class="text-center">No recent visits in the last 48 hours</td>
                     </tr>
                 `;
             }
         } catch (error) {
-            console.error('Error fetching recent executions:', error);
+            console.error('Error fetching recent visits:', error);
             document.getElementById('recent-executions').innerHTML = `
                 <tr>
-                    <td colspan="6" class="text-center">Error loading recent executions</td>
+                    <td colspan="6" class="text-center">Error loading recent visits</td>
                 </tr>
             `;
         }

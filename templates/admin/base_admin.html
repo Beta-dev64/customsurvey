@@ -123,7 +123,7 @@
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link {% if request.path == url_for('admin.admin_dashboard') %}active{% endif %}" href="{{ url_for('admin.admin_dashboard') }}">
-                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                        <i class="fas fa-tachometer-alt"></i> Overview
                     </a>
                 </li>
                 <li class="nav-item">
@@ -133,12 +133,12 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if '/admin/outlets' in request.path %}active{% endif %}" href="{{ url_for('admin.outlet_list') }}">
-                        <i class="fas fa-store"></i> Outlets
+                        <i class="fas fa-store"></i> Retail Points
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {% if '/admin/executions' in request.path %}active{% endif %}" href="{{ url_for('admin.execution_list') }}">
-                        <i class="fas fa-clipboard-check"></i> Executions
+                        <i class="fas fa-clipboard-check"></i> Visits
                     </a>
                 </li>
                 <!-- Add this link to the admin navigation sidebar -->

@@ -287,7 +287,7 @@ def init_routes(app):
             conn.commit()
             conn.close()
 
-            flash('Execution recorded successfully', 'success')
+            flash('Visitation recorded successfully', 'success')
             return redirect(url_for('outlets'))
 
         conn = get_db_connection()
@@ -299,7 +299,7 @@ def init_routes(app):
         conn.close()
 
         if not outlet:
-            flash('Outlet not found', 'danger')
+            flash('Retail Point not found', 'danger')
             return redirect(url_for('outlets'))
 
         return render_template('new_execution.html', outlet=outlet, products=DANGOTE_PRODUCTS)
@@ -715,10 +715,10 @@ def init_routes(app):
         df = df.rename(columns={
             'agent_name': 'Agent Name',
             'urn': 'URN',
-            'outlet_name': 'Outlet Name',
+            'outlet_name': 'Retail Point Name',
             'address': 'Address',
             'phone': 'Phone',
-            'outlet_type': 'Outlet Type',
+            'outlet_type': 'Retail Point Type',
             'outlet_region': 'Region',
             'outlet_state': 'State',
             'outlet_lga': 'LGA',
@@ -750,7 +750,7 @@ def init_routes(app):
 
         # Full list of columns (for reference if we need to add back removed columns)
         all_headers = [
-            'Agent Name', 'URN', 'Outlet Name', 'Address', 'Phone', 'Outlet Type',
+            'Agent Name', 'URN', 'Retail Point Name', 'Address', 'Phone', 'Retail Point Type',
             'Region', 'State', 'LGA', 'Executions', 'Assigned', 'Visited', 'Coverage (%)',
             'Table', 'Chair', 'Parasol', 'Tarpaulin', 'Hawker Jacket', 'Cup',
             'Latitude', 'Longitude', 'Before Image', 'After Image'
@@ -872,10 +872,10 @@ def init_routes(app):
         df = df.rename(columns={
             'agent_name': 'Agent Name',
             'urn': 'URN',
-            'outlet_name': 'Outlet Name',
+            'outlet_name': 'Retail Point Name',
             'address': 'Address',
             'phone': 'Phone',
-            'outlet_type': 'Outlet Type',
+            'outlet_type': 'Retail Point Type',
             'outlet_region': 'Region',
             'outlet_state': 'State',
             'outlet_lga': 'LGA',
@@ -895,7 +895,7 @@ def init_routes(app):
 
         # Final column structure
         headers = [
-            'Agent Name', 'URN', 'Outlet Name', 'Address', 'Phone', 'Outlet Type',
+            'Agent Name', 'URN', 'Retail Point Name', 'Address', 'Phone', 'Retail Point Type',
             'Region', 'State', 'LGA', 'Executions', 'Assigned', 'Visited', 'Coverage (%)',
             'Table', 'Chair', 'Parasol', 'Tarpaulin', 'Hawker Jacket', 'Cup',
             'Latitude', 'Longitude', 'Before Image', 'After Image'
@@ -1190,7 +1190,7 @@ def init_routes(app):
 
         # Define headers in correct order
         headers = [
-            'Agent Name', 'URN', 'Outlet Name', 'Address', 'Phone', 'Outlet Type',
+            'Agent Name', 'URN', 'Retail Point Name', 'Address', 'Phone', 'Retail Point Type',
             'Region', 'State', 'LGA', 'Executions', 'Assigned', 'Visited', 'Coverage (%)',
             'Table', 'Chair', 'Parasol', 'Tarpaulin', 'Hawker Jacket', 'Cup',
             'Latitude', 'Longitude', 'Before Image', 'After Image'
@@ -1203,10 +1203,10 @@ def init_routes(app):
         col_mapping = {
             'agent_name': 'Agent Name',
             'urn': 'URN',
-            'outlet_name': 'Outlet Name',
+            'outlet_name': 'Retail Point Name',
             'address': 'Address',
             'phone': 'Phone',
-            'outlet_type': 'Outlet Type',
+            'outlet_type': 'Retail Point Type',
             'region': 'Region',
             'state': 'State',
             'local_govt': 'LGA',

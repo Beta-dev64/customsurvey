@@ -1,23 +1,23 @@
 {% extends 'admin/base_admin.html' %}
 
-{% block title %}Outlet Management - Dangote Cement{% endblock %}
+{% block title %}Retail Point Management - Dangote Cement{% endblock %}
 
 {% block admin_content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="admin-title mb-0">Outlet Management</h1>
+    <h1 class="admin-title mb-0">Retail Point Management</h1>
     <div>
         <a href="{{ url_for('admin.outlet_import') }}" class="btn btn-outline-primary me-2">
-            <i class="fas fa-file-import me-1"></i> Import Outlets
+            <i class="fas fa-file-import me-1"></i> Import Retail Points
         </a>
         <a href="{{ url_for('admin.outlet_new') }}" class="btn btn-primary">
-            <i class="fas fa-plus-circle me-1"></i> Add New Outlet
+            <i class="fas fa-plus-circle me-1"></i> Add New Retail Point
         </a>
     </div>
 </div>
 
 <div class="card admin-card">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="card-title mb-0">Outlets</h5>
+        <h5 class="card-title mb-0">Retail Point</h5>
         <div class="input-group" style="width: 300px">
             <input type="text" class="form-control form-control-sm" id="outletSearch" placeholder="Search outlets...">
             <button class="btn btn-sm btn-outline-secondary" type="button">
@@ -31,7 +31,7 @@
                 <thead>
                     <tr>
                         <th>URN</th>
-                        <th>Outlet Name</th>
+                        <th>Retail Point Name</th>
                         <th>Customer Name</th>
                         <th>Region</th>
                         <th>State</th>
@@ -78,7 +78,7 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Are you sure you want to delete outlet <strong>{{ outlet.outlet_name }}</strong>?</p>
+                                            <p>Are you sure you want to delete Retail Point <strong>{{ outlet.outlet_name }}</strong>?</p>
                                             <p class="text-danger">This action cannot be undone.</p>
                                         </div>
                                         <div class="modal-footer">

@@ -431,7 +431,7 @@ def outlet_new():
         
         # Validate required fields
         if not all(form_data[field] for field in ['urn', 'outlet_name', 'region']):
-            flash('URN, Outlet Name and Region are required', 'danger')
+            flash('URN, Retail Point Name and Region are required', 'danger')
             return render_template('admin/outlet_form.html')
         
         with get_db_connection() as conn:
@@ -477,7 +477,7 @@ def outlet_edit(outlet_id):
             
             # Validate required fields
             if not all(form_data[field] for field in ['urn', 'outlet_name', 'region']):
-                flash('URN, Outlet Name and Region are required', 'danger')
+                flash('URN, Retail Point Name and Region are required', 'danger')
                 c.execute("SELECT * FROM outlets WHERE id = ?", (outlet_id,))
                 outlet = c.fetchone()
                 return render_template('admin/outlet_form.html', outlet=outlet)
@@ -803,7 +803,7 @@ def execution_upload():
             df = pd.read_excel(file)
 
         # Validate minimal required columns
-        required_columns = ['URN', 'Outlet Name']
+        required_columns = ['URN', 'Retail Point Name']
         if not all(col in df.columns for col in required_columns):
             flash(f"Missing required columns: {', '.join(required_columns)}", 'danger')
             return redirect(request.url)
@@ -821,7 +821,7 @@ def execution_upload():
             for i, row in enumerate(execution_data):
                 try:
                     urn = str(row.get('URN', '')).strip()
-                    outlet_name = str(row.get('Outlet Name', '')).strip()
+                    outlet_name = str(row.get('Retail Point Name', '')).strip()
                     
                     if not urn:
                         raise ValueError("Missing URN")

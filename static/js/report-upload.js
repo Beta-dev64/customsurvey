@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Required fields for different report types
     const requiredFields = {
-        'posm': ['Agent Name', 'URN', 'Outlet Name', 'Address', 'State', 'LGA'],
+        'posm': ['Agent Name', 'URN', 'Retail Point Name', 'Address', 'State', 'LGA'],
         'agent': ['Name', 'Username', 'Role', 'Region', 'State'],
-        'execution': ['Agent', 'Outlet', 'Date', 'Status']
+        'execution': ['Agent', 'Retail Point', 'Date', 'Status']
     };
     
     // Initialize event listeners
@@ -420,17 +420,17 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add field options based on detected report type
             const allFields = [
                 // POSM fields
-                'Agent Name', 'URN', 'Outlet Name', 'Address', 'Phone', 'Outlet Type',
-                'Region', 'State', 'LGA', 'Executions', 'Assigned', 'Visited', 'Coverage',
+                'Agent Name', 'URN', 'Retail Point Name', 'Address', 'Phone', 'Retail Point Type',
+                'Region', 'State', 'LGA', 'Visits', 'Assigned', 'Visited', 'Coverage',
                 'Table', 'Chair', 'Parasol', 'Tarpaulin', 'Hawker Jacket', 'Cup',
                 'Geolocation', 'Before Image', 'After Image',
                 
                 // Agent fields
-                'ID', 'Name', 'Username', 'Role', 'Executions Performed',
-                'Outlets Assigned', 'Outlets Visited', 'Coverage (%)',
+                'ID', 'Name', 'Username', 'Role', 'Visitations',
+                'Retail Points Assigned', 'Retail Points Visited', 'Coverage (%)',
                 
                 // Execution fields
-                'Agent', 'Outlet', 'Date', 'Status', 'Products Available',
+                'Agent', 'Retail Point', 'Date', 'Status', 'Products Available',
                 'Compliance Score', 'Notes'
             ];
             
@@ -659,25 +659,25 @@ document.addEventListener('DOMContentLoaded', function() {
 // Update validation rules
 const VALIDATION_RULES = {
     outlet: {
-        required: ['URN', 'Outlet Name', 'Address', 'Region', 'State', 'LGA'],
-        optional: ['Phone', 'Outlet Type', 'Table', 'Chair', 'Parasol', 'Tarpaulin', 'Hawker Jacket']
+        required: ['URN', 'Retail Point Name', 'Address', 'Region', 'State', 'LGA'],
+        optional: ['Phone', 'Retail Point Type', 'Table', 'Chair', 'Parasol', 'Tarpaulin', 'Hawker Jacket']
     },
     agent: {
         required: ['Name', 'Username', 'Role', 'Region'],
         optional: ['State', 'LGA', 'Phone', 'Email']
     },
     execution: {
-        required: ['URN', 'Outlet Name', 'Address', 'Region', 'State', 'LGA'],
-        optional: ['Phone', 'Outlet Type', 'Table', 'Chair', 'Parasol', 'Tarpaulin', 'Hawker Jacket']
+        required: ['URN', 'Retail Point Name', 'Address', 'Region', 'State', 'LGA'],
+        optional: ['Phone', 'Retail Point Type', 'Table', 'Chair', 'Parasol', 'Tarpaulin', 'Hawker Jacket']
     },
 };
 
 // Update the required fields for different report types
 const REQUIRED_FIELDS = {
-    outlet: ['URN', 'Outlet Name', 'Address', 'Phone', 'Outlet Type', 'Region', 'State', 'LGA'],
-    posm: ['URN', 'Outlet Name', 'Address', 'Phone', 'Outlet Type', 'Region', 'State', 'LGA'],
+    outlet: ['URN', 'Retail Point Name', 'Address', 'Phone', 'Retail Point Type', 'Region', 'State', 'LGA'],
+    posm: ['URN', 'Retail Point Name', 'Address', 'Phone', 'Retail Point Type', 'Region', 'State', 'LGA'],
     agent: ['Name', 'Username', 'Role', 'Region'],
-    execution: ['Outlet URN', 'Agent Username', 'Date', 'Status']
+    execution: ['Retail Point URN', 'Agent Username', 'Date', 'Status']
 };
 
 // Update the detectReportType function
@@ -685,7 +685,7 @@ function detectReportType(headers) {
     const headerSet = new Set(headers.map(h => h.trim()));
     
     // Check for outlet/POSM data (based on CSV structure)
-    if (headerSet.has('URN') && headerSet.has('Outlet Name') && headerSet.has('Address')) {
+    if (headerSet.has('URN') && headerSet.has('Retail Point Name') && headerSet.has('Address')) {
         return 'outlet';
     }
     

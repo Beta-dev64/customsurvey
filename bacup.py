@@ -461,7 +461,7 @@ def new_execution(outlet_id):
         conn.commit()
         conn.close()
 
-        flash('Execution recorded successfully', 'success')
+        flash('Visitation recorded successfully', 'success')
         return redirect(url_for('outlets'))
 
     conn = sqlite3.connect(DB_PATH)

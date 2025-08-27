@@ -28,7 +28,7 @@
             </div>
             
             <div class="col-md-6">
-                <label for="outlet_name" class="form-label admin-form-label">Outlet Name</label>
+                <label for="outlet_name" class="form-label admin-form-label">Retail Point Name</label>
                 <input type="text" class="form-control" id="outlet_name" name="outlet_name" 
                        value="{{ outlet.outlet_name if outlet else '' }}" required>
             </div>
@@ -52,7 +52,7 @@
             </div>
             
             <div class="col-md-4">
-                <label for="outlet_type" class="form-label admin-form-label">Outlet Type</label>
+                <label for="outlet_type" class="form-label admin-form-label">Retail Point Type</label>
                 <select class="form-select" id="outlet_type" name="outlet_type">
                     <option value="">Select Type</option>
                     <option value="Shop" {% if outlet and outlet.outlet_type == 'Shop' %}selected{% endif %}>Shop</option>

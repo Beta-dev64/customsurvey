@@ -427,7 +427,7 @@ def outlet_new():
         
         # Validate input
         if not urn or not outlet_name or not region:
-            flash('URN, Outlet Name and Region are required', 'danger')
+            flash('URN, Retail Point Name and Region are required', 'danger')
             return render_template('admin/outlet_form.html')
         
         conn = get_db_connection()
@@ -473,7 +473,7 @@ def outlet_edit(outlet_id):
         
         # Validate input
         if not urn or not outlet_name or not region:
-            flash('URN, Outlet Name and Region are required', 'danger')
+            flash('URN, Retail Point Name and Region are required', 'danger')
             c.execute("SELECT * FROM outlets WHERE id = ?", (outlet_id,))
             outlet = c.fetchone()
             conn.close()
@@ -823,7 +823,7 @@ def execution_upload():
             df = pd.read_excel(file)
 
         # Validate minimal required columns
-        required_columns = ['URN', 'Outlet Name']
+        required_columns = ['URN', 'Retail Point Name']
         if not all(col in df.columns for col in required_columns):
             flash(f"Missing required columns: {', '.join(required_columns)}", 'danger')
             return redirect(request.url)
@@ -843,7 +843,7 @@ def execution_upload():
         for i, row in enumerate(execution_data):
             try:
                 urn = str(row.get('URN', '')).strip()
-                outlet_name = str(row.get('Outlet Name', '')).strip()
+                outlet_name = str(row.get('Retail Point Name', '')).strip()
                 if not urn:
                     raise ValueError("Missing URN")
 
@@ -980,7 +980,7 @@ def execution_upload():
             }), 400
 
         # Setup required fields for outlet validation
-        required_fields = ['URN', 'Outlet Name', 'Phone', 'Region', 'State', 'LGA']
+        required_fields = ['URN', 'Retail Point Name', 'Phone', 'Region', 'State', 'LGA']
         validation_errors = []
 
         # Preprocess and validate data
@@ -1023,7 +1023,7 @@ def execution_upload():
             try:
                 # OUTLET processing
                 urn = row.get('URN', '').strip()
-                outlet_name = row.get('Outlet Name', '').strip()
+                outlet_name = row.get('Retail Point Name', '').strip()
                 address = row.get('Address', '').strip()
                 phone = row.get('Phone', '').strip()
                 outlet_type = row.get('Outlet Type', 'Shop').strip()
@@ -1128,7 +1128,7 @@ def execution_upload():
         execution_data = data.get('data', [])
         
         # Enhanced validation
-        required_fields = ['URN', 'Outlet Name', 'Phone', 'Region', 'State', 'LGA']
+        required_fields = ['URN', 'Retail Point Name', 'Phone', 'Region', 'State', 'LGA']
         validation_errors = []
         
         for i, row in enumerate(execution_data):
@@ -1180,7 +1180,7 @@ def execution_upload():
         for i, row in enumerate(execution_data):
             try:
                 urn = row.get('URN', '').strip()
-                outlet_name = row.get('Outlet Name', '').strip()
+                outlet_name = row.get('Retail Point Name', '').strip()
                 address = row.get('Address', '').strip()
                 phone = row.get('Phone', '').strip()
                 outlet_type = row.get('Outlet Type', '').strip()
@@ -1260,7 +1260,7 @@ def execution_upload():
         errors = 0
         
         # Validate required fields
-        required_fields = ['URN', 'Outlet Name', 'Region', 'State', 'LGA']
+        required_fields = ['URN', 'Retail Point Name', 'Region', 'State', 'LGA']
         validation_errors = []
         
         for i, row in enumerate(execution_data):

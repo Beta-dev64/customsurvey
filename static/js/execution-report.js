@@ -45,15 +45,15 @@ function createExecutionSummaryElements() {
                     <div class="card-body">
                         <h6 class="card-subtitle mb-3 text-muted">Coverage Statistics</h6>
                         <div class="d-flex justify-content-between mb-2">
-                            <div>Total Outlets:</div>
+                            <div>Total Retail Points:</div>
                             <div class="fw-bold" id="totalOutletsCount">-</div>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
-                            <div>Executed Outlets:</div>
+                            <div>Visited Retail Point:</div>
                             <div class="fw-bold" id="executedOutletsCount">-</div>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
-                            <div>Total Executions:</div>
+                            <div>Total Visitations:</div>
                             <div class="fw-bold" id="totalExecutionsCount">-</div>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
@@ -85,7 +85,7 @@ function createExecutionSummaryElements() {
                 <thead class="table-light">
                     <tr>
                         <th>Region</th>
-                        <th>Executed</th>
+                        <th>Visited</th>
                         <th>Total</th>
                         <th>Percentage</th>
                         <th>Progress</th>
@@ -143,7 +143,7 @@ function displayExecutionSummary(data) {
             data: {
                 labels: regions,
                 datasets: [{
-                    label: 'Executed (%)',
+                    label: 'Visited (%)',
                     data: percentages,
                     backgroundColor: 'rgba(255, 102, 0, 0.8)',
                     borderWidth: 1,
@@ -173,7 +173,7 @@ function displayExecutionSummary(data) {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Execution Coverage by Region',
+                        text: 'Visitation Coverage by Region',
                         font: {
                             size: 16
                         }
