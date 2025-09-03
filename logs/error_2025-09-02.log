@@ -1,0 +1,2 @@
+[2025-09-02 23:18:19] ERROR in app: Blueprint registration failed: expected an indented block after 'try' statement on line 216 (app_admin.py, line 219)
+[2025-09-02 23:18:19] ERROR in app: Blueprint registration failed: expected an indented block after 'try' statement on line 216 (app_admin.py, line 219)

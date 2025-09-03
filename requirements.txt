@@ -1,0 +1,102 @@
+# Core Flask dependencies
+Flask==3.0.0
+Werkzeug==3.0.1
+Jinja2==3.1.3
+MarkupSafe==2.1.3
+itsdangerous==2.1.2
+click==8.1.7
+
+# Database
+sqlite3  # Built into Python, no need to install separately
+
+# Image processing
+Pillow==10.2.0
+
+# Data processing and export
+pandas==2.2.0
+openpyxl==3.1.2
+xlsxwriter==3.1.9
+
+# PDF generation
+reportlab==4.0.9
+
+# HTTP requests
+requests==2.31.0
+
+# Security and validation
+WTF-Forms==1.2.1
+Flask-WTF==1.2.1
+
+# Rate limiting
+Flask-Limiter==3.5.0
+
+# Caching
+Flask-Caching==2.1.0
+
+# Environment configuration
+python-dotenv==1.0.0
+
+# Testing dependencies
+pytest==8.0.0
+pytest-flask==1.3.0
+pytest-cov==4.0.0
+coverage==7.4.1
+
+# Development dependencies
+black==24.2.0
+flake8==7.0.0
+isort==5.13.2
+
+# Type hints
+typing-extensions==4.9.0
+
+# Utilities
+pathlib2==2.3.7; python_version < "3.4"
+
+# Additional security
+cryptography==42.0.2
+
+# WSGI server for production
+gunicorn==21.2.0
+
+# Process management
+psutil==5.9.8
+
+# Date/time utilities
+python-dateutil==2.8.2
+
+# JSON handling
+ujson==5.9.0
+
+# Memory optimization
+pympler==0.9
+
+# Additional image format support
+pillow-heif==0.15.0
+
+# Backup and compression
+python-zip==0.1
+
+# Email support (if needed later)
+Flask-Mail==0.9.1
+
+# Admin interface enhancements
+Flask-Admin==1.6.1
+
+# API documentation
+Flask-RESTX==1.3.0
+
+# Session management
+Flask-Session==0.5.0
+
+# CORS support
+Flask-CORS==4.0.0
+
+# Background tasks
+celery==5.3.6
+
+# Redis (for Celery and caching)
+redis==5.0.1
+
+# Health check endpoints
+Flask-HealthZ==1.0.1

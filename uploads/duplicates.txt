@@ -1,7 +1,481 @@
-Row 1: Duplicate entry - URN 'DCP/21/SW/ED/1010437' or outlet name 'ENOUGH VENTURE' has an execution in the last 7 days
-Row 2: Duplicate entry - URN 'DCP/21/SW/ED/1010449' or outlet name 'AUGUSTINE ANYA' has an execution in the last 7 days
-Row 3: Duplicate entry - URN 'DCP/21/SW/ED/1010450' or outlet name 'OMO STEEL CO 2' has an execution in the last 7 days
-Row 4: Duplicate entry - URN 'DCP/21/SW/ED/1010455' or outlet name 'BIGGY VENTURE' has an execution in the last 7 days
-Row 5: Duplicate entry - URN 'DCP/21/SW/ED/1010456' or outlet name 'KHALIFA ENTERPRISE' has an execution in the last 7 days
-Row 6: Duplicate entry - URN 'DCP/21/SW/ED/1010457' or outlet name 'EMONANK VENTURE' has an execution in the last 7 days
-Row 7: Duplicate entry - URN 'DCP/21/SW/ED/1010459' or outlet name 'LUCKY TRUST 2' has an execution in the last 7 days
+Row 14: Duplicate entry - URN 'DCP/24/LO/001963' or outlet name 'OKE AKANJI NIG ENTERPRISE' has an execution in the last 7 days
+Row 18: Duplicate entry - URN 'DCP/25/LO/002567' or outlet name 'REGENT DIAMOND' has an execution in the last 7 days
+Row 28: Duplicate entry - URN 'DCP/25/LO/002566' or outlet name 'REGENT DIAMOND' has an execution in the last 7 days
+Row 29: Duplicate entry - URN 'DCP/19/LO/000112' or outlet name 'DYOUNG DIMARK' has an execution in the last 7 days
+Row 54: Duplicate entry - URN 'DCP/19/LO/002843' or outlet name 'JOSSID GLOBAL SERVICE' has an execution in the last 7 days
+Row 55: Duplicate entry - URN 'DCP/19/LO/002759' or outlet name 'UNCLE ABBEY CEMENT' has an execution in the last 7 days
+Row 62: Duplicate entry - URN 'DCP/25/LO/002825' or outlet name 'NOBLE HMA' has an execution in the last 7 days
+Row 63: Duplicate entry - URN 'DCP/25/LO/002826' or outlet name 'NOBLE HMA' has an execution in the last 7 days
+Row 64: Duplicate entry - URN 'DCP/25/LO/002827' or outlet name 'NOBLE HMA' has an execution in the last 7 days
+Row 66: Duplicate entry - URN 'DCP/24/LO/001345' or outlet name 'SHALOG VENTURE' has an execution in the last 7 days
+Row 79: Duplicate entry - URN 'DCP/24/LO/001387' or outlet name 'MR HAMMED BADMUS' has an execution in the last 7 days
+Row 88: Duplicate entry - URN 'DCP/24/LO/001394' or outlet name 'MR DAUD OGUNYOMI' has an execution in the last 7 days
+Row 90: Duplicate entry - URN 'DCP/24/LO/001396' or outlet name 'MRS BELLO TOYIN' has an execution in the last 7 days
+Row 91: Duplicate entry - URN 'DCP/24/LO/001397' or outlet name 'MRS BELLO TOYIN' has an execution in the last 7 days
+Row 102: Duplicate entry - URN 'DCP/19/LO/009787' or outlet name 'MRS ADEBOMI' has an execution in the last 7 days
+Row 104: Duplicate entry - URN 'DCP/24/LO/001404' or outlet name 'MR ADEWUNMI' has an execution in the last 7 days
+Row 120: Duplicate entry - URN 'DCP/24/LO/000768' or outlet name 'MR AKINOLA ENIAGBOJULE' has an execution in the last 7 days
+Row 128: Duplicate entry - URN 'DCP/19/LO/009864' or outlet name 'MRS YUSUF' has an execution in the last 7 days
+Row 129: Duplicate entry - URN 'DCP/19/LO/009822' or outlet name 'MRS ADEBAYO' has an execution in the last 7 days
+Row 143: Duplicate entry - URN 'DCP/24/LO/001422' or outlet name 'MRS ADEBAYO' has an execution in the last 7 days
+Row 148: Duplicate entry - URN 'DCP/19/LO/009810' or outlet name 'MRS FALEYE' has an execution in the last 7 days
+Row 149: Duplicate entry - URN 'DCP/19/LO/009811' or outlet name 'MRS KUTELU' has an execution in the last 7 days
+Row 161: Duplicate entry - URN 'DCP/19/LO/009859' or outlet name 'MRS AZEEZ ABOLANLE' has an execution in the last 7 days
+Row 164: Duplicate entry - URN 'DCP/24/LO/000709' or outlet name 'MRS OGUNSOLA' has an execution in the last 7 days
+Row 183: Duplicate entry - URN 'DCP/19/LO/011869' or outlet name 'MR KOTOYE OLALEKAN' has an execution in the last 7 days
+Row 199: Duplicate entry - URN 'DCP/23/LO/000755' or outlet name 'MR TAJUDEEN' has an execution in the last 7 days
+Row 211: Duplicate entry - URN 'DCP/24/LO/001229' or outlet name 'YA JAMIU CEMENT' has an execution in the last 7 days
+Row 244: Duplicate entry - URN 'Dcp/19/Lo/003009' or outlet name 'Ikas Enterprises' has an execution in the last 7 days
+Row 251: Duplicate entry - URN 'DCP/24/LO/001245' or outlet name 'OMOBA CEMENT' has an execution in the last 7 days
+Row 288: Duplicate entry - URN 'DCP/24/LO/001233' or outlet name 'Ireni Temi Tie' has an execution in the last 7 days
+Row 344: Duplicate entry - URN 'DCP/24/LO/000585' or outlet name 'A&G CEMENT STORE 2' has an execution in the last 7 days
+Row 347: Duplicate entry - URN 'DCP/19/LO/000485' or outlet name 'TRIPLE OLA CEMENT STORE' has an execution in the last 7 days
+Row 395: Duplicate entry - URN 'DCP/25/LO/002824' or outlet name 'NOBEL HMA AND MORE VENTURES' has an execution in the last 7 days
+Row 402: Duplicate entry - URN 'DCP/25/LO/005458' or outlet name 'P OLAWALE INVESTMENT COMPANY NIG LIMITED' has an execution in the last 7 days
+Row 405: Duplicate entry - URN 'DCP/25/LO/002717' or outlet name 'REGENT DIAMOND VENTURES' has an execution in the last 7 days
+Row 409: Duplicate entry - URN 'DCP/24/LO/000510' or outlet name 'REGENT DIAMOND VENTURES' has an execution in the last 7 days
+Row 410: Duplicate entry - URN 'DCP/24/LO/001345' or outlet name 'SAHOLOG' has an execution in the last 7 days
+Row 411: Duplicate entry - URN 'DCP/24/LO/000450' or outlet name 'SHALOG BLOCK INDUSTRY' has an execution in the last 7 days
+Row 412: Duplicate entry - URN 'DCP/24/LO/000509' or outlet name 'KS SUCCESS BLOCK INDUSTRY' has an execution in the last 7 days
+Row 424: Duplicate entry - URN 'DCP/24/LO/001377' or outlet name 'UNCLE ABBEY CEMENT' has an execution in the last 7 days
+Row 435: Duplicate entry - URN 'DCP/19/LO/011875' or outlet name 'FM CEMENT' has an execution in the last 7 days
+Row 440: Duplicate entry - URN 'DCP/19/LO/002763' or outlet name 'ISIAKA BAKARE CEMENT' has an execution in the last 7 days
+Row 457: Duplicate entry - URN 'DCP/19/LO/002810' or outlet name 'KEENY KAY VENTURES' has an execution in the last 7 days
+Row 460: Duplicate entry - URN 'DCP/24/LO/001353' or outlet name 'GOD IS GOOD CEMENT' has an execution in the last 7 days
+Row 461: Duplicate entry - URN 'DCP/24/LO/001347' or outlet name 'ILERI OLUWA BUILDING MATERIALS' has an execution in the last 7 days
+Row 462: Duplicate entry - URN 'DCP/24/LO/00510' or outlet name 'REGENT DIAMOND VENTURES' has an execution in the last 7 days
+Row 465: Duplicate entry - URN 'DCP/25/LO/002567' or outlet name 'REGENT DIAMOND VENTURES' has an execution in the last 7 days
+Row 470: Duplicate entry - URN 'DCP/19/LO/002817' or outlet name 'UP JESUS VENTURES' has an execution in the last 7 days
+Row 474: Duplicate entry - URN 'DCP/24/LO/001376' or outlet name 'OPEYEMI ALWAYS CEMENT' has an execution in the last 7 days
+Row 483: Duplicate entry - URN 'DCP/24/LO/001326' or outlet name 'RMN BLOCK INDUSTRY' has an execution in the last 7 days
+Row 489: Duplicate entry - URN 'DCP/19/LO/002788' or outlet name 'REGENT DIAMOND VENTURES' has an execution in the last 7 days
+Row 493: Duplicate entry - URN 'DCP/19/LO/011724' or outlet name 'Eweje Cement' has an execution in the last 7 days
+Row 494: Duplicate entry - URN 'DCP/25/LO/002577' or outlet name 'Olakuleyin Tayo' has an execution in the last 7 days
+Row 495: Duplicate entry - URN 'DCP/24/LO/001221' or outlet name 'Ojo Cement' has an execution in the last 7 days
+Row 496: Duplicate entry - URN 'DCP/24/LO/001222' or outlet name 'Albarika Cement' has an execution in the last 7 days
+Row 497: Duplicate entry - URN 'DCP/24/LO/001236' or outlet name 'Amiru Cement' has an execution in the last 7 days
+Row 498: Duplicate entry - URN 'Dcp/19/Lo/010249' or outlet name 'Asiri Eko Cement 2' has an execution in the last 7 days
+Row 499: Duplicate entry - URN 'Dcp/19/Lo/010251' or outlet name 'Ogundare&Sons' has an execution in the last 7 days
+Row 500: Duplicate entry - URN 'DCP/23/LO/000806' or outlet name 'YA JAMIU CEMENT' has an execution in the last 7 days
+Row 501: Duplicate entry - URN 'DCP/24/LO/001229' or outlet name 'YA JAMIU CEMENT' has an execution in the last 7 days
+Row 502: Duplicate entry - URN 'DCP/25/LO/002578' or outlet name 'OMOGA CEMENT' has an execution in the last 7 days
+Row 503: Duplicate entry - URN 'DCP/25/LO/004661' or outlet name 'Asiri Eko Blocks Industry' has an execution in the last 7 days
+Row 504: Duplicate entry - URN 'Dcp/19/Lo/010246' or outlet name 'Imam Ahamod Cement' has an execution in the last 7 days
+Row 505: Duplicate entry - URN 'DCP/19/LO/010253' or outlet name 'IJESHA BLOCK INDUSTRY' has an execution in the last 7 days
+Row 506: Duplicate entry - URN 'Dcp/19/Lo/010257' or outlet name 'Alhaji Gani Olaleye' has an execution in the last 7 days
+Row 507: Duplicate entry - URN 'Dcp/19/Lo/010258' or outlet name 'Alahu Rahaman Block Industry' has an execution in the last 7 days
+Row 508: Duplicate entry - URN 'Dcp/19/Lo/010259' or outlet name 'Mr Mosses Popoola Cement' has an execution in the last 7 days
+Row 509: Duplicate entry - URN 'Dcp/19/Lo/010260' or outlet name 'Adeyemi Trading Store' has an execution in the last 7 days
+Row 510: Duplicate entry - URN 'Dcp/19/Lo/010262' or outlet name 'Mayowa Enterprises' has an execution in the last 7 days
+Row 511: Duplicate entry - URN 'Dcp/19/Lo/010263' or outlet name 'Mr Oketoyan' has an execution in the last 7 days
+Row 512: Duplicate entry - URN 'Dcp/19/Lo/010264' or outlet name 'Olele Cement' has an execution in the last 7 days
+Row 513: Duplicate entry - URN 'Dcp/19/Lo/010265' or outlet name 'Pepepe Cement Store' has an execution in the last 7 days
+Row 514: Duplicate entry - URN 'Dcp/19/Lo/010267' or outlet name 'Dejumo Block Industry' has an execution in the last 7 days
+Row 515: Duplicate entry - URN 'Dcp/19/Lo/010268' or outlet name 'Al Ramon Block Industry' has an execution in the last 7 days
+Row 516: Duplicate entry - URN 'Dcp/19/Lo/010270' or outlet name 'Mr Fakunle' has an execution in the last 7 days
+Row 517: Duplicate entry - URN 'DCP/24/LO/001235' or outlet name 'Jimted Cement Shop' has an execution in the last 7 days
+Row 518: Duplicate entry - URN 'DCP/24/LO/001240' or outlet name 'OGO OLUWA CEMENT' has an execution in the last 7 days
+Row 519: Duplicate entry - URN 'DCP/25/LO/002580' or outlet name 'YA WAHAB' has an execution in the last 7 days
+Row 520: Duplicate entry - URN 'DCP/25/LO/002581' or outlet name 'KEWULERE' has an execution in the last 7 days
+Row 521: Duplicate entry - URN 'DCP/25/LO/002582' or outlet name 'FASARA VENTURES' has an execution in the last 7 days
+Row 522: Duplicate entry - URN 'DCP/25/LO/002724' or outlet name 'IFEOLUWA ENTERPRISES' has an execution in the last 7 days
+Row 523: Duplicate entry - URN 'Dcp/19/Lo/002996' or outlet name 'A1 Investment' has an execution in the last 7 days
+Row 524: Duplicate entry - URN 'Dcp/19/Lo/002998' or outlet name 'Ikas Enterprises' has an execution in the last 7 days
+Row 525: Duplicate entry - URN 'Dcp/19/Lo/002999' or outlet name 'Mr Ile Labo Simi Oko' has an execution in the last 7 days
+Row 526: Duplicate entry - URN 'Dcp/19/Lo/003000' or outlet name 'No King As God' has an execution in the last 7 days
+Row 527: Duplicate entry - URN 'Dcp/19/Lo/003001' or outlet name 'Dears Nig.Ltd' has an execution in the last 7 days
+Row 528: Duplicate entry - URN 'Dcp/19/Lo/003004' or outlet name 'Alhahu Lateef Cement Store' has an execution in the last 7 days
+Row 529: Duplicate entry - URN 'Dcp/19/Lo/003005' or outlet name 'Alwajud Cement' has an execution in the last 7 days
+Row 530: Duplicate entry - URN 'Dcp/19/Lo/003006' or outlet name 'Tosang Limited' has an execution in the last 7 days
+Row 531: Duplicate entry - URN 'Dcp/19/Lo/003007' or outlet name 'Mr Akinola Waheed' has an execution in the last 7 days
+Row 532: Duplicate entry - URN 'Dcp/19/Lo/003009' or outlet name 'Ikas Enterprises' has an execution in the last 7 days
+Row 533: Duplicate entry - URN 'DCP/24/LO/001245' or outlet name 'Mr Sulaiman Olanloye' has an execution in the last 7 days
+Row 534: Duplicate entry - URN 'DCP/25/LO/004743' or outlet name 'Hadilat Cement' has an execution in the last 7 days
+Row 535: Duplicate entry - URN 'DCP/25/LO/004725' or outlet name 'Adlat' has an execution in the last 7 days
+Row 536: Duplicate entry - URN 'DCP/24/LO/001238' or outlet name 'A.Y Ventures' has an execution in the last 7 days
+Row 537: Duplicate entry - URN 'DCP/24/LO/001959' or outlet name 'ALLAHU LATEEF' has an execution in the last 7 days
+Row 538: Duplicate entry - URN 'DCP/25/LO/002583' or outlet name 'YEKINI&SONS INTEGRATED SERVICES' has an execution in the last 7 days
+Row 539: Duplicate entry - URN 'DCP/24/LO/001245' or outlet name 'OMOBA CEMENT' has an execution in the last 7 days
+Row 540: Duplicate entry - URN 'DCP/24/LO/001242' or outlet name 'TOMSON COMMUNICATION' has an execution in the last 7 days
+Row 541: Duplicate entry - URN 'Dcp/19/Lo/010287' or outlet name 'Werenise Oluwa' has an execution in the last 7 days
+Row 542: Duplicate entry - URN 'Dcp/19/Lo/010288' or outlet name 'Olamike' has an execution in the last 7 days
+Row 543: Duplicate entry - URN 'Dcp/19/Lo/010289' or outlet name 'Fashion &Sons Enterprises Nig Ltd' has an execution in the last 7 days
+Row 544: Duplicate entry - URN 'Dcp/19/Lo/010290' or outlet name 'Baba Iwalesin Company' has an execution in the last 7 days
+Row 545: Duplicate entry - URN 'Dcp/19/Lo/010291' or outlet name 'Olaiya&Sons' has an execution in the last 7 days
+Row 546: Duplicate entry - URN 'Dcp/19/Lo/010295' or outlet name 'Ya-Lateef' has an execution in the last 7 days
+Row 547: Duplicate entry - URN 'Dcp/19/Lo/010296' or outlet name 'Ojasope' has an execution in the last 7 days
+Row 548: Duplicate entry - URN 'Dcp/19/Lo/010298' or outlet name 'Olaosebikan Cement' has an execution in the last 7 days
+Row 549: Duplicate entry - URN 'Dcp/19/Lo/010321' or outlet name 'Oyerinde Cement' has an execution in the last 7 days
+Row 550: Duplicate entry - URN 'Dcp/19/Lo/010322' or outlet name 'Ya-Lateef Cement' has an execution in the last 7 days
+Row 551: Duplicate entry - URN 'DCP/24/LO/001253' or outlet name 'Osfat Cement' has an execution in the last 7 days
+Row 552: Duplicate entry - URN 'DCP/25/LO/004662' or outlet name 'Agbede Cement' has an execution in the last 7 days
+Row 553: Duplicate entry - URN 'DCP/24/LO/001256' or outlet name 'Focus Cement' has an execution in the last 7 days
+Row 554: Duplicate entry - URN 'DCP/24/LO/001255' or outlet name 'MD CEMENT' has an execution in the last 7 days
+Row 555: Duplicate entry - URN 'DCP/24/LO/001258' or outlet name 'FADIPE MICHAEL' has an execution in the last 7 days
+Row 556: Duplicate entry - URN 'DCP/24/LO/001259' or outlet name 'SALAM KAOLA CEMENT' has an execution in the last 7 days
+Row 557: Duplicate entry - URN 'DCP/23/LO/000950' or outlet name 'OLA INVESTMENT COMPANY' has an execution in the last 7 days
+Row 558: Duplicate entry - URN 'DCP/25/LO/002471' or outlet name 'OJASOPE NIG.LIMITED' has an execution in the last 7 days
+Row 559: Duplicate entry - URN 'DCP/24/LO/001228' or outlet name 'MOSCHEM INTEGRATED SERVICES ENTERPRISES' has an execution in the last 7 days
+Row 560: Duplicate entry - URN 'DCP/25/LO/002584' or outlet name 'DOSUNMU VENTURES' has an execution in the last 7 days
+Row 561: Duplicate entry - URN 'DCP/25/LO/002585' or outlet name 'AJO OLOMI CEMENT' has an execution in the last 7 days
+Row 562: Duplicate entry - URN 'Dcp/19/Lo/003035' or outlet name 'Olorunosebi Cement' has an execution in the last 7 days
+Row 563: Duplicate entry - URN 'DCP/24/LO/001260' or outlet name 'Ultimate Cement' has an execution in the last 7 days
+Row 564: Duplicate entry - URN 'Dcp/19/Lo/003038' or outlet name 'F & F Cement' has an execution in the last 7 days
+Row 565: Duplicate entry - URN 'Dcp/19/Lo/003039' or outlet name 'Olajesu Global Resources' has an execution in the last 7 days
+Row 566: Duplicate entry - URN 'Dcp/19/Lo/003040' or outlet name 'Omo Oba Fash Entp.' has an execution in the last 7 days
+Row 567: Duplicate entry - URN 'Dcp/19/Lo/003041' or outlet name 'Aimasiko Cement' has an execution in the last 7 days
+Row 568: Duplicate entry - URN 'DCP/24/LO/001246' or outlet name 'Ireni Temi Tie' has an execution in the last 7 days
+Row 569: Duplicate entry - URN 'Dcp/19/Lo/003044' or outlet name 'Temidire Cement' has an execution in the last 7 days
+Row 570: Duplicate entry - URN 'Dcp/19/Lo/010319' or outlet name 'Ti Oluwani Cement' has an execution in the last 7 days
+Row 571: Duplicate entry - URN 'DCP/24/LO/001262' or outlet name 'Moboluwaduro Ent.' has an execution in the last 7 days
+Row 572: Duplicate entry - URN 'DCP/24/LO/001263' or outlet name 'Baba Ogbo Cement' has an execution in the last 7 days
+Row 573: Duplicate entry - URN 'DCP/24/LO/001264' or outlet name 'Kilamek Cement' has an execution in the last 7 days
+Row 574: Duplicate entry - URN 'DCP/24/LO/001261' or outlet name 'Damex Cement' has an execution in the last 7 days
+Row 575: Duplicate entry - URN 'Dcp/23/Lo/000607' or outlet name 'Tomson Communication Ltd' has an execution in the last 7 days
+Row 576: Duplicate entry - URN 'DCP/24/LO/001233' or outlet name 'Ireni Temi Tie' has an execution in the last 7 days
+Row 577: Duplicate entry - URN 'Dcp/23/Lo/000476' or outlet name 'Enty Enterprises' has an execution in the last 7 days
+Row 578: Duplicate entry - URN 'DCP/24/LO/001265' or outlet name 'OPEITA TAIWO TRADING  STORE' has an execution in the last 7 days
+Row 579: Duplicate entry - URN 'DCP/24/LO/000451' or outlet name 'ITELE BLOCK INDUSTRY' has an execution in the last 7 days
+Row 580: Duplicate entry - URN 'DCP/24/LO/000451' or outlet name 'ITELE BLOCK INDUSTRY' has an execution in the last 7 days
+Row 586: Duplicate entry - URN 'DCP/19/LO/009156' or outlet name 'WANIK ENTERPRISES' has an execution in the last 7 days
+Row 601: Duplicate entry - URN 'DCP/24/LO/000258' or outlet name 'olasunkanmi global venture' has an execution in the last 7 days
+Row 627: Duplicate entry - URN 'DCP/19/LO/000101' or outlet name 'Posu Golden apple cement' has an execution in the last 7 days
+Row 629: Duplicate entry - URN 'DCP/19/LO/000103' or outlet name 'Posu Golden apple cement' has an execution in the last 7 days
+Row 633: Duplicate entry - URN 'DCP/19/LO/000107' or outlet name 'Posu Golden apple cement' has an execution in the last 7 days
+Row 635: Duplicate entry - URN 'DCP/19/LO/000109' or outlet name 'Posu Golden apple cement' has an execution in the last 7 days
+Row 636: Duplicate entry - URN 'DCP/19/LO/000497' or outlet name 'Kazeem JOLAOSO' has an execution in the last 7 days
+Row 638: Duplicate entry - URN 'DCP/19/LO/000499' or outlet name 'Frisware Integrated services' has an execution in the last 7 days
+Row 639: Duplicate entry - URN 'DCP/19/LO/000097' or outlet name 'Frisware Integrated services' has an execution in the last 7 days
+Row 648: Duplicate entry - URN 'DCP/19/LO/011839' or outlet name 'Abesfad nig ltd' has an execution in the last 7 days
+Row 658: Duplicate entry - URN 'DCP/19/LO/000118' or outlet name 'Endurance block' has an execution in the last 7 days
+Row 659: Duplicate entry - URN 'DCP/19/LO/000119' or outlet name 'Ogo-Oluwa cement' has an execution in the last 7 days
+Row 660: Duplicate entry - URN 'DCP/19/LO/000120' or outlet name 'Convenant cement' has an execution in the last 7 days
+Row 661: Duplicate entry - URN 'DCP/19/LO/000120' or outlet name 'Convenant block industry' has an execution in the last 7 days
+Row 662: Duplicate entry - URN 'DCP/19/LO/000128' or outlet name 'B&S cement store' has an execution in the last 7 days
+Row 664: Duplicate entry - URN 'DCP/19/LO/000128' or outlet name 'B&S cement store' has an execution in the last 7 days
+Row 700: Duplicate entry - URN 'DCP/24/LO/001308' or outlet name 'OLUWANISHOLA CEMENT' has an execution in the last 7 days
+Row 705: Duplicate entry - URN 'DCP/19/LO/009773' or outlet name 'KOLLYGAB ENTERPRISES 2' has an execution in the last 7 days
+Row 707: Duplicate entry - URN 'DCP/19/LO/009773' or outlet name 'AL-LATEEF COMM. AND CEMENT' has an execution in the last 7 days
+Row 732: Duplicate entry - URN 'DCP/24/LO/000156' or outlet name 'OMOGACO LAD' has an execution in the last 7 days
+Row 744: Duplicate entry - URN 'DCP/19/LO/009714' or outlet name 'S O LOGISTICS VENTURES' has an execution in the last 7 days
+Row 749: Duplicate entry - URN 'DCP/19/LO/009719' or outlet name 'TOP SPEED CEMENT AND BUILDING MATERIALS 2' has an execution in the last 7 days
+Row 774: Duplicate entry - URN 'DCP/24/LO/001315' or outlet name 'P. OLAWALE INVESTMENT' has an execution in the last 7 days
+Row 776: Duplicate entry - URN 'DCP/24/LO/001317' or outlet name 'BEMIBAWA CEMENT AND BLOCKS INDUSTRY' has an execution in the last 7 days
+Row 779: Duplicate entry - URN 'DCP/19/LO/009766' or outlet name 'WAHEED CEMENT' has an execution in the last 7 days
+Row 780: Duplicate entry - URN 'DCP/19/LO/009767' or outlet name 'JOSKANWU ENTERPRISE 1' has an execution in the last 7 days
+Row 781: Duplicate entry - URN 'DCP/19/LO/009768' or outlet name 'JOSKANWU ENTERPRISE 2' has an execution in the last 7 days
+Row 782: Duplicate entry - URN 'DCP/19/LO/009769' or outlet name 'MANASSEH ENTERPRISE' has an execution in the last 7 days
+Row 783: Duplicate entry - URN 'DCP/19/LO/009770' or outlet name 'ORE OFE INDUSTRIAL ENTERPRISE' has an execution in the last 7 days
+Row 784: Duplicate entry - URN 'DCP/19/LO/009771' or outlet name 'GOD MERCY CEMENT' has an execution in the last 7 days
+Row 791: Duplicate entry - URN 'DCP/19/LO/009780' or outlet name 'JOHN CEMENT' has an execution in the last 7 days
+Row 804: Duplicate entry - URN 'DCP/19/LO/009677' or outlet name 'ALKAD CEMENT AND BUILDING MATERIALS' has an execution in the last 7 days
+Row 805: Duplicate entry - URN 'DCP/24/LO/001319' or outlet name 'CHUKWUNONSO CEMENT' has an execution in the last 7 days
+Row 806: Duplicate entry - URN 'DCP/19/LO/009765' or outlet name 'SHARAFAR CEMENT' has an execution in the last 7 days
+Row 813: Duplicate entry - URN 'DCP/19/LO/000010' or outlet name 'ALAJA COLE MORA'S' has an execution in the last 7 days
+Row 830: Duplicate entry - URN 'DCP/19/LO/000048' or outlet name 'MR AKEEM' has an execution in the last 7 days
+Row 834: Duplicate entry - URN 'DCP/19/LO/000053' or outlet name 'MRS KOMOLAFE' has an execution in the last 7 days
+Row 836: Duplicate entry - URN 'DCP/19/LO/000033' or outlet name 'MRS CHRISTIANAH' has an execution in the last 7 days
+Row 846: Duplicate entry - URN 'DCP/24/LO/001088' or outlet name 'MR ABAYOMI' has an execution in the last 7 days
+Row 851: Duplicate entry - URN 'DCP/19/LO/001092' or outlet name 'MRS DOSUNMU' has an execution in the last 7 days
+Row 858: Duplicate entry - URN 'DCP/24/LO/001101' or outlet name 'MR OLADIPO ABIDEMI' has an execution in the last 7 days
+Row 859: Duplicate entry - URN 'DCP/24/LO/001102' or outlet name 'MR OLADIPO ABIDEMI' has an execution in the last 7 days
+Row 860: Duplicate entry - URN 'DCP/24/LO/001103' or outlet name 'MR OLADIPO ABIDEMI' has an execution in the last 7 days
+Row 864: Duplicate entry - URN 'DCP/19/LO/000508' or outlet name 'MR GAFAR ABODUN' has an execution in the last 7 days
+Row 865: Duplicate entry - URN 'DCP/19/LO/000509' or outlet name 'MR GAFAR ABODUN' has an execution in the last 7 days
+Row 869: Duplicate entry - URN 'DCP/19/LO/000053' or outlet name 'ALHAJI ONINUORE' has an execution in the last 7 days
+Row 871: Duplicate entry - URN 'DCP/19/LO/000032' or outlet name 'MR KEHINDE OLAKUNLE' has an execution in the last 7 days
+Row 872: Duplicate entry - URN 'DCP/19/LO/000033' or outlet name 'MRS SOETAN' has an execution in the last 7 days
+Row 887: Duplicate entry - URN 'DCP/19/LO/000533' or outlet name 'ALHAJA SOWUNMI' has an execution in the last 7 days
+Row 892: Duplicate entry - URN 'DCP/24/LO/001106' or outlet name 'MR RASAQ YUSUF' has an execution in the last 7 days
+Row 898: Duplicate entry - URN 'DCP/24/LO/002147' or outlet name 'MRS MOTUNRAYO BALOGUN' has an execution in the last 7 days
+Row 899: Duplicate entry - URN 'DCP/24/LO/002148' or outlet name 'MRS MOTUNRAYO BALOGUN' has an execution in the last 7 days
+Row 901: Duplicate entry - URN 'DCP/24/LO/002152' or outlet name 'CHIEF ADEBOYE ADEBOLA' has an execution in the last 7 days
+Row 929: Duplicate entry - URN 'DCP/19/LO/001099' or outlet name 'mr okikiola jamiu' has an execution in the last 7 days
+Row 943: Duplicate entry - URN 'DCP/23/LO/000183' or outlet name 'Mr Raliwan' has an execution in the last 7 days
+Row 960: Duplicate entry - URN 'DCP/19/LO/001121' or outlet name 'Mr Desmond Oyebode' has an execution in the last 7 days
+Row 998: Duplicate entry - URN 'DCP/19/LO/000826' or outlet name 'MRS CHRISTIAN AFOLABI' has an execution in the last 7 days
+Row 1008: Duplicate entry - URN 'DCP/19/LO/001163' or outlet name 'Mrs Adeyemi' has an execution in the last 7 days
+Row 1009: Duplicate entry - URN 'DCP/25/LO/005781' or outlet name 'Mr Ogunsola Ademola' has an execution in the last 7 days
+Row 1010: Duplicate entry - URN 'DCP/25/LO/005782' or outlet name 'Mrs Theresa Johnson' has an execution in the last 7 days
+Row 1030: Duplicate entry - URN 'DCP/19/LO/002235' or outlet name 'MRS SHOETAN CEMENT STORE' has an execution in the last 7 days
+Row 1033: Duplicate entry - URN 'DCP/24/LO/001280' or outlet name 'AKINRIMISI CEMENT' has an execution in the last 7 days
+Row 1046: Duplicate entry - URN 'DCP/19/LO/002252' or outlet name 'MUMMY KELECHI CEMENT STORE' has an execution in the last 7 days
+Row 1047: Duplicate entry - URN 'DCP/19/LO/002253' or outlet name 'J.S CEMENT STORE' has an execution in the last 7 days
+Row 1050: Duplicate entry - URN 'DCP/19/LO/002256' or outlet name 'OWONIKOKO CEMENT STORE' has an execution in the last 7 days
+Row 1056: Duplicate entry - URN 'DCP/19/LO/002262' or outlet name 'YALATEEF CEMENT STORE' has an execution in the last 7 days
+Row 1074: Duplicate entry - URN 'DCP/24/LO/001287' or outlet name 'MRS OLA CEMENT STORE' has an execution in the last 7 days
+Row 1093: Duplicate entry - URN 'DCP/24/LO/001290' or outlet name 'BISOLA CEMENT STORE' has an execution in the last 7 days
+Row 1096: Duplicate entry - URN 'DCP/19/LO/002309' or outlet name 'IYA IBO CEMENT STORE' has an execution in the last 7 days
+Row 1099: Duplicate entry - URN 'DCP/19/LO/002312' or outlet name 'AYODEJI CEMENT STORE' has an execution in the last 7 days
+Row 1102: Duplicate entry - URN 'DCP/19/LO/002302' or outlet name 'SALROF ENTERPRISES CEMENT STORE' has an execution in the last 7 days
+Row 1136: Duplicate entry - URN 'DCP/19/LO/002356' or outlet name 'MRS OYEDIJI CEMENT STORE' has an execution in the last 7 days
+Row 1175: Duplicate entry - URN 'Dcp/19/LO/002672' or outlet name 'MUMMY JUMMY' has an execution in the last 7 days
+Row 1179: Duplicate entry - URN 'Dcp/19/LO/002672' or outlet name 'MAR-ELL VENTURE' has an execution in the last 7 days
+Row 1184: Duplicate entry - URN 'Dcp/19/LO/0026' or outlet name 'AlHAJA BABAWALE' has an execution in the last 7 days
+Row 1185: Duplicate entry - URN 'Dcp/19/LO/002672' or outlet name 'TWINS  FAJA NIG LTD' has an execution in the last 7 days
+Row 1186: Duplicate entry - URN 'Dcp/19/LO/0026' or outlet name 'AL-TECH & SONS' has an execution in the last 7 days
+Row 1187: Duplicate entry - URN 'Dcp/19/LO/002672' or outlet name 'AKINWALE CEMENT' has an execution in the last 7 days
+Row 1196: Duplicate entry - URN 'Dcp/19/LO/002685' or outlet name 'APPRECIATION VENTURE' has an execution in the last 7 days
+Row 1206: Duplicate entry - URN 'Dcp/19/LO/002708' or outlet name 'MUFUTAU IBRAHIM' has an execution in the last 7 days
+Row 1209: Duplicate entry - URN 'Dcp/19/LO/0027117' or outlet name 'GABJAY ENTERPRISE' has an execution in the last 7 days
+Row 1228: Duplicate entry - URN 'Dcp/19/LO/002718' or outlet name 'WALEX CEMENT' has an execution in the last 7 days
+Row 1258: Duplicate entry - URN 'DCP/21/LO/03680' or outlet name 'MUSTAPHA YUNUS ABIOLA' has an execution in the last 7 days
+Row 1268: Duplicate entry - URN 'DCP/19/LO/003080' or outlet name 'MR AYOOLA' has an execution in the last 7 days
+Row 1269: Duplicate entry - URN 'DCP/19/LO/003081' or outlet name 'OKE AKANJI' has an execution in the last 7 days
+Row 1274: Duplicate entry - URN 'DCP/19/LO/003086' or outlet name 'ALLAH DEY' has an execution in the last 7 days
+Row 1275: Duplicate entry - URN 'DCP/19/LO/003087' or outlet name 'ALLAH DEY' has an execution in the last 7 days
+Row 1279: Duplicate entry - URN 'DCP/19/LO/003091' or outlet name 'MUSTAPHA YUNUS ABIOLA' has an execution in the last 7 days
+Row 1281: Duplicate entry - URN 'DCP/19/LO/003093' or outlet name 'MR. ORISAGBEMI' has an execution in the last 7 days
+Row 1289: Duplicate entry - URN 'DCP/19/LO/003100' or outlet name 'GLORIOUS CEMENT' has an execution in the last 7 days
+Row 1295: Duplicate entry - URN 'DCP/19/LO/003109' or outlet name 'MR JOSHUA' has an execution in the last 7 days
+Row 1299: Duplicate entry - URN 'DCP/19/LO/003118' or outlet name 'MR SODEHINDE' has an execution in the last 7 days
+Row 1307: Duplicate entry - URN 'DCP/19/LO/003121' or outlet name 'MR BASHIRU ADEKEYE' has an execution in the last 7 days
+Row 1308: Duplicate entry - URN 'DCP/19/LO/003122' or outlet name 'MR BASHIRU ADEKEYE' has an execution in the last 7 days
+Row 1309: Duplicate entry - URN 'DCP/19/LO/003125' or outlet name 'MR BASHIRU ADEKEYE' has an execution in the last 7 days
+Row 1310: Duplicate entry - URN 'DCP/19/LO/003126' or outlet name 'MR BASHIRU ADEKEYE' has an execution in the last 7 days
+Row 1317: Duplicate entry - URN 'DCP/19/LO/003133' or outlet name 'MR OLAJIDE' has an execution in the last 7 days
+Row 1320: Duplicate entry - URN 'DCP/19/LO/003137' or outlet name 'MR OKE AKANJI' has an execution in the last 7 days
+Row 1321: Duplicate entry - URN 'DCP/19/LO/003138' or outlet name 'MR MOSES AGBOOLA' has an execution in the last 7 days
+Row 1329: Duplicate entry - URN 'DCP/19/LO/003153' or outlet name 'MR OKE AKANJI' has an execution in the last 7 days
+Row 1330: Duplicate entry - URN 'DCP/19/LO/003154' or outlet name 'MR OKE AKANJI' has an execution in the last 7 days
+Row 1333: Duplicate entry - URN 'DCP/19/LO/003157' or outlet name 'MRS YUSUF' has an execution in the last 7 days
+Row 1338: Duplicate entry - URN 'DCP/19/LO/003162' or outlet name 'MR SOYOOLA' has an execution in the last 7 days
+Row 1339: Duplicate entry - URN 'DCP/19/LO/003163' or outlet name 'MR SOYOOLA' has an execution in the last 7 days
+Row 1347: Duplicate entry - URN 'DCP/24/LO/000666' or outlet name 'OKE ADENIRAN' has an execution in the last 7 days
+Row 1348: Duplicate entry - URN 'DCP/19/LO/000794' or outlet name 'Mrs Adebayo' has an execution in the last 7 days
+Row 1349: Duplicate entry - URN 'DCP/19/LO/000795' or outlet name 'Mrs Salami' has an execution in the last 7 days
+Row 1350: Duplicate entry - URN 'DCP/19/LO/000796' or outlet name 'Damifayo' has an execution in the last 7 days
+Row 1351: Duplicate entry - URN 'DCP/19/LO/000797' or outlet name 'Mr olopade' has an execution in the last 7 days
+Row 1352: Duplicate entry - URN 'DCP/19/LO/000798' or outlet name 'mrs Basirat' has an execution in the last 7 days
+Row 1353: Duplicate entry - URN 'DCP/19/LO/000799' or outlet name 'mrs kemi Yusuf' has an execution in the last 7 days
+Row 1354: Duplicate entry - URN 'DCP/19/LO/000800' or outlet name 'mrs Ademolu' has an execution in the last 7 days
+Row 1355: Duplicate entry - URN 'DCP/19/LO/000801' or outlet name 'mr Oserere' has an execution in the last 7 days
+Row 1356: Duplicate entry - URN 'DCP/19/LO/000802' or outlet name 'mrs owoyemi' has an execution in the last 7 days
+Row 1357: Duplicate entry - URN 'DCP/19/LO/000803' or outlet name 'iya junior' has an execution in the last 7 days
+Row 1358: Duplicate entry - URN 'DCP/19/LO/000804' or outlet name 'mrs bose' has an execution in the last 7 days
+Row 1359: Duplicate entry - URN 'DCP/19/LO/000805' or outlet name 'Gboriduro Adewale' has an execution in the last 7 days
+Row 1360: Duplicate entry - URN 'DCP/25/LO/002510' or outlet name 'Saheed Ariyo' has an execution in the last 7 days
+Row 1361: Duplicate entry - URN 'DCP/25/LO/002514' or outlet name 'Fumnmilayo Adeosun' has an execution in the last 7 days
+Row 1362: Duplicate entry - URN 'DCP/25/LO/005729' or outlet name 'omololu oluwakemi' has an execution in the last 7 days
+Row 1363: Duplicate entry - URN 'DCP/25/LO/005730' or outlet name 'mistura ojo' has an execution in the last 7 days
+Row 1364: Duplicate entry - URN 'DCP/25/LO/005731' or outlet name 'modupe Junaid' has an execution in the last 7 days
+Row 1365: Duplicate entry - URN 'DCP/25/LO/005782' or outlet name 'Mrs Theresa Johnson' has an execution in the last 7 days
+Row 1366: Duplicate entry - URN 'DCP/19/LO/001096' or outlet name 'Mrs Ogunrinde' has an execution in the last 7 days
+Row 1367: Duplicate entry - URN 'DCP/19/LO/001097' or outlet name 'Soliu Aderoju' has an execution in the last 7 days
+Row 1368: Duplicate entry - URN 'DCP/19/LO/001098' or outlet name 'mrs Olowu' has an execution in the last 7 days
+Row 1369: Duplicate entry - URN 'DCP/19/LO/001099' or outlet name 'Alhaja Aishat' has an execution in the last 7 days
+Row 1370: Duplicate entry - URN 'DCP/19/LO/001100' or outlet name 'Alhaji Saka' has an execution in the last 7 days
+Row 1371: Duplicate entry - URN 'DCP/25/LO/002502' or outlet name 'MR ADEKAUNSI' has an execution in the last 7 days
+Row 1372: Duplicate entry - URN 'DCP/19/LO/001099' or outlet name 'mr okikiola jamiu' has an execution in the last 7 days
+Row 1373: Duplicate entry - URN 'DCP/25/LO/002505' or outlet name 'Mrs Peter Adelani' has an execution in the last 7 days
+Row 1374: Duplicate entry - URN 'DCP/19/LO/001104' or outlet name 'mr jamiu okikiola' has an execution in the last 7 days
+Row 1375: Duplicate entry - URN 'DCP/19/LO/001105' or outlet name 'Mrs Oluwalogbon' has an execution in the last 7 days
+Row 1376: Duplicate entry - URN 'DCP/19/LO/001106' or outlet name 'Mrs Tony oyebode' has an execution in the last 7 days
+Row 1377: Duplicate entry - URN 'DCP/19/LO/001107' or outlet name 'Big Mummy' has an execution in the last 7 days
+Row 1378: Duplicate entry - URN 'DCP/23/LO/000184' or outlet name 'mr ologunleko' has an execution in the last 7 days
+Row 1379: Duplicate entry - URN 'DCP/19/LO/001150' or outlet name 'Hajia Musa' has an execution in the last 7 days
+Row 1380: Duplicate entry - URN 'DCP/19/LO/001151' or outlet name 'Mr. Tony oyebode' has an execution in the last 7 days
+Row 1381: Duplicate entry - URN 'DCP/19/LO/001152' or outlet name 'Hajia Mustapha Alira' has an execution in the last 7 days
+Row 1382: Duplicate entry - URN 'DCP/19/LO/001153' or outlet name 'sholotan nurudeen' has an execution in the last 7 days
+Row 1383: Duplicate entry - URN 'DCP/23/LO/000183' or outlet name 'Mr Raliwan' has an execution in the last 7 days
+Row 1384: Duplicate entry - URN 'DCP/19/LO/002504' or outlet name 'saheed sanusi' has an execution in the last 7 days
+Row 1385: Duplicate entry - URN 'DCP/25/LO/002512' or outlet name 'Taiwo Benjamin' has an execution in the last 7 days
+Row 1386: Duplicate entry - URN 'DCP/23/LO/000183' or outlet name 'Mr Raliwan' has an execution in the last 7 days
+Row 1387: Duplicate entry - URN 'DCP/19/LO/000806' or outlet name 'Mrs Adeniyi' has an execution in the last 7 days
+Row 1388: Duplicate entry - URN 'DCP/19/LO/000807' or outlet name 'lseoluwa' has an execution in the last 7 days
+Row 1389: Duplicate entry - URN 'DCP/19/LO/000808' or outlet name 'Kenny' has an execution in the last 7 days
+Row 1390: Duplicate entry - URN 'DCP/19/LO/000809' or outlet name 'Biodun' has an execution in the last 7 days
+Row 1391: Duplicate entry - URN 'DCP/19/LO/000810' or outlet name 'Mr Ojo' has an execution in the last 7 days
+Row 1392: Duplicate entry - URN 'DCP/19/LO/000811' or outlet name 'Mrs Sulimon Oluwaloni' has an execution in the last 7 days
+Row 1393: Duplicate entry - URN 'DCP/19/LO/000812' or outlet name 'Bose Adewale' has an execution in the last 7 days
+Row 1394: Duplicate entry - URN 'DCP/19/LO/000813' or outlet name 'Allahu lateff' has an execution in the last 7 days
+Row 1395: Duplicate entry - URN 'DCP/19/LO/000814' or outlet name 'Mubas ola' has an execution in the last 7 days
+Row 1396: Duplicate entry - URN 'DCP/19/LO/000815' or outlet name 'Bakinsin' has an execution in the last 7 days
+Row 1397: Duplicate entry - URN 'DCP/19/LO/000816' or outlet name 'David o fabiyi' has an execution in the last 7 days
+Row 1398: Duplicate entry - URN 'DCP/25/LO/005702' or outlet name 'wasiu olamide' has an execution in the last 7 days
+Row 1399: Duplicate entry - URN 'DCP/25/LO/005703' or outlet name 'Mrs lawal mosurat' has an execution in the last 7 days
+Row 1400: Duplicate entry - URN 'DCP/25/LO/005704' or outlet name 'OJERINDE JOSEPH' has an execution in the last 7 days
+Row 1401: Duplicate entry - URN 'DCP/25/LO/005705' or outlet name 'OLAJUMOKE OLUFUMI' has an execution in the last 7 days
+Row 1402: Duplicate entry - URN 'DCP/19/LO/001120' or outlet name 'Mr Desmond Oyebode' has an execution in the last 7 days
+Row 1403: Duplicate entry - URN 'DCP/19/LO/001121' or outlet name 'Mr Desmond Oyebode' has an execution in the last 7 days
+Row 1404: Duplicate entry - URN 'DCP/19/LO/001122' or outlet name 'Mrs Idiat Ganiu' has an execution in the last 7 days
+Row 1405: Duplicate entry - URN 'DCP/25/LO/000245' or outlet name 'mrs Animahawu shakirat jumoke' has an execution in the last 7 days
+Row 1406: Duplicate entry - URN 'DCP/19/LO/001124' or outlet name 'Madam Folashade' has an execution in the last 7 days
+Row 1407: Duplicate entry - URN 'DCP/19/LO/001125' or outlet name 'Mr. Ganiu' has an execution in the last 7 days
+Row 1408: Duplicate entry - URN 'DCP/19/LO/001126' or outlet name 'Mr Falabi' has an execution in the last 7 days
+Row 1409: Duplicate entry - URN 'DCP/19/LO/001127' or outlet name 'Mrs Kemi Ogunniyi' has an execution in the last 7 days
+Row 1410: Duplicate entry - URN 'DCP/19/LO/001128' or outlet name 'Mr Ismail' has an execution in the last 7 days
+Row 1411: Duplicate entry - URN 'DCP/19/LO/001129' or outlet name 'mr segun' has an execution in the last 7 days
+Row 1412: Duplicate entry - URN 'DCP/19/LO/001130' or outlet name 'Mr Adeyemi' has an execution in the last 7 days
+Row 1413: Duplicate entry - URN 'DCP/19/LO/001131' or outlet name 'ojurugbe nurudeen' has an execution in the last 7 days
+Row 1414: Duplicate entry - URN 'DCP/19/LO/001159' or outlet name 'Saheed' has an execution in the last 7 days
+Row 1415: Duplicate entry - URN 'DCP/19/LO/001160' or outlet name 'Mr Alatishe' has an execution in the last 7 days
+Row 1416: Duplicate entry - URN 'DCP/25/LO/000674' or outlet name 'MR ADEKUNLE' has an execution in the last 7 days
+Row 1417: Duplicate entry - URN 'DCP/19/LO/001162' or outlet name 'Mrs Adeyemi' has an execution in the last 7 days
+Row 1418: Duplicate entry - URN 'DCP/25/LO/002508' or outlet name 'opeyemi Akinsunbo' has an execution in the last 7 days
+Row 1419: Duplicate entry - URN 'DCP/19/LO/001132' or outlet name 'Mr Faleye' has an execution in the last 7 days
+Row 1420: Duplicate entry - URN 'DCP/19/LO/001133' or outlet name 'Hajia Ibrahim' has an execution in the last 7 days
+Row 1421: Duplicate entry - URN 'DCP/19/LO/001134' or outlet name 'Mummy Elilakabikudi' has an execution in the last 7 days
+Row 1422: Duplicate entry - URN 'DCP/19/LO/001135' or outlet name 'Mummy Racheal' has an execution in the last 7 days
+Row 1423: Duplicate entry - URN 'DCP/19/LO/001136' or outlet name 'Mummy Keji' has an execution in the last 7 days
+Row 1424: Duplicate entry - URN 'DCP/19/LO/001137' or outlet name 'Mr Saheed Ariyo' has an execution in the last 7 days
+Row 1425: Duplicate entry - URN 'DCP/19/LO/001138' or outlet name 'Alhaja Hassan' has an execution in the last 7 days
+Row 1426: Duplicate entry - URN 'DCP/19/LO/001139' or outlet name 'Mummy Serah' has an execution in the last 7 days
+Row 1427: Duplicate entry - URN 'DCP/19/LO/001140' or outlet name 'Mrs Ajibade' has an execution in the last 7 days
+Row 1428: Duplicate entry - URN 'DCP/19/LO/001141' or outlet name 'Mr Lekan' has an execution in the last 7 days
+Row 1429: Duplicate entry - URN 'DCP/19/LO/001142' or outlet name 'Daddy Elilakabikudi' has an execution in the last 7 days
+Row 1430: Duplicate entry - URN 'DCP/19/LO/001143' or outlet name 'Mummy Nimotah' has an execution in the last 7 days
+Row 1431: Duplicate entry - URN 'DCP/19/LO/001164' or outlet name 'Mummy Moji' has an execution in the last 7 days
+Row 1432: Duplicate entry - URN 'DCP/19/LO/001166' or outlet name 'fumilayo Adeosun' has an execution in the last 7 days
+Row 1433: Duplicate entry - URN 'DCP/19/LO/008552' or outlet name 'mr Tunde Ashimu' has an execution in the last 7 days
+Row 1434: Duplicate entry - URN 'DCP/23/LO/000704' or outlet name 'mr Adisa' has an execution in the last 7 days
+Row 1435: Duplicate entry - URN 'DCP/25/LO/002513' or outlet name 'olaleye Sunday' has an execution in the last 7 days
+Row 1436: Duplicate entry - URN 'DCP/25/LO/005781' or outlet name 'Mr Ogunsola Ademola' has an execution in the last 7 days
+Row 1437: Duplicate entry - URN 'DCP/19/LO/000829' or outlet name 'MRS BOLUWATIFE DEBORAH' has an execution in the last 7 days
+Row 1438: Duplicate entry - URN 'DCP/19/LO/000823' or outlet name 'MR OLUMIDE DADA' has an execution in the last 7 days
+Row 1439: Duplicate entry - URN 'DCP/19/LO/000821' or outlet name 'MR FOWOSEDO WASIU' has an execution in the last 7 days
+Row 1440: Duplicate entry - URN 'DCP/19/LO/000819' or outlet name 'MR A OPEYEMI' has an execution in the last 7 days
+Row 1441: Duplicate entry - URN 'DCP/19/LO/000826' or outlet name 'MRS CHRISTIAN AFOLABI' has an execution in the last 7 days
+Row 1442: Duplicate entry - URN 'DCP/19/LO/000824' or outlet name 'AHLAJA ROFIAT' has an execution in the last 7 days
+Row 1443: Duplicate entry - URN 'DCP/19/LO/000847' or outlet name 'MRS ADEOYE' has an execution in the last 7 days
+Row 1444: Duplicate entry - URN 'DCP/19/LO/000827' or outlet name 'MRS ADEGBOYEGA' has an execution in the last 7 days
+Row 1445: Duplicate entry - URN 'DCP/19/LO/000820' or outlet name 'MRS TAYO .O.' has an execution in the last 7 days
+Row 1446: Duplicate entry - URN 'DCP/19/LO/000849' or outlet name 'AHLAJA BOLAJI 1' has an execution in the last 7 days
+Row 1447: Duplicate entry - URN 'DCP/25/LO/005732' or outlet name 'Bakarare Nurudeen' has an execution in the last 7 days
+Row 1448: Duplicate entry - URN 'DCP/25/LO/005779' or outlet name 'Ibrahim Hammed' has an execution in the last 7 days
+Row 1449: Duplicate entry - URN 'DCP/25/LO/005780' or outlet name 'Abiodun Adeshina Owolabi' has an execution in the last 7 days
+Row 1450: Duplicate entry - URN 'DCP/25/LO/002712' or outlet name 'Mr Martin Akinwunmi' has an execution in the last 7 days
+Row 1451: Duplicate entry - URN 'DCP/19/LO/001163' or outlet name 'Mrs Adeyemi' has an execution in the last 7 days
+Row 1452: Duplicate entry - URN 'DCP/25/LO/005781' or outlet name 'Mr Ogunsola Ademola' has an execution in the last 7 days
+Row 1453: Duplicate entry - URN 'DCP/25/LO/005782' or outlet name 'Mrs Theresa Johnson' has an execution in the last 7 days
+Row 1454: Duplicate entry - URN 'DCP/19/LO/009151' or outlet name 'AKANKE SUPER STORE' has an execution in the last 7 days
+Row 1455: Duplicate entry - URN 'DCP/19/LO/009152' or outlet name 'POSU GOLDEN APPLE' has an execution in the last 7 days
+Row 1456: Duplicate entry - URN 'DCP/19/LO/009153' or outlet name 'MUSEDIK OGUNREMI CEMENT' has an execution in the last 7 days
+Row 1457: Duplicate entry - URN 'DCP/19/LO/009154' or outlet name 'B/S CEMENT' has an execution in the last 7 days
+Row 1458: Duplicate entry - URN 'DCP/19/LO/009155' or outlet name 'WANIK ENTERPRISES' has an execution in the last 7 days
+Row 1459: Duplicate entry - URN 'DCP/19/LO/009156' or outlet name 'WANIK ENTERPRISES' has an execution in the last 7 days
+Row 1460: Duplicate entry - URN 'DCP/19/LO/009157' or outlet name 'FINNING NIG LIMITED' has an execution in the last 7 days
+Row 1461: Duplicate entry - URN 'DCP/19/LO/009158' or outlet name 'MRS BAKARE' has an execution in the last 7 days
+Row 1462: Duplicate entry - URN 'DCP/19/LO/009164' or outlet name 'Mr Idowu cement store' has an execution in the last 7 days
+Row 1463: Duplicate entry - URN 'DCP/19/LO/009160' or outlet name 'AKINTOYE CEMENT' has an execution in the last 7 days
+Row 1464: Duplicate entry - URN 'DCP/19/LO/000081' or outlet name 'mummy tee cement  store' has an execution in the last 7 days
+Row 1465: Duplicate entry - URN 'DCP/19/LO/000112' or outlet name 'LuKaz block industry' has an execution in the last 7 days
+Row 1466: Duplicate entry - URN 'DCP/19/LO/000113' or outlet name 'kasamadupe block industry' has an execution in the last 7 days
+Row 1467: Duplicate entry - URN 'DCP/19/LO/000116' or outlet name 'musedik block industry' has an execution in the last 7 days
+Row 1468: Duplicate entry - URN 'DCP/19/LO/000118' or outlet name 'Bakare cement store' has an execution in the last 7 days
+Row 1469: Duplicate entry - URN 'DCP/19/LO/000119' or outlet name 'ENDURANCE BLOCK' has an execution in the last 7 days
+Row 1470: Duplicate entry - URN 'DCP/19/LO/009165' or outlet name 'OGO-OLUWA CEMENT' has an execution in the last 7 days
+Row 1471: Duplicate entry - URN 'DCP/19/LO/000120' or outlet name 'Convenant cement store' has an execution in the last 7 days
+Row 1472: Duplicate entry - URN 'DCP/19/LO/000121' or outlet name 'Convenant BLOCK INDUSTRY' has an execution in the last 7 days
+Row 1473: Duplicate entry - URN 'DCP/24/LO/000257' or outlet name 'olasunkanmi global venture' has an execution in the last 7 days
+Row 1474: Duplicate entry - URN 'DCP/24/LO/000258' or outlet name 'olasunkanmi global venture' has an execution in the last 7 days
+Row 1475: Duplicate entry - URN 'DCP/24/LO/000535' or outlet name 'ADESHYNA GLOBAL INVESTMENT' has an execution in the last 7 days
+Row 1476: Duplicate entry - URN 'DCP/24/LO/000154' or outlet name 'S LACATERA WORLD' has an execution in the last 7 days
+Row 1477: Duplicate entry - URN 'DCP/25/LO/002541' or outlet name 'YUSLAD CEMENT STORE' has an execution in the last 7 days
+Row 1478: Duplicate entry - URN 'DCP/24/LO/000211' or outlet name 'KIKELOMO CEMENT STORE' has an execution in the last 7 days
+Row 1479: Duplicate entry - URN 'DCP/24/LO/001065' or outlet name 'MERIT THRIVING VENTURE' has an execution in the last 7 days
+Row 1480: Duplicate entry - URN 'DCP/19/LO/009167' or outlet name 'Royal Gate commercial marketting Ind' has an execution in the last 7 days
+Row 1481: Duplicate entry - URN 'DCP/19/LO/009168' or outlet name 'FADLAD VENTURE' has an execution in the last 7 days
+Row 1482: Duplicate entry - URN 'DCP/19/LO/009169' or outlet name 'Alubarika cement store' has an execution in the last 7 days
+Row 1483: Duplicate entry - URN 'DCP/19/LO/009170' or outlet name 'Owoiya cement' has an execution in the last 7 days
+Row 1484: Duplicate entry - URN 'DCP/19/LO/009171' or outlet name 'Ogo-Oluwa cement 2' has an execution in the last 7 days
+Row 1485: Duplicate entry - URN 'DCP/19/LO/000089' or outlet name 'Walter cement' has an execution in the last 7 days
+Row 1486: Duplicate entry - URN 'DCP/19/LO/000131' or outlet name 'Morikas cement' has an execution in the last 7 days
+Row 1487: Duplicate entry - URN 'DCP/19/LO/000091' or outlet name 'Kashamadupe cement' has an execution in the last 7 days
+Row 1488: Duplicate entry - URN 'DCP/19/LO/009186' or outlet name 'B&S cement store' has an execution in the last 7 days
+Row 1489: Duplicate entry - URN 'DCP/19/LO/000093' or outlet name 'Kazarb heritage' has an execution in the last 7 days
+Row 1490: Duplicate entry - URN 'DCP/19/LO/000094' or outlet name 'Walter cement 2' has an execution in the last 7 days
+Row 1491: Duplicate entry - URN 'DCP/19/LO/000095' or outlet name 'Kola Alogi cement' has an execution in the last 7 days
+Row 1492: Duplicate entry - URN 'DCP/19/LO/000122' or outlet name 'Lucky base store' has an execution in the last 7 days
+Row 1493: Duplicate entry - URN 'DCP/19/LO/000123' or outlet name 'Luklat cement store' has an execution in the last 7 days
+Row 1494: Duplicate entry - URN 'DCP/19/LO/000126' or outlet name 'Ogo-Oluwa cement 1' has an execution in the last 7 days
+Row 1495: Duplicate entry - URN 'DCP/19/LO/000127' or outlet name 'Gods Hand ventures' has an execution in the last 7 days
+Row 1496: Duplicate entry - URN 'DCP/24/LO/001064' or outlet name 'BUHPMENT CEMENT STORE' has an execution in the last 7 days
+Row 1497: Duplicate entry - URN 'DCP/19/LO/000098' or outlet name 'Rhythem osa enterprises' has an execution in the last 7 days
+Row 1498: Duplicate entry - URN 'DCP/19/LO/000099' or outlet name 'Posu Golden apple cement' has an execution in the last 7 days
+Row 1499: Duplicate entry - URN 'DCP/24/LO/001063' or outlet name 'Alhaji Show cement' has an execution in the last 7 days
+Row 1500: Duplicate entry - URN 'DCP/19/LO/000101' or outlet name 'Posu Golden apple cement' has an execution in the last 7 days
+Row 1501: Duplicate entry - URN 'DCP/19/LO/000102' or outlet name 'Victory cement' has an execution in the last 7 days
+Row 1502: Duplicate entry - URN 'DCP/19/LO/000103' or outlet name 'Posu Golden apple cement' has an execution in the last 7 days
+Row 1503: Duplicate entry - URN 'DCP/19/LO/009189' or outlet name 'Moboluwaduro Cement Store' has an execution in the last 7 days
+Row 1504: Duplicate entry - URN 'DCP/19/LO/000105' or outlet name 'Frisware Integrated services' has an execution in the last 7 days
+Row 1505: Duplicate entry - URN 'DCP/19/LO/011687' or outlet name 'Alhaji show 2 cement store' has an execution in the last 7 days
+Row 1506: Duplicate entry - URN 'DCP/19/LO/000107' or outlet name 'Posu Golden apple cement' has an execution in the last 7 days
+Row 1507: Duplicate entry - URN 'DCP/19/LO/000108' or outlet name 'Kazeem JOLAOSO' has an execution in the last 7 days
+Row 1508: Duplicate entry - URN 'DCP/19/LO/000109' or outlet name 'Posu Golden apple cement' has an execution in the last 7 days
+Row 1509: Duplicate entry - URN 'DCP/19/LO/000497' or outlet name 'Kazeem JOLAOSO' has an execution in the last 7 days
+Row 1510: Duplicate entry - URN 'DCP/19/LO/000498' or outlet name 'Mummy Nifemi ventures' has an execution in the last 7 days
+Row 1511: Duplicate entry - URN 'DCP/19/LO/000499' or outlet name 'Frisware Integrated services' has an execution in the last 7 days
+Row 1512: Duplicate entry - URN 'DCP/19/LO/000097' or outlet name 'Frisware Integrated services' has an execution in the last 7 days
+Row 1513: Duplicate entry - URN 'DCP/25/LO/002533' or outlet name 'omo Iran ologo' has an execution in the last 7 days
+Row 1514: Duplicate entry - URN 'DCP/25/LO/002536' or outlet name 'Majub cement' has an execution in the last 7 days
+Row 1515: Duplicate entry - URN 'DCP/19/LO/000083' or outlet name 'mummy nifemi 2 cement store' has an execution in the last 7 days
+Row 1516: Duplicate entry - URN 'DCP/19/LO/001062' or outlet name 'TIYIN CEMENT STORE' has an execution in the last 7 days
+Row 1517: Duplicate entry - URN 'DCP/19/LO/009208' or outlet name 'MR OMOLABI SAMUEL' has an execution in the last 7 days
+Row 1518: Duplicate entry - URN 'DCP/19/LO/011688' or outlet name 'ojasope cement store' has an execution in the last 7 days
+Row 1519: Duplicate entry - URN 'DCP/19/LO/000519' or outlet name 'ogooluwani block industry' has an execution in the last 7 days
+Row 1520: Duplicate entry - URN 'DCP/19/LO/011839' or outlet name 'Abesfad nig ltd 2' has an execution in the last 7 days
+Row 1521: Duplicate entry - URN 'DCP/19/LO/011839' or outlet name 'Abesfad nig ltd' has an execution in the last 7 days
+Row 1522: Duplicate entry - URN 'DCP/25/LO/002537' or outlet name 'sunshine block industry' has an execution in the last 7 days
+Row 1523: Duplicate entry - URN 'DCP/25/LO/002538' or outlet name 'Babadarijiwo cement' has an execution in the last 7 days
+Row 1524: Duplicate entry - URN 'DCP/19/LO/000079' or outlet name 'M.F AND SON CEMENT STORE' has an execution in the last 7 days
+Row 1525: Duplicate entry - URN 'DCP/19/LO/000542' or outlet name 'Jomfik Nig Ltd' has an execution in the last 7 days
+Row 1526: Duplicate entry - URN 'DCP/19/LO/000124' or outlet name 'Victory of God cement' has an execution in the last 7 days
+Row 1527: Duplicate entry - URN 'DCP/19/LO/00136' or outlet name 'Omooba zion block Industry' has an execution in the last 7 days
+Row 1528: Duplicate entry - URN 'DCP/19/LO/000111' or outlet name 'Mrs Adegbenro' has an execution in the last 7 days
+Row 1529: Duplicate entry - URN 'DCP/24/LO/001061' or outlet name 'AWODELE VENTURES' has an execution in the last 7 days
+Row 1530: Duplicate entry - URN 'DCP/24/LO/001060' or outlet name 'MAKE HOME CREATIONS' has an execution in the last 7 days
+Row 1531: Duplicate entry - URN 'DCP/19/LO/000118' or outlet name 'Endurance block' has an execution in the last 7 days
+Row 1532: Duplicate entry - URN 'DCP/19/LO/000119' or outlet name 'Ogo-Oluwa cement' has an execution in the last 7 days
+Row 1533: Duplicate entry - URN 'DCP/19/LO/000120' or outlet name 'Convenant cement' has an execution in the last 7 days
+Row 1534: Duplicate entry - URN 'DCP/19/LO/000120' or outlet name 'Convenant block industry' has an execution in the last 7 days
+Row 1535: Duplicate entry - URN 'DCP/19/LO/000128' or outlet name 'B&S cement store' has an execution in the last 7 days
+Row 1536: Duplicate entry - URN 'DCP/19/LO/000129' or outlet name 'Oke cement' has an execution in the last 7 days
+Row 1537: Duplicate entry - URN 'DCP/19/LO/000128' or outlet name 'B&S cement store' has an execution in the last 7 days
+Row 1538: Duplicate entry - URN 'DCP/19/LO/000132' or outlet name 'Kola Alogi cement 2' has an execution in the last 7 days
+Row 1539: Duplicate entry - URN 'DCP/19/LO/000133' or outlet name 'Wabillahi block' has an execution in the last 7 days
+Row 1540: Duplicate entry - URN 'DCP/19/LO/000135' or outlet name 'walter cement' has an execution in the last 7 days
+Row 1541: Duplicate entry - URN 'DCP/25/LO/002539' or outlet name 'DANDEBBY cement Store' has an execution in the last 7 days
+Row 1542: Duplicate entry - URN 'DCP/19/LO/000137' or outlet name 'Kashamadupe block industry' has an execution in the last 7 days
+Row 1543: Duplicate entry - URN 'DCP/19/LO/000134' or outlet name 'fadlad block industry' has an execution in the last 7 days
+Row 1544: Duplicate entry - URN 'DCP/25/LO/002540' or outlet name 'Noslat ventures' has an execution in the last 7 days
+Row 1545: Duplicate entry - URN 'DCP/24/LO/001059' or outlet name 'DEVINE CONSCIENCE BLOCK INDUSTRY' has an execution in the last 7 days
+Row 1546: Duplicate entry - URN 'DCP/25/LO/003719' or outlet name 'OLAOFE CEMENT STORE' has an execution in the last 7 days
+Row 1547: Duplicate entry - URN 'DCP/25/LO/002875' or outlet name 'JESUPEMI NIG ENTERPRISES' has an execution in the last 7 days
+Row 1548: Duplicate entry - URN 'DCP/23/LO/000359' or outlet name 'B&S VENTURE' has an execution in the last 7 days
+Row 1549: Duplicate entry - URN 'DCP/24/LO/002218' or outlet name 'Iyanuoluwa venture' has an execution in the last 7 days
+Row 1550: Duplicate entry - URN 'DCP/19/LO/009163' or outlet name 'Jokotewa venture' has an execution in the last 7 days
+Row 1551: Duplicate entry - URN 'DCP/24/LO/009204' or outlet name 'GLORIOUS CALVARY VENTURE' has an execution in the last 7 days
+Row 1552: Duplicate entry - URN 'DCP/24/LO/009209' or outlet name 'Awuru enterprises' has an execution in the last 7 days
+Row 1553: Duplicate entry - URN 'DCP/24/LO/009216' or outlet name 'Eyiowuewi cement store' has an execution in the last 7 days
+Row 1610: Duplicate entry - URN 'DCP/19/LO/009445' or outlet name 'OLAWALE INVESTMENT' has an execution in the last 7 days
+Row 1667: Duplicate entry - URN 'DCP/24/LO/000208' or outlet name 'TAOFEEK CEMENT' has an execution in the last 7 days
+Row 1671: Duplicate entry - URN 'DCP/24/LO/001960' or outlet name 'P Olawale investment' has an execution in the last 7 days
+Row 1689: Duplicate entry - URN 'DCP/25/LO/005777' or outlet name 'OLUSOLA GREAT and SONS NIGERIA VENTURE' has an execution in the last 7 days
+Row 1690: Duplicate entry - URN 'DCP/24/LO/002058' or outlet name 'OLAOLUWACEMENT SHOP  2' has an execution in the last 7 days
+Row 1724: Duplicate entry - URN 'DCP/19/LO/002139' or outlet name 'popoola olawale' has an execution in the last 7 days
+Row 1729: Duplicate entry - URN 'DCP/19/LO/002144' or outlet name 'Olaoluwa cement' has an execution in the last 7 days
+Row 1754: Duplicate entry - URN 'DCP/19/LO/009742' or outlet name 'BAYOOLA CEMENT' has an execution in the last 7 days
+Row 1758: Duplicate entry - URN 'DCP/19/LO/002179' or outlet name 'JIMI AZEEZ' has an execution in the last 7 days
+Row 1790: Duplicate entry - URN 'DCP/19/LO/002214' or outlet name 'Tu Grap cement' has an execution in the last 7 days
+Row 1858: Duplicate entry - URN 'DCP/19/LO/010392' or outlet name 'IDOWU CEMENT' has an execution in the last 7 days
+Row 1871: Duplicate entry - URN 'DCP/19/LO/010372' or outlet name 'MRS OLAOTAN ADESOLA' has an execution in the last 7 days
+Row 1884: Duplicate entry - URN 'DCP/19/LO/009154' or outlet name 'MRS ELIZABETH SHOBAYO' has an execution in the last 7 days
+Row 1900: Duplicate entry - URN 'DCP/25/LO/002467' or outlet name 'MR TOSIN OBASSA' has an execution in the last 7 days
+Row 1901: Duplicate entry - URN 'DCP/25/LO/002468' or outlet name 'MR TOSIN OBASSA' has an execution in the last 7 days
+Row 1902: Duplicate entry - URN 'DCP/25/LO/002469' or outlet name 'MR TOSIN OBASSA' has an execution in the last 7 days
+Row 1907: Duplicate entry - URN 'DCP/25/LO/005504' or outlet name 'MR TOSIN OBASSA' has an execution in the last 7 days
+Row 1908: Duplicate entry - URN 'DCP/25/LO/005505' or outlet name 'MR TOSIN OBASSA' has an execution in the last 7 days
+Row 1914: Duplicate entry - URN 'DCP/19/LO/009319' or outlet name 'ORE OFE' has an execution in the last 7 days
+Row 1924: Duplicate entry - URN 'DCP/19/LO/009290' or outlet name 'ANU OLUWA BLOCK IND' has an execution in the last 7 days
+Row 1966: Duplicate entry - URN 'DCP/19/LO/009267' or outlet name 'FOLASHADE BAKARE' has an execution in the last 7 days
+Row 1970: Duplicate entry - URN 'DCP/19/LO/002109' or outlet name 'P.OLAWALE' has an execution in the last 7 days
+Row 1974: Duplicate entry - URN 'DCP/19/LO/009243' or outlet name 'OBAMORO CEMENT' has an execution in the last 7 days
+Row 1985: Duplicate entry - URN 'DCP/19/LO/009244' or outlet name 'SAMISE VENTURE' has an execution in the last 7 days
+Row 1987: Duplicate entry - URN 'DCP/19/LO/009239' or outlet name 'SOLID BLOCK & CEMENT' has an execution in the last 7 days
+Row 1996: Duplicate entry - URN 'DCP/23/LO/000412' or outlet name 'TWINS FAJA' has an execution in the last 7 days
+Row 2003: Duplicate entry - URN 'DCP/19/LO/009285' or outlet name 'KING SOLOMON' has an execution in the last 7 days
+Row 2005: Duplicate entry - URN 'DCP/19/LO/009241' or outlet name 'OLOYE CEMENT' has an execution in the last 7 days
+Row 2013: Duplicate entry - URN 'DCP/19/LO/009289' or outlet name 'M.OLA YUSUF' has an execution in the last 7 days
+Row 2018: Duplicate entry - URN 'DCP/19/LO/002488' or outlet name 'JIMMY AZEEZ' has an execution in the last 7 days
+Row 2020: Duplicate entry - URN 'DCP/25/LO/004022' or outlet name 'ALLAHU LATEEF CEMENT' has an execution in the last 7 days

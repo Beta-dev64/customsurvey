@@ -785,35 +785,85 @@ def execution_delete(execution_id):
 @admin_bp.route('/executions/upload', methods=['GET', 'POST'])
 @admin_required
 def execution_upload():
+    """Enhanced execution upload with automatic outlet creation"""
     if request.method == 'GET':
-        return render_template('admin/execution_list.html')
+        return render_template('admin/execution_upload.html')
 
     file = request.files.get('file')
-    is_valid, error_msg = validate_file_upload(file)
+    if not file or not file.filename:
+        flash('No file selected', 'danger')
+        return redirect(request.url)
     
-    if not is_valid:
-        flash(error_msg, 'danger')
+    # Validate file type - support Excel and CSV
+    allowed_extensions = ['.csv', '.xlsx', '.xls']
+    file_ext = os.path.splitext(file.filename.lower())[1]
+    if file_ext not in allowed_extensions:
+        flash(f'Invalid file type. Allowed: {", ".join(allowed_extensions)}', 'danger')
         return redirect(request.url)
 
     try:
         # Read the uploaded file into a DataFrame
-        if file.filename.lower().endswith('.csv'):
+        if file_ext == '.csv':
             df = pd.read_csv(file)
         else:
             df = pd.read_excel(file)
 
+        # Print columns for debugging
+        current_app.logger.info(f"File columns: {list(df.columns)}")
+        print(f"Excel columns detected: {list(df.columns)}")
+
+        # Clean column names (remove extra spaces, standardize)
+        df.columns = df.columns.str.strip()
+        
+        # Create column mapping for flexibility
+        column_mapping = {
+            'URN': ['URN', 'urn', 'Urn', 'URN Code', 'Outlet URN'],
+            'Retail Point Name': ['Retail Point Name', 'Outlet Name', 'Shop Name', 'Point Name', 'Name'],
+            'Customer Name': ['Customer Name', 'Customer', 'Owner Name', 'Owner'],
+            'Address': ['Address', 'Location', 'Full Address'],
+            'Phone': ['Phone', 'Phone Number', 'Contact', 'Mobile'],
+            'Region': ['Region', 'Zone'],
+            'State': ['State'],
+            'LGA': ['LGA', 'Local Govt', 'Local Government', 'Local Government Area'],
+            'Outlet Type': ['Outlet Type', 'Type', 'Shop Type'],
+            'Date': ['Date', 'Execution Date', 'Visit Date'],
+            'Status': ['Status', 'Execution Status'],
+            'Notes': ['Notes', 'Comments', 'Remarks'],
+            'Table': ['Table'],
+            'Chair': ['Chair'],
+            'Parasol': ['Parasol'],
+            'Tarpaulin': ['Tarpaulin'],
+            'Hawker Jacket': ['Hawker Jacket']
+        }
+        
+        # Map columns dynamically
+        mapped_columns = {}
+        for standard_col, possible_cols in column_mapping.items():
+            for col in possible_cols:
+                if col in df.columns:
+                    mapped_columns[standard_col] = col
+                    break
+        
         # Validate minimal required columns
         required_columns = ['URN', 'Retail Point Name']
-        if not all(col in df.columns for col in required_columns):
-            flash(f"Missing required columns: {', '.join(required_columns)}", 'danger')
+        missing_cols = [col for col in required_columns if col not in mapped_columns]
+        if missing_cols:
+            available_cols = list(df.columns)
+            flash(f"Missing required columns: {', '.join(missing_cols)}. Available columns: {', '.join(available_cols)}", 'danger')
             return redirect(request.url)
 
-        # Convert the DataFrame to a list of dicts
-        execution_data = df.fillna('').to_dict(orient='records')
+        # Convert the DataFrame to a list of dicts with mapped columns
+        execution_data = []
+        for _, row in df.iterrows():
+            mapped_row = {}
+            for std_col, file_col in mapped_columns.items():
+                mapped_row[std_col] = row.get(file_col, '')
+            execution_data.append(mapped_row)
 
-        imported = skipped = 0
+        imported = skipped = outlets_created = 0
         errors = []
         duplicates = []
+        new_outlets = []
 
         with get_db_connection() as conn:
             cursor = conn.cursor()
@@ -823,82 +873,210 @@ def execution_upload():
                     urn = str(row.get('URN', '')).strip()
                     outlet_name = str(row.get('Retail Point Name', '')).strip()
                     
-                    if not urn:
-                        raise ValueError("Missing URN")
-
-                    # Check for existing execution in last 7 days
-                    seven_days_ago = (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d %H:%M:%S')
-                    cursor.execute('''
-                        SELECT COUNT(*) FROM executions e
-                        JOIN outlets o ON e.outlet_id = o.id
-                        WHERE (o.urn = ? OR o.outlet_name = ?)
-                        AND e.execution_date >= ?
-                    ''', (urn, outlet_name, seven_days_ago))
-                    
-                    if cursor.fetchone()[0] > 0:
-                        duplicates.append({
+                    if not urn or not outlet_name:
+                        errors.append({
                             'row': i + 1,
-                            'message': f"Duplicate entry - URN '{urn}' or outlet name '{outlet_name}' has an execution in the last 7 days"
+                            'error': f"Missing required data - URN: '{urn}', Outlet Name: '{outlet_name}'"
                         })
-                        skipped += 1
                         continue
 
-                    # Get outlet ID
+                    # Check for existing execution in last 7 days (skip duplicate check for new outlets)
+                    if 'new' not in urn.lower():
+                        seven_days_ago = (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d %H:%M:%S')
+                        cursor.execute('''
+                            SELECT COUNT(*) FROM executions e
+                            JOIN outlets o ON e.outlet_id = o.id
+                            WHERE (o.urn = ? OR o.outlet_name = ?)
+                            AND e.execution_date >= ?
+                        ''', (urn, outlet_name, seven_days_ago))
+                        
+                        if cursor.fetchone()[0] > 0:
+                            duplicates.append({
+                                'row': i + 1,
+                                'message': f"Duplicate entry - URN '{urn}' or outlet name '{outlet_name}' has an execution in the last 7 days"
+                            })
+                            skipped += 1
+                            continue
+
+                    # Get or create outlet
+                    outlet_id = None
+                    
+                    # Check if outlet exists
                     cursor.execute('SELECT id FROM outlets WHERE urn = ?', (urn,))
                     outlet = cursor.fetchone()
-                    if not outlet:
-                        raise ValueError(f"No outlet found for URN '{urn}'")
+                    
+                    if outlet:
+                        outlet_id = outlet[0]
+                    elif 'new' in urn.lower() or not outlet:
+                        # Create new outlet
+                        try:
+                            new_outlet_data = {
+                                'urn': urn,
+                                'outlet_name': outlet_name,
+                                'customer_name': str(row.get('Customer Name', '')).strip(),
+                                'address': str(row.get('Address', '')).strip(),
+                                'phone': str(row.get('Phone', '')).strip(),
+                                'outlet_type': str(row.get('Outlet Type', 'Shop')).strip(),
+                                'local_govt': str(row.get('LGA', '')).strip(),
+                                'state': str(row.get('State', '')).strip(),
+                                'region': str(row.get('Region', 'SW')).strip()  # Default to SW if not provided
+                            }
+                            
+                            # Validate required outlet fields
+                            if not new_outlet_data['region']:
+                                new_outlet_data['region'] = 'SW'  # Default region
+                            
+                            cursor.execute('''
+                                INSERT INTO outlets (
+                                    urn, outlet_name, customer_name, address, phone,
+                                    outlet_type, local_govt, state, region
+                                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            ''', (
+                                new_outlet_data['urn'],
+                                new_outlet_data['outlet_name'],
+                                new_outlet_data['customer_name'],
+                                new_outlet_data['address'],
+                                new_outlet_data['phone'],
+                                new_outlet_data['outlet_type'],
+                                new_outlet_data['local_govt'],
+                                new_outlet_data['state'],
+                                new_outlet_data['region']
+                            ))
+                            
+                            outlet_id = cursor.lastrowid
+                            outlets_created += 1
+                            
+                            new_outlets.append({
+                                'row': i + 1,
+                                'urn': urn,
+                                'name': outlet_name,
+                                'region': new_outlet_data['region']
+                            })
+                            
+                            current_app.logger.info(f"Created new outlet: URN={urn}, Name={outlet_name}")
+                            
+                        except Exception as outlet_error:
+                            errors.append({
+                                'row': i + 1,
+                                'error': f"Failed to create outlet for URN '{urn}': {str(outlet_error)}"
+                            })
+                            continue
+                    
+                    if not outlet_id:
+                        errors.append({
+                            'row': i + 1,
+                            'error': f"Could not find or create outlet for URN '{urn}'"
+                        })
+                        continue
 
-                    outlet_id = outlet[0]
-
-                    # Get first admin as agent
-                    cursor.execute("SELECT id FROM users WHERE role = 'admin' LIMIT 1")
+                    # Get agent (prefer admin, fallback to first available user)
+                    cursor.execute("SELECT id FROM users WHERE role = 'admin' AND is_active = 1 LIMIT 1")
                     agent = cursor.fetchone()
+                    
                     if not agent:
-                        raise ValueError("No admin user found to assign as agent")
+                        cursor.execute("SELECT id FROM users WHERE is_active = 1 LIMIT 1")
+                        agent = cursor.fetchone()
+                    
+                    if not agent:
+                        raise ValueError("No active user found to assign as agent")
 
                     agent_id = agent[0]
-                    execution_date = row.get('Date', '').strip() or datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                    status = row.get('Status', 'Completed').strip()
-                    notes = row.get('Notes', '').strip()
+                    
+                    # Parse execution date
+                    execution_date_str = str(row.get('Date', '')).strip()
+                    if execution_date_str:
+                        try:
+                            # Try different date formats
+                            for date_format in ['%Y-%m-%d', '%d/%m/%Y', '%m/%d/%Y', '%Y-%m-%d %H:%M:%S']:
+                                try:
+                                    execution_date = datetime.strptime(execution_date_str, date_format)
+                                    break
+                                except ValueError:
+                                    continue
+                            else:
+                                execution_date = datetime.now()
+                        except:
+                            execution_date = datetime.now()
+                    else:
+                        execution_date = datetime.now()
+                    
+                    execution_date_formatted = execution_date.strftime('%Y-%m-%d %H:%M:%S')
+                    status = str(row.get('Status', 'Completed')).strip()
+                    notes = str(row.get('Notes', '')).strip()
 
-                    products_available = {
-                        'Table': str(row.get('Table', '')).lower() in ['true', '1', 'yes'],
-                        'Chair': str(row.get('Chair', '')).lower() in ['true', '1', 'yes'],
-                        'Parasol': str(row.get('Parasol', '')).lower() in ['true', '1', 'yes'],
-                        'Tarpaulin': str(row.get('Tarpaulin', '')).lower() in ['true', '1', 'yes'],
-                        'Hawker Jacket': str(row.get('Hawker Jacket', '')).lower() in ['true', '1', 'yes']
-                    }
+                    # Parse products availability
+                    products_available = {}
+                    for product in ['Table', 'Chair', 'Parasol', 'Tarpaulin', 'Hawker Jacket']:
+                        product_value = str(row.get(product, '')).strip().lower()
+                        products_available[product] = product_value in ['true', '1', 'yes', 'y', 'available', 'present']
 
+                    # Insert execution
                     cursor.execute('''
                         INSERT INTO executions (
                             outlet_id, agent_id, execution_date,
                             status, notes, products_available
                         ) VALUES (?, ?, ?, ?, ?, ?)
-                    ''', (outlet_id, agent_id, execution_date, status, notes, json.dumps(products_available)))
+                    ''', (
+                        outlet_id, agent_id, execution_date_formatted,
+                        status, notes, json.dumps(products_available)
+                    ))
 
                     imported += 1
+                    current_app.logger.info(f"Imported execution for URN {urn} (row {i+1})")
 
                 except Exception as e:
+                    error_msg = f"Row {i + 1}: {str(e)}"
                     errors.append({'row': i + 1, 'error': str(e)})
+                    current_app.logger.error(error_msg)
 
             conn.commit()
 
+        # Create uploads directory with Windows-compatible path
+        uploads_dir = os.path.join(os.getcwd(), 'uploads')
+        os.makedirs(uploads_dir, exist_ok=True)
+        
         # Save duplicates to file if any
         if duplicates:
-            os.makedirs('uploads', exist_ok=True)
-            with open(os.path.join('uploads', 'duplicates.txt'), 'w') as f:
+            duplicates_file = os.path.join(uploads_dir, 'duplicates.txt')
+            with open(duplicates_file, 'w', encoding='utf-8') as f:
                 f.write("\n".join([f"Row {d['row']}: {d['message']}" for d in duplicates]))
-            flash(f'{len(duplicates)} duplicates detected in the last 7 days. See uploads/duplicates.txt for details.', 'warning')
-
-        # Flash summary message
-        flash(f'Upload complete: {imported} imported, {skipped} skipped, {len(errors)} errors.', 'success')
-
+            flash(f'{len(duplicates)} duplicates detected in the last 7 days. See {duplicates_file} for details.', 'warning')
+        
+        # Save new outlets info if any
+        if new_outlets:
+            new_outlets_file = os.path.join(uploads_dir, 'new_outlets.txt')
+            with open(new_outlets_file, 'w', encoding='utf-8') as f:
+                f.write("New outlets created:\n")
+                for outlet in new_outlets:
+                    f.write(f"Row {outlet['row']}: URN={outlet['urn']}, Name={outlet['name']}, Region={outlet['region']}\n")
+            flash(f'{outlets_created} new outlets created. See {new_outlets_file} for details.', 'info')
+        
+        # Save errors to file if any
         if errors:
-            flash(f'{len(errors)} errors occurred during import. Check logs for details.', 'danger')
+            errors_file = os.path.join(uploads_dir, 'import_errors.txt')
+            with open(errors_file, 'w', encoding='utf-8') as f:
+                f.write("Import errors:\n")
+                for error in errors:
+                    f.write(f"Row {error['row']}: {error['error']}\n")
+            flash(f'{len(errors)} errors occurred during import. See {errors_file} for details.', 'danger')
+
+        # Flash comprehensive summary message
+        summary_parts = []
+        if imported > 0:
+            summary_parts.append(f'{imported} executions imported')
+        if outlets_created > 0:
+            summary_parts.append(f'{outlets_created} outlets created')
+        if skipped > 0:
+            summary_parts.append(f'{skipped} duplicates skipped')
+        if errors:
+            summary_parts.append(f'{len(errors)} errors')
+        
+        summary = 'Upload complete: ' + ', '.join(summary_parts) if summary_parts else 'No data processed'
+        flash(summary, 'success' if imported > 0 or outlets_created > 0 else 'warning')
 
         return redirect(url_for('admin.execution_list'))
 
     except Exception as e:
+        current_app.logger.error(f"Error processing file {file.filename}: {str(e)}")
         flash(f"Error processing file: {str(e)}", 'danger')
         return redirect(request.url)

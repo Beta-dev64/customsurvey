@@ -232,11 +232,11 @@ function displayProductAvailability(data) {
 let posmDeploymentChart = null;
 let posmByRegionChart = null;
 
-// Load POSM Deployment Report
-function loadProductAvailabilityReport() {
+// Load POSM Deployment Report (Charts version - not currently used)
+function loadPosmDeploymentCharts() {
     showReportLoader('productAvailabilityReport');
     
-    fetch('/reports/posm_deployment')
+    fetch('/api/posm_deployments')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to fetch POSM deployment data');

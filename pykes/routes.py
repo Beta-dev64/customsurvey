@@ -43,18 +43,13 @@ def login_required(f):
 @contextmanager
 def get_db_cursor():
     """Context manager for database operations with automatic cleanup"""
-    conn = None
-    try:
-        conn = get_db_connection()
+    with get_db_connection() as conn:
         cursor = conn.cursor()
-        yield conn, cursor
-    except Exception as e:
-        if conn:
+        try:
+            yield conn, cursor
+        except Exception as e:
             conn.rollback()
-        raise e
-    finally:
-        if conn:
-            conn.close()
+            raise e
 
 
     # Helper functions
@@ -358,67 +353,120 @@ def init_routes(app):
     @app.route('/executions')
     @login_required
     def executions():
-        # Get filter parameters
+        # Get filter and pagination parameters
         filters = {
             'agent_id': request.args.get('agent_id'),
-            'o.region': request.args.get('region'),
+            'region': request.args.get('region'),
             'status': request.args.get('status'),
-            'e.execution_date': request.args.get('start_date'),
-            'e.execution_date': request.args.get('end_date')
+            'search': request.args.get('search', '')
         }
         
         start_date = request.args.get('start_date')
         end_date = request.args.get('end_date')
+        page = request.args.get('page', 1, type=int)
+        per_page = min(request.args.get('per_page', DEFAULT_PER_PAGE, type=int), MAX_PER_PAGE)
+        offset = (page - 1) * per_page
 
         with get_db_cursor() as (conn, cursor):
-            query = """
+            base_query = """
                 SELECT e.*, o.outlet_name, o.urn, o.state, o.region, o.local_govt, u.full_name as agent_name
                 FROM executions e
                 JOIN outlets o ON e.outlet_id = o.id
                 JOIN users u ON e.agent_id = u.id
                 WHERE 1=1
             """
+            count_query = """
+                SELECT COUNT(*)
+                FROM executions e
+                JOIN outlets o ON e.outlet_id = o.id
+                JOIN users u ON e.agent_id = u.id
+                WHERE 1=1
+            """
             params = []
+            count_params = []
             
             user_info = get_session_user_info()
             
             # Apply role-based filtering
             if filters['agent_id']:
-                query += ' AND e.agent_id = ?'
+                base_query += ' AND e.agent_id = ?'
+                count_query += ' AND e.agent_id = ?'
                 params.append(filters['agent_id'])
+                count_params.append(filters['agent_id'])
             elif user_info['role'] == 'field_agent':
-                query += ' AND e.agent_id = ?'
+                base_query += ' AND e.agent_id = ?'
+                count_query += ' AND e.agent_id = ?'
                 params.append(user_info['user_id'])
+                count_params.append(user_info['user_id'])
             
             # Apply other filters
-            if filters['o.region']:
-                query += ' AND o.region = ?'
-                params.append(filters['o.region'])
+            if filters['region']:
+                base_query += ' AND o.region = ?'
+                count_query += ' AND o.region = ?'
+                params.append(filters['region'])
+                count_params.append(filters['region'])
             
             if filters['status']:
                 if ',' in filters['status']:
                     status_list = [s.strip() for s in filters['status'].split(',') if s.strip()]
                     placeholders = ','.join('?' for _ in status_list)
-                    query += f' AND e.status IN ({placeholders})'
+                    base_query += f' AND e.status IN ({placeholders})'
+                    count_query += f' AND e.status IN ({placeholders})'
                     params.extend(status_list)
+                    count_params.extend(status_list)
                 else:
-                    query += ' AND e.status = ?'
+                    base_query += ' AND e.status = ?'
+                    count_query += ' AND e.status = ?'
                     params.append(filters['status'])
+                    count_params.append(filters['status'])
+            
+            if filters['search']:
+                search_term = f"%{filters['search']}%"
+                search_condition = """ AND (
+                    o.outlet_name LIKE ? OR
+                    o.urn LIKE ? OR
+                    o.address LIKE ? OR
+                    u.full_name LIKE ?
+                )"""
+                base_query += search_condition
+                count_query += search_condition
+                search_params = [search_term] * 4
+                params.extend(search_params)
+                count_params.extend(search_params)
             
             if start_date:
-                query += ' AND e.execution_date >= ?'
+                base_query += ' AND e.execution_date >= ?'
+                count_query += ' AND e.execution_date >= ?'
                 params.append(start_date)
+                count_params.append(start_date)
             
             if end_date:
-                query += ' AND e.execution_date <= ?'
+                base_query += ' AND e.execution_date <= ?'
+                count_query += ' AND e.execution_date <= ?'
                 params.append(end_date)
+                count_params.append(end_date)
             
-            query += ' ORDER BY e.execution_date DESC'
+            # Get total count
+            cursor.execute(count_query, count_params)
+            total_executions = cursor.fetchone()[0]
             
-            cursor.execute(query, params)
+            # Add ordering and pagination
+            base_query += ' ORDER BY e.execution_date DESC LIMIT ? OFFSET ?'
+            params.extend([per_page, offset])
+            
+            cursor.execute(base_query, params)
             executions = cursor.fetchall()
 
-        return render_template('executions.html', executions=executions)
+        pagination = calculate_pagination(total_executions, page, per_page)
+
+        return render_template('executions.html', 
+                             executions=executions,
+                             page=pagination.get('current_page', page),
+                             total_pages=pagination.get('total_pages'),
+                             total_executions=total_executions,
+                             **filters,
+                             start_date=start_date,
+                             end_date=end_date)
 
     @app.route('/execution/<int:execution_id>')
     @login_required
@@ -443,106 +491,103 @@ def init_routes(app):
         return render_template('execution_detail.html', execution=execution, products=products)
     
     @app.route('/dashboard/data')
+    @login_required
     def dashboard_data():
         if 'user_id' not in session:
             return jsonify({'error': 'Not authenticated'}), 401
 
-        conn = get_db_connection()
-        c = conn.cursor()
+        with get_db_cursor() as (conn, c):
+            is_admin = session['role'] == 'admin'
+            user_id = session['user_id']
+            user_region = session['region']
+            user_state = session.get('state', '')
 
-        is_admin = session['role'] == 'admin'
-        user_id = session['user_id']
-        user_region = session['region']
-        user_state = session.get('state', '')
+            if is_admin:
+                c.execute("SELECT COUNT(*) as count FROM outlets")
+                total_outlets = c.fetchone()['count']
 
-        if is_admin:
-            c.execute("SELECT COUNT(*) as count FROM outlets")
-            total_outlets = c.fetchone()['count']
+                c.execute("SELECT COUNT(*) as count FROM executions WHERE status = 'Completed'")
+                total_executions = c.fetchone()['count']
 
-            c.execute("SELECT COUNT(*) as count FROM executions WHERE status = 'Completed'")
-            total_executions = c.fetchone()['count']
+                coverage_percentage = round((total_executions / total_outlets * 100), 2) if total_outlets > 0 else 0
 
-            coverage_percentage = round((total_executions / total_outlets * 100), 2) if total_outlets > 0 else 0
-
-            c.execute("SELECT COUNT(DISTINCT agent_id) as count FROM executions WHERE status = 'Completed'")
-            active_agents = c.fetchone()['count']
-        else:
-            if user_state:
-                c.execute("SELECT COUNT(*) as count FROM outlets WHERE state = ?", (user_state,))
+                c.execute("SELECT COUNT(DISTINCT agent_id) as count FROM executions WHERE status = 'Completed'")
+                active_agents = c.fetchone()['count']
             else:
-                c.execute("SELECT COUNT(*) as count FROM outlets WHERE region = ?", (user_region,))
-            total_outlets = c.fetchone()['count']
+                if user_state:
+                    c.execute("SELECT COUNT(*) as count FROM outlets WHERE state = ?", (user_state,))
+                else:
+                    c.execute("SELECT COUNT(*) as count FROM outlets WHERE region = ?", (user_region,))
+                total_outlets = c.fetchone()['count']
 
-            c.execute("SELECT COUNT(*) as count FROM executions WHERE agent_id = ? AND status = 'Completed'", (user_id,))
-            total_executions = c.fetchone()['count']
+                c.execute("SELECT COUNT(*) as count FROM executions WHERE agent_id = ? AND status = 'Completed'", (user_id,))
+                total_executions = c.fetchone()['count']
 
-            c.execute("""
-                SELECT COUNT(DISTINCT outlet_id) as count
-                FROM executions
-                WHERE agent_id = ?
-            """, (user_id,))
-            assigned_outlets = c.fetchone()['count']
+                c.execute("""
+                    SELECT COUNT(DISTINCT outlet_id) as count
+                    FROM executions
+                    WHERE agent_id = ?
+                """, (user_id,))
+                assigned_outlets = c.fetchone()['count']
 
-            coverage_percentage = round((total_executions / assigned_outlets * 100), 2) if assigned_outlets > 0 else 0
-            active_agents = 1
+                coverage_percentage = round((total_executions / assigned_outlets * 100), 2) if assigned_outlets > 0 else 0
+                active_agents = 1
 
-        if is_admin:
-            c.execute("SELECT region, COUNT(*) as count FROM outlets GROUP BY region")
-            regions = {row['region']: row['count'] for row in c.fetchall()}
+            if is_admin:
+                c.execute("SELECT region, COUNT(*) as count FROM outlets GROUP BY region")
+                regions = {row['region']: row['count'] for row in c.fetchall()}
 
-            c.execute("SELECT state, COUNT(*) as count FROM outlets GROUP BY state")
-            states = {row['state']: row['count'] for row in c.fetchall()}
-        else:
-            if user_state:
-                c.execute("SELECT local_govt, COUNT(*) as count FROM outlets WHERE state = ? GROUP BY local_govt",
-                        (user_state,))
+                c.execute("SELECT state, COUNT(*) as count FROM outlets GROUP BY state")
+                states = {row['state']: row['count'] for row in c.fetchall()}
             else:
-                c.execute("SELECT local_govt, COUNT(*) as count FROM outlets WHERE region = ? GROUP BY local_govt",
-                        (user_region,))
-            regions = {row['local_govt']: row['count'] for row in c.fetchall()}
+                if user_state:
+                    c.execute("SELECT local_govt, COUNT(*) as count FROM outlets WHERE state = ? GROUP BY local_govt",
+                            (user_state,))
+                else:
+                    c.execute("SELECT local_govt, COUNT(*) as count FROM outlets WHERE region = ? GROUP BY local_govt",
+                            (user_region,))
+                regions = {row['local_govt']: row['count'] for row in c.fetchall()}
 
-            c.execute("SELECT state, COUNT(*) as count FROM outlets WHERE region = ? GROUP BY state",
-                     (user_region,))
-            states = {row['state']: row['count'] for row in c.fetchall()}
+                c.execute("SELECT state, COUNT(*) as count FROM outlets WHERE region = ? GROUP BY state",
+                         (user_region,))
+                states = {row['state']: row['count'] for row in c.fetchall()}
 
-        if is_admin:
-            c.execute("SELECT DATE(execution_date) as date, COUNT(*) as count FROM executions WHERE status = 'Completed' GROUP BY DATE(execution_date)")
-        else:
-            c.execute("SELECT DATE(execution_date) as date, COUNT(*) as count FROM executions WHERE agent_id = ? AND status = 'Completed' GROUP BY DATE(execution_date)",
-                     (user_id,))
-        executions_by_date = {row['date']: row['count'] for row in c.fetchall()}
-
-        if is_admin:
-            c.execute('''
-            SELECT u.full_name, COUNT(e.id) as count
-            FROM executions e
-            JOIN users u ON e.agent_id = u.id
-            WHERE e.status = 'Completed'
-            GROUP BY e.agent_id
-            ''')
-            executions_by_agent = {row['full_name']: row['count'] for row in c.fetchall()}
-        else:
-            c.execute('''
-            SELECT u.full_name, COUNT(e.id) as count
-            FROM executions e
-            JOIN users u ON e.agent_id = u.id
-            WHERE e.agent_id = ? AND e.status = 'Completed'
-            GROUP BY e.agent_id
-            ''', (user_id,))
-            executions_by_agent = {row['full_name']: row['count'] for row in c.fetchall()}
-
-        if is_admin:
-            c.execute("SELECT outlet_type, COUNT(*) as count FROM outlets GROUP BY outlet_type")
-        else:
-            if user_state:
-                c.execute("SELECT outlet_type, COUNT(*) as count FROM outlets WHERE state = ? GROUP BY outlet_type",
-                        (user_state,))
+            if is_admin:
+                c.execute("SELECT DATE(execution_date) as date, COUNT(*) as count FROM executions WHERE status = 'Completed' GROUP BY DATE(execution_date)")
             else:
-                c.execute("SELECT outlet_type, COUNT(*) as count FROM outlets WHERE region = ? GROUP BY outlet_type",
-                        (user_region,))
-        outlet_types = {row['outlet_type']: row['count'] for row in c.fetchall()}
+                c.execute("SELECT DATE(execution_date) as date, COUNT(*) as count FROM executions WHERE agent_id = ? AND status = 'Completed' GROUP BY DATE(execution_date)",
+                         (user_id,))
+            executions_by_date = {row['date']: row['count'] for row in c.fetchall()}
 
-        conn.close()
+            if is_admin:
+                c.execute('''
+                SELECT u.full_name, COUNT(e.id) as count
+                FROM executions e
+                JOIN users u ON e.agent_id = u.id
+                WHERE e.status = 'Completed'
+                GROUP BY e.agent_id
+                ''')
+                executions_by_agent = {row['full_name']: row['count'] for row in c.fetchall()}
+            else:
+                c.execute('''
+                SELECT u.full_name, COUNT(e.id) as count
+                FROM executions e
+                JOIN users u ON e.agent_id = u.id
+                WHERE e.agent_id = ? AND e.status = 'Completed'
+                GROUP BY e.agent_id
+                ''', (user_id,))
+                executions_by_agent = {row['full_name']: row['count'] for row in c.fetchall()}
+
+            if is_admin:
+                c.execute("SELECT outlet_type, COUNT(*) as count FROM outlets GROUP BY outlet_type")
+            else:
+                if user_state:
+                    c.execute("SELECT outlet_type, COUNT(*) as count FROM outlets WHERE state = ? GROUP BY outlet_type",
+                            (user_state,))
+                else:
+                    c.execute("SELECT outlet_type, COUNT(*) as count FROM outlets WHERE region = ? GROUP BY outlet_type",
+                            (user_region,))
+            outlet_types = {row['outlet_type']: row['count'] for row in c.fetchall()}
 
         return jsonify({
             'total_outlets': total_outlets,
@@ -599,66 +644,120 @@ def init_routes(app):
         if 'user_id' not in session:
             return jsonify({'error': 'Not authenticated'}), 401
 
-        page = request.args.get('page', 1, type=int)
-        per_page = request.args.get('per_page', 10, type=int)
+        try:
+            page = request.args.get('page', 1, type=int)
+            per_page = request.args.get('per_page', 10, type=int)
+            region = request.args.get('region')
+            state = request.args.get('state')
+            date_range = request.args.get('date_range')
 
-        query = '''
-            SELECT
-                e.*,
-                u.full_name as agent_name,
-                u.username,
-                u.role,
-                u.region,
-                u.state,
-                u.lga,
-                o.region as outlet_region,
-                o.state as outlet_state,
-                o.local_govt as outlet_lga,
-                o.urn,
-                o.outlet_name,
-                o.address,
-                o.phone,
-                o.outlet_type
-            FROM executions e
-            JOIN users u ON e.agent_id = u.id
-            JOIN outlets o ON e.outlet_id = o.id
-            WHERE e.status = 'Completed'
-        '''
+            # Base query
+            query = '''
+                SELECT
+                    e.id,
+                    e.execution_date,
+                    e.before_image,
+                    e.after_image,
+                    e.latitude,
+                    e.longitude,
+                    e.products_available,
+                    u.full_name as agent_name,
+                    u.username,
+                    u.role,
+                    u.region as user_region,
+                    u.state as user_state,
+                    u.lga as user_lga,
+                    o.region as outlet_region,
+                    o.state as outlet_state,
+                    o.local_govt as outlet_lga,
+                    o.urn,
+                    o.outlet_name,
+                    o.address,
+                    o.phone,
+                    o.outlet_type
+                FROM executions e
+                JOIN users u ON e.agent_id = u.id
+                JOIN outlets o ON e.outlet_id = o.id
+                WHERE e.status = 'Completed'
+            '''
 
-        params = []
-        if request.args.get('region'):
-            query += " AND o.region = ?"
-            params.append(request.args.get('region'))
-        if request.args.get('state'):
-            query += " AND o.state = ?"
-            params.append(request.args.get('state'))
+            params = []
 
-        count_query = f"SELECT COUNT(*) FROM ({query})"
-        conn = get_db_connection()
-        total_count = conn.execute(count_query, params).fetchone()[0]
+            # Add filters
+            if region and region.upper() != 'ALL':
+                query += " AND o.region = ?"
+                params.append(region.upper())
 
-        query += " LIMIT ? OFFSET ?"
-        params.extend([per_page, (page - 1) * per_page])
+            if state and state.upper() != 'ALL':
+                query += " AND o.state = ?"
+                params.append(state.upper())
 
-        conn.row_factory = sqlite3.Row
-        executions = conn.execute(query, params).fetchall()
-        conn.close()
+            # Add date range filter
+            if date_range:
+                if date_range == 'week':
+                    query += " AND datetime(e.execution_date) >= datetime('now', '-7 days')"
+                elif date_range == 'month':
+                    query += " AND datetime(e.execution_date) >= datetime('now', '-1 month')"
+                elif date_range == 'quarter':
+                    query += " AND datetime(e.execution_date) >= datetime('now', '-3 months')"
+                elif date_range == 'year':
+                    query += " AND datetime(e.execution_date) >= datetime('now', '-1 year')"
 
-        executions_data = []
-        for exec_row in executions:
-            execution = dict(exec_row)
-            execution['coverage_percentage'] = round((execution.get('outlets_visited', 0) / execution.get('outlets_assigned', 1)) * 100, 2)
-            executions_data.append(execution)
+            with get_db_cursor() as (conn, cursor):
+                # Get total count for pagination
+                count_query = f"SELECT COUNT(*) as count FROM ({query}) as subquery"
+                cursor.execute(count_query, params)
+                total_count = cursor.fetchone()['count']
 
-        return jsonify({
-            'executions': executions_data,
-            'pagination': {
-                'total_count': total_count,
-                'total_pages': (total_count + per_page - 1) // per_page,
-                'current_page': page,
-                'per_page': per_page
-            }
-        })
+                # Add pagination to main query
+                query += " ORDER BY e.execution_date DESC LIMIT ? OFFSET ?"
+                params.extend([per_page, (page - 1) * per_page])
+
+                # Execute main query
+                cursor.execute(query, params)
+                executions = cursor.fetchall()
+
+            # Process results
+            executions_data = []
+            for exec_row in executions:
+                execution = dict(exec_row)
+                
+                # Handle missing/null data - replace with empty strings
+                execution['agent_name'] = execution.get('agent_name', '') or ''
+                execution['urn'] = execution.get('urn', '') or ''
+                execution['outlet_name'] = execution.get('outlet_name', '') or ''
+                execution['address'] = execution.get('address', '') or ''
+                execution['phone'] = execution.get('phone', '') or ''
+                execution['outlet_type'] = execution.get('outlet_type', '') or ''
+                execution['outlet_region'] = execution.get('outlet_region', '') or ''
+                execution['outlet_state'] = execution.get('outlet_state', '') or ''
+                execution['outlet_lga'] = execution.get('outlet_lga', '') or ''
+                execution['before_image'] = execution.get('before_image', '') or ''
+                execution['after_image'] = execution.get('after_image', '') or ''
+                execution['latitude'] = execution.get('latitude', '') or ''
+                execution['longitude'] = execution.get('longitude', '') or ''
+                
+                # Static values for now - could be calculated later
+                execution['executions_performed'] = 1  # Each row is one execution
+                execution['outlets_assigned'] = 0
+                execution['outlets_visited'] = 1
+                execution['coverage_percentage'] = 0
+                
+                executions_data.append(execution)
+
+            return jsonify({
+                'executions': executions_data,
+                'pagination': {
+                    'total_count': total_count,
+                    'total_pages': (total_count + per_page - 1) // per_page,
+                    'current_page': page,
+                    'per_page': per_page
+                }
+            })
+
+        except Exception as e:
+            print(f"Error in posm_deployments: {str(e)}")
+            return jsonify({'error': f'Internal server error: {str(e)}'}), 500
 
 
 
@@ -669,10 +768,7 @@ def init_routes(app):
  
 
     def get_posm_deployments_data(region=None, state=None, date_range=None, start_date=None, end_date=None):
-
-        page = request.args.get('page', 1, type=int)
-        per_page = request.args.get('per_page', 10, type=int)
-
+        """Helper function to get POSM deployments data for export"""
         query = '''
             SELECT
                 e.*,
@@ -718,32 +814,20 @@ def init_routes(app):
                 query += " AND e.execution_date BETWEEN ? AND ?"
                 params.extend([start_date, end_date])
 
-        # count_query = f"SELECT COUNT(*) FROM ({query})"
         conn = get_db_connection()
-        # total_count = conn.execute(count_query, params).fetchone()[0]
-
-        # query += " LIMIT ? OFFSET ?"
-        # params.extend([per_page, (page - 1) * per_page])
-
         conn.row_factory = sqlite3.Row
         executions = conn.execute(query, params).fetchall()
         conn.close()
-
-        # executions_data = []
-        # for exec_row in executions:
-        #     execution = dict(exec_row)
-        #     execution['coverage_percentage'] = round((execution.get('outlets_visited', 0) / execution.get('outlets_assigned', 1)) * 100, 2)
-        #     executions_data.append(execution)
-
- 
-        # df = pd.DataFrame([dict(row) for row in executions_data])
         
         executions_data = []
         for exec_row in executions:
             execution = dict(exec_row)
 
             # Parse the JSON string safely
-            products = json.loads(execution.get('products_available', '{}'))
+            try:
+                products = json.loads(execution.get('products_available', '{}'))
+            except (json.JSONDecodeError, TypeError):
+                products = {}
 
             # Map each relevant product field to the execution dict
             execution['table'] = products.get('Table', False)
@@ -751,174 +835,15 @@ def init_routes(app):
             execution['parasol'] = products.get('Parasol', False)
             execution['tarpaulin'] = products.get('Tarpaulin', False)
             execution['hawker_jacket'] = products.get('Hawker Jacket', False)
-            execution['cup'] = products.get('Cups', False)
-
-            # Add calculated field
-            execution['coverage_percentage'] = round(
-                (execution.get('outlets_visited', 0) / execution.get('outlets_assigned', 1)) * 100, 2
-            )
+            execution['cup'] = products.get('Cup', False)  # Fixed from 'Cups' to 'Cup'
 
             executions_data.append(execution)
 
         # Create DataFrame
         df = pd.DataFrame([dict(row) for row in executions_data])
-
-                # Rename columns
-        df = df.rename(columns={
-            'agent_name': 'Agent Name',
-            'urn': 'URN',
-            'outlet_name': 'Retail Point Name',
-            'address': 'Address',
-            'phone': 'Phone',
-            'outlet_type': 'Outlet Type',
-            'outlet_region': 'Region',
-            'outlet_state': 'State',
-            'outlet_lga': 'LGA',
-            'outlets_visited': 'Visited',
-            'outlets_assigned': 'Assigned',
-            'table': 'Table',
-            'chair': 'Chair',
-            'parasol': 'Parasol',
-            'tarpaulin': 'Tarpaulin',
-            'hawker_jacket': 'Hawker Jacket',
-            'cup': 'Cup',
-            'latitude': 'Latitude',
-            'longitude': 'Longitude',
-            'before_image': 'Before Image',
-            'after_image': 'After Image'
-        })
-
-        # Define columns to remove
-        removed_columns = [
-            'Region', 
-            'LGA', 
-            'Executions', 
-            'Assigned', 
-            'Visited', 
-            'Coverage (%)', 
-            'Latitude', 
-            'Longitude'
-        ]
-
-        # Full list of columns (for reference if we need to add back removed columns)
-        all_headers = [
-            'Agent Name', 'URN', 'Outlet Name', 'Address', 'Phone', 'Outlet Type',
-            'Region', 'State', 'LGA', 'Executions', 'Assigned', 'Visited', 'Coverage (%)',
-            'Table', 'Chair', 'Parasol', 'Tarpaulin', 'Hawker Jacket', 'Cup',
-            'Latitude', 'Longitude', 'Before Image', 'After Image'
-        ]
-
-        # Create headers list without the removed columns
-        headers = [col for col in all_headers if col not in removed_columns]
-
-        #subset_df = df[['Table', 'Chair', 'Parasol', 'Tarpaulin', 'Hawker Jacket', 'Cup']]
-        # print(df.columns)
-
-        # Add missing columns
-        for col in headers:
-            if col not in df.columns:
-                df[col] = None
-
-        # Keep only the columns in our headers list
-        df = df[headers]
-
-        # return df
-
-        # Rename columns
-        # df = df.rename(columns={
-        #     'agent_name': 'Agent Name',
-        #     'urn': 'URN',
-        #     'outlet_name': 'Outlet Name',
-        #     'address': 'Address',
-        #     'phone': 'Phone',
-        #     'outlet_type': 'Outlet Type',
-        #     'outlet_region': 'Region',
-        #     'outlet_state': 'State',
-        #     'outlet_lga': 'LGA',
-        #     'outlets_visited': 'Visited',
-        #     'outlets_assigned': 'Assigned',
-        #     'table': 'Table',
-        #     'chair': 'Chair',
-        #     'parasol': 'Parasol',
-        #     'tarpaulin': 'Tarpaulin',
-        #     'hawker_jacket': 'Hawker Jacket',
-        #     'cup': 'Cup',
-        #     'latitude': 'Latitude',
-        #     'longitude': 'Longitude',
-        #     'before_image': 'Before Image',
-        #     'after_image': 'After Image'
-        # })
-
-        # # Final column structure
-        # headers = [
-        #     'Agent Name', 'URN', 'Outlet Name', 'Address', 'Phone', 'Outlet Type',
-        #     'Region', 'State', 'LGA', 'Executions', 'Assigned', 'Visited', 'Coverage (%)',
-        #     'Table', 'Chair', 'Parasol', 'Tarpaulin', 'Hawker Jacket', 'Cup',
-        #     'Latitude', 'Longitude', 'Before Image', 'After Image'
-        # ]
-
-        # for col in headers:
-        #     if col not in df.columns:
-        #         df[col] = None
-
-
-        return df
-
-        # return jsonify({
-        #     'executions': executions_data,
-        #     'pagination': {
-        #         'total_count': total_count,
-        #         # 'total_pages': (total_count + per_page - 1) // per_page,
-        #         'current_page': page,
-        #         'per_page': per_page
-        #     }
-        # })
-
-
-
-    def get_posm_deployments_datad(per_page=1000, region=None, state=None):
-        conn = get_db_connection()
-        conn.row_factory = sqlite3.Row
-        cursor = conn.cursor()
-
-        query = '''
-            SELECT
-                u.full_name AS agent_name,
-                o.urn, o.outlet_name, o.address, o.phone, o.outlet_type,
-                o.region AS outlet_region,
-                o.state AS outlet_state,
-                o.local_govt AS outlet_lga,
-                e.[table], e.chair, e.parasol, e.tarpaulin, e.[hawker_jacket], e.cup,
-                e.before_image, e.after_image
-            FROM executions e
-            JOIN users u ON e.agent_id = u.id
-            JOIN outlets o ON e.outlet_id = o.id
-            WHERE e.status = 'Completed'
-        '''
-
-        params = []
-
-        if region:
-            query += ' AND o.region = ?'
-            params.append(region)
-
-        if state:
-            query += ' AND o.state = ?'
-            params.append(state)
-
-        query += ' LIMIT ?'
-        params.append(per_page)
-
-        # Execute and fetch
-        cursor.execute(query, params)
-        rows = cursor.fetchall()
-        conn.close()
-
-        # Convert to DataFrame
-        df = pd.DataFrame([dict(row) for row in rows])
-
-        # Compute Coverage
-        df['Coverage (%)'] = round((df.get('outlets_visited', 0) / df.get('outlets_assigned', 1)) * 100, 2)
+        
+        if df.empty:
+            return pd.DataFrame()
 
         # Rename columns
         df = df.rename(columns={
@@ -931,8 +856,6 @@ def init_routes(app):
             'outlet_region': 'Region',
             'outlet_state': 'State',
             'outlet_lga': 'LGA',
-            'outlets_visited': 'Visited',
-            'outlets_assigned': 'Assigned',
             'table': 'Table',
             'chair': 'Chair',
             'parasol': 'Parasol',
@@ -945,21 +868,21 @@ def init_routes(app):
             'after_image': 'After Image'
         })
 
-        # Final column structure
+        # Define final headers
         headers = [
-            'Agent Name', 'URN', 'Outlet Name', 'Address', 'Phone', 'Outlet Type',
-            'Region', 'State', 'LGA', 'Executions', 'Assigned', 'Visited', 'Coverage (%)',
-            'Table', 'Chair', 'Parasol', 'Tarpaulin', 'Hawker Jacket', 'Cup',
-            'Latitude', 'Longitude', 'Before Image', 'After Image'
+            'Agent Name', 'URN', 'Retail Point Name', 'Address', 'Phone', 'Retail Point Type',
+            'Region', 'State', 'LGA', 'Table', 'Chair', 'Parasol', 'Tarpaulin', 
+            'Hawker Jacket', 'Cup', 'Before Image', 'After Image'
         ]
 
-        # Add missing columns if necessary
+        # Add missing columns
         for col in headers:
             if col not in df.columns:
                 df[col] = None
 
-        df['Executions'] = df['Visited']  # You can adjust this as needed
+        # Keep only the columns in our headers list
         df = df[headers]
+
         return df
 
 
@@ -970,147 +893,156 @@ def init_routes(app):
         if 'user_id' not in session:
             return jsonify({'error': 'Not authenticated'}), 401
 
-        conn = get_db_connection()
-        c = conn.cursor()
+        try:
+            page = request.args.get('page', 1, type=int)
+            per_page = request.args.get('per_page', 20, type=int)
+            offset = (page - 1) * per_page
 
-        page = request.args.get('page', 1, type=int)
-        per_page = request.args.get('per_page', 20, type=int)
-        offset = (page - 1) * per_page
+            search_term = request.args.get('search', '')
+            region = request.args.get('region', '')
+            state = request.args.get('state', '')
+            date_range = request.args.get('date_range', '')
 
-        search_term = request.args.get('search', '')
-        region = request.args.get('region', '')
-        state = request.args.get('state', '')
-        date_range = request.args.get('date_range', '')
+            agent_id = request.args.get('agent_id')
+            user_role = session.get('role')
+            current_user_id = session.get('user_id')
 
-        agent_id = request.args.get('agent_id')
-        user_role = session.get('role')
-        current_user_id = session.get('user_id')
-
-        count_query = '''
-        SELECT COUNT(DISTINCT u.id) as total_count
-        FROM users u
-        WHERE u.role = 'field_agent'
-        '''
-
-        query = '''
-        SELECT
-            u.id,
-            u.username,
-            u.full_name,
-            u.role,
-            u.region,
-            u.state,
-            u.lga,
-            COUNT(DISTINCT CASE WHEN e.status = 'Completed' THEN e.id ELSE NULL END) as executions_performed,
-            COUNT(DISTINCT CASE WHEN e.status = 'Completed' THEN e.outlet_id ELSE NULL END) as outlets_visited,
-            (SELECT COUNT(*) FROM outlets o WHERE o.region = u.region) as outlets_in_region
-        FROM
-            users u
-        LEFT JOIN
-            executions e ON u.id = e.agent_id
-        WHERE
-            u.role = 'field_agent'
-        '''
-
-        params = []
-        count_params = []
-
-        if search_term:
-            search_condition = '''
-            AND (
-                u.username LIKE ? OR
-                u.full_name LIKE ? OR
-                u.region LIKE ? OR
-                u.state LIKE ? OR
-                u.lga LIKE ?
-            )
+            # Base query - exclude current user and only show field agents
+            count_query = '''
+            SELECT COUNT(DISTINCT u.id) as total_count
+            FROM users u
+            WHERE u.role = 'field_agent' AND u.id != ?
             '''
-            search_param = f'%{search_term}%'
-            query += search_condition
-            count_query += search_condition
-            params.extend([search_param, search_param, search_param, search_param, search_param])
-            count_params.extend([search_param, search_param, search_param, search_param, search_param])
 
-        if region and region != 'all':
-            query += " AND u.region = ? "
-            count_query += " AND u.region = ? "
-            params.append(region)
-            count_params.append(region)
+            query = '''
+            SELECT
+                u.id,
+                u.username,
+                u.full_name,
+                u.role,
+                u.region,
+                u.state,
+                u.lga,
+                COUNT(DISTINCT CASE WHEN e.status = 'Completed' THEN e.id ELSE NULL END) as executions_performed,
+                COUNT(DISTINCT CASE WHEN e.status = 'Completed' THEN e.outlet_id ELSE NULL END) as outlets_visited
+            FROM
+                users u
+            LEFT JOIN
+                executions e ON u.id = e.agent_id
+            WHERE
+                u.role = 'field_agent' AND u.id != ?
+            '''
 
-        if state and state != 'all':
-            query += " AND u.state = ? "
-            count_query += " AND u.state = ? "
-            params.append(state)
-            count_params.append(state)
+            params = [current_user_id]
+            count_params = [current_user_id]
 
-        if date_range:
-            date_condition = ""
-            if date_range == 'week':
-                date_condition = "AND datetime(e.execution_date) >= datetime('now', '-7 days')"
-            elif date_range == 'month':
-                date_condition = "AND datetime(e.execution_date) >= datetime('now', '-1 month')"
-            elif date_range == 'quarter':
-                date_condition = "AND datetime(e.execution_date) >= datetime('now', '-3 months')"
-            elif date_range == 'year':
-                date_condition = "AND datetime(e.execution_date) >= datetime('now', '-1 year')"
+            if search_term:
+                search_condition = '''
+                AND (
+                    u.username LIKE ? OR
+                    u.full_name LIKE ? OR
+                    u.region LIKE ? OR
+                    u.state LIKE ? OR
+                    u.lga LIKE ?
+                )
+                '''
+                search_param = f'%{search_term}%'
+                query += search_condition
+                count_query += search_condition
+                params.extend([search_param, search_param, search_param, search_param, search_param])
+                count_params.extend([search_param, search_param, search_param, search_param, search_param])
 
-            if date_condition:
-                query += date_condition
+            if region and region != 'all':
+                query += " AND u.region = ? "
+                count_query += " AND u.region = ? "
+                params.append(region)
+                count_params.append(region)
 
-        if agent_id:
-            query += " AND u.id = ? "
-            count_query += " AND u.id = ? "
-            params.append(agent_id)
-            count_params.append(agent_id)
-        elif user_role == 'field_agent':
-            query += " AND u.id = ? "
-            count_query += " AND u.id = ? "
-            params.append(current_user_id)
-            count_params.append(current_user_id)
+            if state and state != 'all':
+                query += " AND u.state = ? "
+                count_query += " AND u.state = ? "
+                params.append(state)
+                count_params.append(state)
 
-        query += " GROUP BY u.id"
+            if date_range:
+                date_condition = ""
+                if date_range == 'week':
+                    date_condition = "AND datetime(e.execution_date) >= datetime('now', '-7 days')"
+                elif date_range == 'month':
+                    date_condition = "AND datetime(e.execution_date) >= datetime('now', '-1 month')"
+                elif date_range == 'quarter':
+                    date_condition = "AND datetime(e.execution_date) >= datetime('now', '-3 months')"
+                elif date_range == 'year':
+                    date_condition = "AND datetime(e.execution_date) >= datetime('now', '-1 year')"
 
-        query += " LIMIT ? OFFSET ?"
-        params.extend([per_page, offset])
+                if date_condition:
+                    query += " " + date_condition
 
-        c.execute(count_query, count_params)
-        total_count = c.fetchone()['total_count']
+            if agent_id and agent_id != str(current_user_id):
+                query += " AND u.id = ? "
+                count_query += " AND u.id = ? "
+                params.append(agent_id)
+                count_params.append(agent_id)
 
-        c.execute(query, params)
+            with get_db_cursor() as (conn, cursor):
+                # Get total count
+                cursor.execute(count_query, count_params)
+                total_count = cursor.fetchone()['total_count']
 
-        agents = []
-        for row in c.fetchall():
-            agent_data = dict(row)
+                # Add grouping and pagination to main query
+                query += " GROUP BY u.id ORDER BY u.full_name LIMIT ? OFFSET ?"
+                params.extend([per_page, offset])
 
-            c.execute('''
-                SELECT COUNT(DISTINCT outlet_id) as assigned_count
-                FROM executions
-                WHERE agent_id = ? AND status = 'Pending'
-            ''', (agent_data['id'],))
+                cursor.execute(query, params)
+                agent_rows = cursor.fetchall()
 
-            assigned_result = c.fetchone()
-            agent_data['outlets_assigned'] = assigned_result['assigned_count'] if assigned_result else 0
+                agents = []
+                for row in agent_rows:
+                    agent_data = dict(row)
+                    
+                    # Handle missing/null data - replace with empty strings
+                    agent_data['full_name'] = agent_data.get('full_name', '') or ''
+                    agent_data['username'] = agent_data.get('username', '') or ''
+                    agent_data['role'] = agent_data.get('role', '') or 'field_agent'
+                    agent_data['region'] = agent_data.get('region', '') or ''
+                    agent_data['state'] = agent_data.get('state', '') or ''
+                    agent_data['lga'] = agent_data.get('lga', '') or ''
 
-            if agent_data['outlets_assigned'] > 0:
-                agent_data['coverage_percentage'] = round((agent_data['outlets_visited'] / agent_data['outlets_assigned']) * 100, 2)
-            else:
-                agent_data['coverage_percentage'] = 0
+                    # Get assigned outlets count (outlets that have pending executions for this agent)
+                    cursor.execute('''
+                        SELECT COUNT(DISTINCT outlet_id) as assigned_count
+                        FROM executions
+                        WHERE agent_id = ?
+                    ''', (agent_data['id'],))
 
-            agents.append(agent_data)
+                    assigned_result = cursor.fetchone()
+                    agent_data['outlets_assigned'] = assigned_result['assigned_count'] if assigned_result else 0
 
-        total_pages = (total_count + per_page - 1) // per_page if total_count > 0 else 1
+                    # Calculate coverage percentage
+                    if agent_data['outlets_assigned'] > 0:
+                        agent_data['coverage_percentage'] = round(
+                            (agent_data['outlets_visited'] / agent_data['outlets_assigned']) * 100, 2
+                        )
+                    else:
+                        agent_data['coverage_percentage'] = 0
 
-        conn.close()
+                    agents.append(agent_data)
 
-        return jsonify({
-            'agents': agents,
-            'pagination': {
-                'total_count': total_count,
-                'total_pages': total_pages,
-                'current_page': page,
-                'per_page': per_page
-            }
-        })
+                total_pages = (total_count + per_page - 1) // per_page if total_count > 0 else 1
+
+            return jsonify({
+                'agents': agents,
+                'pagination': {
+                    'total_count': total_count,
+                    'total_pages': total_pages,
+                    'current_page': page,
+                    'per_page': per_page
+                }
+            })
+            
+        except Exception as e:
+            print(f"Error in agent_performance: {str(e)}")
+            return jsonify({'error': f'Internal server error: {str(e)}'}), 500
 
     @app.route('/reports')
     def reports():
@@ -1128,46 +1060,42 @@ def init_routes(app):
         if 'user_id' not in session:
             return jsonify({'error': 'Not authenticated'}), 401
 
-        conn = get_db_connection()
-        c = conn.cursor()
+        with get_db_cursor() as (conn, c):
+            if session['role'] == 'admin':
+                c.execute('''
+                    SELECT e.id, e.execution_date, e.status,
+                           o.outlet_name, o.state, o.local_govt,
+                           u.full_name as agent_name
+                    FROM executions e
+                    JOIN outlets o ON e.outlet_id = o.id
+                    JOIN users u ON e.agent_id = u.id
+                    WHERE datetime(e.execution_date) >= datetime('now', '-2 days')
+                    ORDER BY e.execution_date DESC
+                    LIMIT 5
+                ''')
+            else:
+                c.execute('''
+                    SELECT e.id, e.execution_date, e.status,
+                           o.outlet_name, o.state, o.local_govt,
+                           u.full_name as agent_name
+                    FROM executions e
+                    JOIN outlets o ON e.outlet_id = o.id
+                    JOIN users u ON e.agent_id = u.id
+                    WHERE e.agent_id = ? AND datetime(e.execution_date) >= datetime('now', '-2 days')
+                    ORDER BY e.execution_date DESC
+                    LIMIT 5
+                ''', (session['user_id'],))
 
-        if session['role'] == 'admin':
-            c.execute('''
-                SELECT e.id, e.execution_date, e.status,
-                       o.outlet_name, o.state, o.local_govt,
-                       u.full_name as agent_name
-                FROM executions e
-                JOIN outlets o ON e.outlet_id = o.id
-                JOIN users u ON e.agent_id = u.id
-                WHERE datetime(e.execution_date) >= datetime('now', '-2 days')
-                ORDER BY e.execution_date DESC
-                LIMIT 5
-            ''')
-        else:
-            c.execute('''
-                SELECT e.id, e.execution_date, e.status,
-                       o.outlet_name, o.state, o.local_govt,
-                       u.full_name as agent_name
-                FROM executions e
-                JOIN outlets o ON e.outlet_id = o.id
-                JOIN users u ON e.agent_id = u.id
-                WHERE e.agent_id = ? AND datetime(e.execution_date) >= datetime('now', '-2 days')
-                ORDER BY e.execution_date DESC
-                LIMIT 5
-            ''', (session['user_id'],))
-
-        executions = []
-        for row in c.fetchall():
-            executions.append({
-                'id': row['id'],
-                'date': row['execution_date'].split(' ')[0],
-                'outlet_name': row['outlet_name'],
-                'location': f"{row['state']}, {row['local_govt']}",
-                'agent_name': row['agent_name'],
-                'status': row['status']
-            })
-
-        conn.close()
+            executions = []
+            for row in c.fetchall():
+                executions.append({
+                    'id': row['id'],
+                    'date': row['execution_date'].split(' ')[0],
+                    'outlet_name': row['outlet_name'],
+                    'location': f"{row['state']}, {row['local_govt']}",
+                    'agent_name': row['agent_name'],
+                    'status': row['status']
+                })
 
         return jsonify({'executions': executions})
 
