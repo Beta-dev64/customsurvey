@@ -516,9 +516,9 @@
 				loadAgentPerformance();
 			}, 500);
 		} else {
-			// For admin/managers/subadmins, load product availability report by default
+					// For admin/managers/subadmins, load POSM deployment report by default
 			setTimeout(function () {
-				loadProductAvailabilityReport();
+				loadPOSMDeployedReport();
 			}, 500);
 		}
 
@@ -545,7 +545,7 @@
 				} else if (reportId === "imageAnalysisReportSection") {
 					loadImageAnalysisReport();
 				} else if (reportId === "productAvailabilityReportSection") {
-					loadProductAvailabilityReport();
+					loadPOSMDeployedReport();
 				} else if (reportId === "agentPerformanceReportSection") {
 					loadAgentPerformance();
 				}
@@ -589,7 +589,7 @@
 				} else {
 					// For admin/managers/subadmins, load the appropriate report based on selection
 					if (activeReport === "productAvailabilityReportSection") {
-						loadProductAvailabilityReport(dateRange, region, state);
+						loadPOSMDeployedReport(dateRange, region, state);
 					} else if (activeReport === "executionSummaryReportSection") {
 						loadExecutionSummaryReport(dateRange, region, state);
 					} else if (activeReport === "imageAnalysisReportSection") {
@@ -1459,7 +1459,10 @@ function exportPOSMDataToCSV() {
 // Add event listener for the export button
 document.addEventListener("DOMContentLoaded", function() {
     // Add this to your existing DOMContentLoaded event handler
-    document.getElementById('exportPOSMBtn').addEventListener('click', exportPOSMDataToCSV);
+    const exportBtn = document.getElementById('exportPosmBtn');
+    if (exportBtn) {
+        exportBtn.addEventListener('click', exportPOSMDataToCSV);
+    }
 });
 
 

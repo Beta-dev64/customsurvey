@@ -1,0 +1,130 @@
+[2025-09-02 23:14:12] INFO in logging_config: Logging system initialized
+[2025-09-02 23:14:12] INFO in logging_config: Logging system initialized
+[2025-09-02 23:14:12] INFO in app: Application starting up
+[2025-09-02 23:14:12] INFO in app: Application starting up
+[2025-09-02 23:14:12] INFO in app: Database initialized successfully
+[2025-09-02 23:14:12] INFO in app: Database initialized successfully
+[2025-09-02 23:14:12] INFO in app: Routes initialized successfully
+[2025-09-02 23:14:12] INFO in app: Routes initialized successfully
+[2025-09-02 23:14:12] INFO in app: Blueprints registered successfully
+[2025-09-02 23:14:12] INFO in app: Blueprints registered successfully
+[2025-09-02 23:14:12] INFO in app: Starting Flask server on port 5000
+[2025-09-02 23:14:12] INFO in app: Starting Flask server on port 5000
+[2025-09-02 23:14:12] WARNING in _internal:  * Debugger is active!
+[2025-09-02 23:14:12] INFO in _internal:  * Debugger PIN: 108-544-040
+[2025-09-02 23:14:44] INFO in _internal:  * Detected change in 'C:\\Users\\Brobot\\Documents\\Onprojects\\femkupoluyi\\surveytray\\app_admin.py', reloading
+[2025-09-02 23:14:48] INFO in logging_config: Logging system initialized
+[2025-09-02 23:14:48] INFO in logging_config: Logging system initialized
+[2025-09-02 23:14:48] INFO in app: Application starting up
+[2025-09-02 23:14:48] INFO in app: Application starting up
+[2025-09-02 23:14:48] INFO in app: Database initialized successfully
+[2025-09-02 23:14:48] INFO in app: Database initialized successfully
+[2025-09-02 23:14:48] INFO in app: Routes initialized successfully
+[2025-09-02 23:14:48] INFO in app: Routes initialized successfully
+[2025-09-02 23:14:48] INFO in app: Blueprints registered successfully
+[2025-09-02 23:14:48] INFO in app: Blueprints registered successfully
+[2025-09-02 23:14:48] INFO in app: Starting Flask server on port 5000
+[2025-09-02 23:14:48] INFO in app: Starting Flask server on port 5000
+[2025-09-02 23:14:48] WARNING in _internal:  * Debugger is active!
+[2025-09-02 23:14:48] INFO in _internal:  * Debugger PIN: 108-544-040
+[2025-09-02 23:14:58] INFO in _internal:  * Detected change in 'C:\\Users\\Brobot\\Documents\\Onprojects\\femkupoluyi\\surveytray\\app_admin.py', reloading
+[2025-09-02 23:15:01] INFO in logging_config: Logging system initialized
+[2025-09-02 23:15:01] INFO in logging_config: Logging system initialized
+[2025-09-02 23:15:01] INFO in app: Application starting up
+[2025-09-02 23:15:01] INFO in app: Application starting up
+[2025-09-02 23:15:01] INFO in app: Database initialized successfully
+[2025-09-02 23:15:01] INFO in app: Database initialized successfully
+[2025-09-02 23:15:01] INFO in app: Routes initialized successfully
+[2025-09-02 23:15:01] INFO in app: Routes initialized successfully
+[2025-09-02 23:15:01] INFO in app: Blueprints registered successfully
+[2025-09-02 23:15:01] INFO in app: Blueprints registered successfully
+[2025-09-02 23:15:01] INFO in app: Starting Flask server on port 5000
+[2025-09-02 23:15:01] INFO in app: Starting Flask server on port 5000
+[2025-09-02 23:15:01] WARNING in _internal:  * Debugger is active!
+[2025-09-02 23:15:01] INFO in _internal:  * Debugger PIN: 108-544-040
+[2025-09-02 23:15:28] INFO in _internal:  * Detected change in 'C:\\Users\\Brobot\\Documents\\Onprojects\\femkupoluyi\\surveytray\\app_admin.py', reloading
+[2025-09-02 23:15:31] INFO in logging_config: Logging system initialized
+[2025-09-02 23:15:31] INFO in logging_config: Logging system initialized
+[2025-09-02 23:15:31] INFO in app: Application starting up
+[2025-09-02 23:15:31] INFO in app: Application starting up
+[2025-09-02 23:15:31] INFO in app: Database initialized successfully
+[2025-09-02 23:15:31] INFO in app: Database initialized successfully
+[2025-09-02 23:15:31] INFO in app: Routes initialized successfully
+[2025-09-02 23:15:31] INFO in app: Routes initialized successfully
+[2025-09-02 23:15:31] INFO in app: Blueprints registered successfully
+[2025-09-02 23:15:31] INFO in app: Blueprints registered successfully
+[2025-09-02 23:15:31] INFO in app: Starting Flask server on port 5000
+[2025-09-02 23:15:31] INFO in app: Starting Flask server on port 5000
+[2025-09-02 23:15:31] WARNING in _internal:  * Debugger is active!
+[2025-09-02 23:15:31] INFO in _internal:  * Debugger PIN: 108-544-040
+[2025-09-02 23:15:57] INFO in _internal:  * Detected change in 'C:\\Users\\Brobot\\Documents\\Onprojects\\femkupoluyi\\surveytray\\app_admin.py', reloading
+[2025-09-02 23:16:01] INFO in logging_config: Logging system initialized
+[2025-09-02 23:16:01] INFO in logging_config: Logging system initialized
+[2025-09-02 23:16:01] INFO in app: Application starting up
+[2025-09-02 23:16:01] INFO in app: Application starting up
+[2025-09-02 23:16:01] INFO in app: Database initialized successfully
+[2025-09-02 23:16:01] INFO in app: Database initialized successfully
+[2025-09-02 23:16:01] INFO in app: Routes initialized successfully
+[2025-09-02 23:16:01] INFO in app: Routes initialized successfully
+[2025-09-02 23:16:01] INFO in app: Blueprints registered successfully
+[2025-09-02 23:16:01] INFO in app: Blueprints registered successfully
+[2025-09-02 23:16:01] INFO in app: Starting Flask server on port 5000
+[2025-09-02 23:16:01] INFO in app: Starting Flask server on port 5000
+[2025-09-02 23:16:01] WARNING in _internal:  * Debugger is active!
+[2025-09-02 23:16:01] INFO in _internal:  * Debugger PIN: 108-544-040
+[2025-09-02 23:16:54] INFO in _internal:  * Detected change in 'C:\\Users\\Brobot\\Documents\\Onprojects\\femkupoluyi\\surveytray\\app_admin.py', reloading
+[2025-09-02 23:16:59] INFO in logging_config: Logging system initialized
+[2025-09-02 23:16:59] INFO in logging_config: Logging system initialized
+[2025-09-02 23:16:59] INFO in app: Application starting up
+[2025-09-02 23:16:59] INFO in app: Application starting up
+[2025-09-02 23:16:59] INFO in app: Database initialized successfully
+[2025-09-02 23:16:59] INFO in app: Database initialized successfully
+[2025-09-02 23:16:59] INFO in app: Routes initialized successfully
+[2025-09-02 23:16:59] INFO in app: Routes initialized successfully
+[2025-09-02 23:16:59] INFO in app: Blueprints registered successfully
+[2025-09-02 23:16:59] INFO in app: Blueprints registered successfully
+[2025-09-02 23:16:59] INFO in app: Starting Flask server on port 5000
+[2025-09-02 23:16:59] INFO in app: Starting Flask server on port 5000
+[2025-09-02 23:16:59] WARNING in _internal:  * Debugger is active!
+[2025-09-02 23:16:59] INFO in _internal:  * Debugger PIN: 108-544-040
+[2025-09-02 23:17:09] INFO in _internal:  * Detected change in 'C:\\Users\\Brobot\\Documents\\Onprojects\\femkupoluyi\\surveytray\\app_admin.py', reloading
+[2025-09-02 23:17:12] INFO in logging_config: Logging system initialized
+[2025-09-02 23:17:12] INFO in logging_config: Logging system initialized
+[2025-09-02 23:17:12] INFO in app: Application starting up
+[2025-09-02 23:17:12] INFO in app: Application starting up
+[2025-09-02 23:17:12] INFO in app: Database initialized successfully
+[2025-09-02 23:17:12] INFO in app: Database initialized successfully
+[2025-09-02 23:17:12] INFO in app: Routes initialized successfully
+[2025-09-02 23:17:12] INFO in app: Routes initialized successfully
+[2025-09-02 23:17:12] INFO in app: Blueprints registered successfully
+[2025-09-02 23:17:12] INFO in app: Blueprints registered successfully
+[2025-09-02 23:17:12] INFO in app: Starting Flask server on port 5000
+[2025-09-02 23:17:12] INFO in app: Starting Flask server on port 5000
+[2025-09-02 23:17:13] WARNING in _internal:  * Debugger is active!
+[2025-09-02 23:17:13] INFO in _internal:  * Debugger PIN: 108-544-040
+[2025-09-02 23:17:33] INFO in _internal:  * Detected change in 'C:\\Users\\Brobot\\Documents\\Onprojects\\femkupoluyi\\surveytray\\app_admin.py', reloading
+[2025-09-02 23:17:35] INFO in logging_config: Logging system initialized
+[2025-09-02 23:17:35] INFO in logging_config: Logging system initialized
+[2025-09-02 23:17:35] INFO in app: Application starting up
+[2025-09-02 23:17:35] INFO in app: Application starting up
+[2025-09-02 23:17:35] INFO in app: Database initialized successfully
+[2025-09-02 23:17:35] INFO in app: Database initialized successfully
+[2025-09-02 23:17:35] INFO in app: Routes initialized successfully
+[2025-09-02 23:17:35] INFO in app: Routes initialized successfully
+[2025-09-02 23:17:35] INFO in app: Blueprints registered successfully
+[2025-09-02 23:17:35] INFO in app: Blueprints registered successfully
+[2025-09-02 23:17:35] INFO in app: Starting Flask server on port 5000
+[2025-09-02 23:17:35] INFO in app: Starting Flask server on port 5000
+[2025-09-02 23:17:35] WARNING in _internal:  * Debugger is active!
+[2025-09-02 23:17:35] INFO in _internal:  * Debugger PIN: 108-544-040
+[2025-09-02 23:18:16] INFO in _internal:  * Detected change in 'C:\\Users\\Brobot\\Documents\\Onprojects\\femkupoluyi\\surveytray\\app_admin.py', reloading
+[2025-09-02 23:18:19] INFO in logging_config: Logging system initialized
+[2025-09-02 23:18:19] INFO in logging_config: Logging system initialized
+[2025-09-02 23:18:19] INFO in app: Application starting up
+[2025-09-02 23:18:19] INFO in app: Application starting up
+[2025-09-02 23:18:19] INFO in app: Database initialized successfully
+[2025-09-02 23:18:19] INFO in app: Database initialized successfully
+[2025-09-02 23:18:19] INFO in app: Routes initialized successfully
+[2025-09-02 23:18:19] INFO in app: Routes initialized successfully
+[2025-09-02 23:18:19] ERROR in app: Blueprint registration failed: expected an indented block after 'try' statement on line 216 (app_admin.py, line 219)
+[2025-09-02 23:18:19] ERROR in app: Blueprint registration failed: expected an indented block after 'try' statement on line 216 (app_admin.py, line 219)

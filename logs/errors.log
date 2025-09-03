@@ -1,0 +1,826 @@
+[2025-09-03 00:52:15] [[31mERROR[0m] [app] [app.create_app:58] Database initialization failed: Failed to initialize database: Database operation failed: no such column: is_active
+[2025-09-03 01:01:05] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'close'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 49, in get_db_cursor
+    cursor = conn.cursor()
+             ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 53, in get_db_cursor
+    conn.rollback()
+    ^^^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'rollback'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 153, in login
+    with get_db_cursor() as (conn, cursor):
+         ^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 57, in get_db_cursor
+    conn.close()
+    ^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'close'
+[2025-09-03 01:01:05] [[31mERROR[0m] [app] [app.log_exception:838] Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 49, in get_db_cursor
+    cursor = conn.cursor()
+             ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 53, in get_db_cursor
+    conn.rollback()
+    ^^^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'rollback'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 153, in login
+    with get_db_cursor() as (conn, cursor):
+         ^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 57, in get_db_cursor
+    conn.close()
+    ^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'close'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 772, in handle_user_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\app.py", line 214, in handle_unexpected_error
+    return render_template('errors/500.html'), 500
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 1084, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 1013, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 972, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: errors/500.html
+[2025-09-03 01:01:06] [[31mERROR[0m] [app] [app.internal_server_error:174] Internal server error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+[2025-09-03 01:01:06] [[31mERROR[0m] [app] [app.teardown_db:244] Request teardown with exception: errors/500.html
+[2025-09-03 01:01:08] [[31mERROR[0m] [app] [app.log_exception:838] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 765, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 740, in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\app.py", line 148, in not_found
+    return render_template('errors/404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 1084, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 1013, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 972, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: errors/404.html
+[2025-09-03 01:01:08] [[31mERROR[0m] [app] [app.internal_server_error:174] Internal server error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+[2025-09-03 01:01:08] [[31mERROR[0m] [app] [app.teardown_db:244] Request teardown with exception: errors/404.html
+[2025-09-03 01:01:16] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'close'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 49, in get_db_cursor
+    cursor = conn.cursor()
+             ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 53, in get_db_cursor
+    conn.rollback()
+    ^^^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'rollback'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 153, in login
+    with get_db_cursor() as (conn, cursor):
+         ^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 57, in get_db_cursor
+    conn.close()
+    ^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'close'
+[2025-09-03 01:01:16] [[31mERROR[0m] [app] [app.log_exception:838] Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 49, in get_db_cursor
+    cursor = conn.cursor()
+             ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 53, in get_db_cursor
+    conn.rollback()
+    ^^^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'rollback'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 153, in login
+    with get_db_cursor() as (conn, cursor):
+         ^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 57, in get_db_cursor
+    conn.close()
+    ^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'close'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 772, in handle_user_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\app.py", line 214, in handle_unexpected_error
+    return render_template('errors/500.html'), 500
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 1084, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 1013, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 972, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: errors/500.html
+[2025-09-03 01:01:16] [[31mERROR[0m] [app] [app.internal_server_error:174] Internal server error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+[2025-09-03 01:01:16] [[31mERROR[0m] [app] [app.teardown_db:244] Request teardown with exception: errors/500.html
+[2025-09-03 01:01:18] [[31mERROR[0m] [app] [app.log_exception:838] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 765, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 740, in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\app.py", line 148, in not_found
+    return render_template('errors/404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 1084, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 1013, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 972, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: errors/404.html
+[2025-09-03 01:01:18] [[31mERROR[0m] [app] [app.internal_server_error:174] Internal server error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+[2025-09-03 01:01:18] [[31mERROR[0m] [app] [app.teardown_db:244] Request teardown with exception: errors/404.html
+[2025-09-03 01:06:11] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'close'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 49, in get_db_cursor
+    cursor = conn.cursor()
+             ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 53, in get_db_cursor
+    conn.rollback()
+    ^^^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'rollback'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 153, in login
+    with get_db_cursor() as (conn, cursor):
+         ^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 57, in get_db_cursor
+    conn.close()
+    ^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'close'
+[2025-09-03 01:06:11] [[31mERROR[0m] [app] [app.log_exception:838] Exception on /login [POST]
+Traceback (most recent call last):
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 49, in get_db_cursor
+    cursor = conn.cursor()
+             ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 53, in get_db_cursor
+    conn.rollback()
+    ^^^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'rollback'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 153, in login
+    with get_db_cursor() as (conn, cursor):
+         ^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 57, in get_db_cursor
+    conn.close()
+    ^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'close'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 772, in handle_user_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\app.py", line 214, in handle_unexpected_error
+    return render_template('errors/500.html'), 500
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 1084, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 1013, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 972, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: errors/500.html
+[2025-09-03 01:06:11] [[31mERROR[0m] [app] [app.internal_server_error:174] Internal server error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+[2025-09-03 01:06:11] [[31mERROR[0m] [app] [app.teardown_db:244] Request teardown with exception: errors/500.html
+[2025-09-03 01:06:14] [[31mERROR[0m] [app] [app.log_exception:838] Exception on /favicon.ico [GET]
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 854, in dispatch_request
+    self.raise_routing_exception(req)
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 463, in raise_routing_exception
+    raise request.routing_exception  # type: ignore[misc]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\ctx.py", line 362, in match_request
+    result = self.url_adapter.match(return_rule=True)  # type: ignore
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\werkzeug\routing\map.py", line 629, in match
+    raise NotFound() from None
+werkzeug.exceptions.NotFound: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 765, in handle_user_exception
+    return self.handle_http_exception(e)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 740, in handle_http_exception
+    return self.ensure_sync(handler)(e)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\app.py", line 148, in not_found
+    return render_template('errors/404.html'), 404
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 149, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 1084, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 1013, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 972, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: errors/404.html
+[2025-09-03 01:06:14] [[31mERROR[0m] [app] [app.internal_server_error:174] Internal server error: 500 Internal Server Error: The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+[2025-09-03 01:06:14] [[31mERROR[0m] [app] [app.teardown_db:244] Request teardown with exception: errors/404.html
+[2025-09-03 01:11:59] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'cursor'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 1127, in recent_executions
+    c = conn.cursor()
+        ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+[2025-09-03 01:11:59] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'cursor'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 446, in dashboard_data
+    c = conn.cursor()
+        ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+[2025-09-03 01:12:24] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'cursor'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 446, in dashboard_data
+    c = conn.cursor()
+        ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+[2025-09-03 01:12:24] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'cursor'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 1127, in recent_executions
+    c = conn.cursor()
+        ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+[2025-09-03 01:12:35] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'cursor'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 1127, in recent_executions
+    c = conn.cursor()
+        ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+[2025-09-03 01:12:35] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'cursor'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 446, in dashboard_data
+    c = conn.cursor()
+        ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+[2025-09-03 01:14:46] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'cursor'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 1127, in recent_executions
+    c = conn.cursor()
+        ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+[2025-09-03 01:14:46] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'cursor'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 446, in dashboard_data
+    c = conn.cursor()
+        ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+[2025-09-03 01:15:13] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'execute'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 633, in posm_deployments
+    total_count = conn.execute(count_query, params).fetchone()[0]
+                  ^^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'execute'
+[2025-09-03 01:15:32] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'cursor'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 969, in agent_performance
+    c = conn.cursor()
+        ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+[2025-09-03 01:15:35] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: Could not build url for endpoint 'reports_bp.reports'. Did you mean 'reports.report_upload' instead?
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\app_reports.py", line 74, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\app_reports.py", line 300, in report_upload
+    return render_template('report_upload.html', role=role)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\templates\report_upload.html", line 1, in top-level template code
+    {% extends 'base.html' %} {% block title %}Upload Reports - Dangote POSM{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\templates\base.html", line 338, in top-level template code
+    {% block content %}{% endblock %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\templates\report_upload.html", line 103, in block 'content'
+    <a href="{{ url_for('reports_bp.reports') }}" class="btn btn-outline-secondary">
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1084, in url_for
+    return self.handle_url_build_error(error, endpoint, values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1073, in url_for
+    rv = url_adapter.build(  # type: ignore[union-attr]
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\werkzeug\routing\map.py", line 924, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'reports_bp.reports'. Did you mean 'reports.report_upload' instead?
+[2025-09-03 01:15:39] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'cursor'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 446, in dashboard_data
+    c = conn.cursor()
+        ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+[2025-09-03 01:15:39] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'cursor'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 1127, in recent_executions
+    c = conn.cursor()
+        ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+[2025-09-03 01:16:54] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'execute'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 633, in posm_deployments
+    total_count = conn.execute(count_query, params).fetchone()[0]
+                  ^^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'execute'
+[2025-09-03 01:17:07] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'execute'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 633, in posm_deployments
+    total_count = conn.execute(count_query, params).fetchone()[0]
+                  ^^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'execute'
+[2025-09-03 01:17:18] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'execute'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 633, in posm_deployments
+    total_count = conn.execute(count_query, params).fetchone()[0]
+                  ^^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'execute'
+[2025-09-03 01:27:40] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'execute'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 683, in posm_deployments
+    total_count = conn.execute(count_query, params).fetchone()[0]
+                  ^^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'execute'
+[2025-09-03 01:28:46] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'execute'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 683, in posm_deployments
+    total_count = conn.execute(count_query, params).fetchone()[0]
+                  ^^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'execute'
+[2025-09-03 01:33:49] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'execute'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 683, in posm_deployments
+    total_count = conn.execute(count_query, params).fetchone()[0]
+                  ^^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'execute'
+[2025-09-03 01:40:37] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'execute'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 683, in posm_deployments
+    params.append(region.upper())
+          ^^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'execute'
+[2025-09-03 01:41:14] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'execute'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 683, in posm_deployments
+    params.append(region.upper())
+          ^^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'execute'
+[2025-09-03 01:55:37] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'execute'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 683, in posm_deployments
+    params.append(region.upper())
+          ^^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'execute'
+[2025-09-03 02:40:13] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'cursor'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 1019, in agent_performance
+    @app.route('/reports')
+            ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
+[2025-09-03 02:40:13] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'execute'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 683, in posm_deployments
+    params.append(region.upper())
+          ^^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'execute'
+[2025-09-03 02:41:57] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: '_GeneratorContextManager' object has no attribute 'cursor'
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\pykes\routes.py", line 878, in agent_performance
+    c = conn.cursor()
+        ^^^^^^^^^^^
+AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
