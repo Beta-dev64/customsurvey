@@ -4689,3 +4689,519 @@ AttributeError: '_GeneratorContextManager' object has no attribute 'cursor'
 [2025-09-03 03:04:33] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/reports/execution_summary
 [2025-09-03 03:04:36] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/api/agent_performance?page=1&per_page=20 from 127.0.0.1
 [2025-09-03 03:04:36] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/api/agent_performance?page=1&per_page=20
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [logging_config.setup_logging:191] Comprehensive logging system initialized
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [logging_config.setup_logging:192] Log directory: C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\logs
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [logging_config.setup_logging:193] Log level: DEBUG
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [logging_config.setup_logging:194] JSON logging: False
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [flask_app_deploy.init_extensions:206] Rate limiting initialized
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [flask_app_deploy.init_extensions:218] Caching initialized
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [flask_app_deploy.create_app:159] Database initialized successfully
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [flask_app_deploy.register_blueprints:386] Reports blueprint registered
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [flask_app_deploy.register_blueprints:393] Admin blueprint registered
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [flask_app_deploy.create_app:190] Application created successfully in development mode
+[2025-09-03 09:36:48] [[31mERROR[0m] [flask_app_deploy] [flask_app_deploy.<module>:515] Failed to create Flask application: View function mapping is overwriting an existing endpoint function: index
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [logging_config.setup_logging:191] Comprehensive logging system initialized
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [logging_config.setup_logging:192] Log directory: C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\logs
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [logging_config.setup_logging:193] Log level: DEBUG
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [logging_config.setup_logging:194] JSON logging: False
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [flask_app_deploy.init_extensions:206] Rate limiting initialized
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [flask_app_deploy.init_extensions:218] Caching initialized
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [flask_app_deploy.create_app:159] Database initialized successfully
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [flask_app_deploy.register_blueprints:386] Reports blueprint registered
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [flask_app_deploy.register_blueprints:393] Admin blueprint registered
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [flask_app_deploy.create_app:190] Application created successfully in development mode
+[2025-09-03 09:36:48] [[36mDEBUG[0m] [flask_app_deploy] [flask_app_deploy.before_request:362] Request: GET http://localhost/test
+[2025-09-03 09:36:48] [[32mINFO[0m] [flask_app_deploy] [flask_app_deploy.not_found:271] 404 error: http://localhost/test
+[2025-09-03 09:45:10] [[32mINFO[0m] [flask_app_deploy] [logging_config.setup_logging:191] Comprehensive logging system initialized
+[2025-09-03 09:45:10] [[32mINFO[0m] [flask_app_deploy] [logging_config.setup_logging:192] Log directory: C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\logs
+[2025-09-03 09:45:10] [[32mINFO[0m] [flask_app_deploy] [logging_config.setup_logging:193] Log level: DEBUG
+[2025-09-03 09:45:10] [[32mINFO[0m] [flask_app_deploy] [logging_config.setup_logging:194] JSON logging: False
+[2025-09-03 09:46:00] [[31mERROR[0m] [flask_app_deploy] [app.log_exception:838] Exception on / [GET]
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\flask_app_deploy.py", line 527, in error_page
+    <pre>{str(e)}</pre>
+              ^
+NameError: name 'e' is not defined
+[2025-09-03 09:46:02] [[31mERROR[0m] [flask_app_deploy] [app.log_exception:838] Exception on / [GET]
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 882, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\flask_app_deploy.py", line 527, in error_page
+    <pre>{str(e)}</pre>
+              ^
+NameError: name 'e' is not defined
+[2025-09-03 09:46:22] [[32mINFO[0m] [app] [logging_config.setup_logging:191] Comprehensive logging system initialized
+[2025-09-03 09:46:22] [[32mINFO[0m] [app] [logging_config.setup_logging:192] Log directory: C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\logs
+[2025-09-03 09:46:22] [[32mINFO[0m] [app] [logging_config.setup_logging:193] Log level: DEBUG
+[2025-09-03 09:46:22] [[32mINFO[0m] [app] [logging_config.setup_logging:194] JSON logging: False
+[2025-09-03 09:46:22] [[32mINFO[0m] [app] [app.create_app:56] Database initialized successfully
+[2025-09-03 09:46:22] [[32mINFO[0m] [app] [app.register_blueprints:252] Admin blueprint registered
+[2025-09-03 09:46:22] [[32mINFO[0m] [app] [app.register_blueprints:256] Reports blueprint registered
+[2025-09-03 09:46:22] [[32mINFO[0m] [app] [app.create_app:80] Application created successfully in development mode
+[2025-09-03 09:46:22] [[32mINFO[0m] [app] [app.<module>:361] Starting application on 0.0.0.0:5000 (debug=False)
+[2025-09-03 09:46:26] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/ from 127.0.0.1
+[2025-09-03 09:46:26] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 302 for GET http://localhost:5000/
+[2025-09-03 09:46:26] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/login from 127.0.0.1
+[2025-09-03 09:46:26] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/login
+[2025-09-03 09:46:27] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 09:46:27] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/bg.jpg from 127.0.0.1
+[2025-09-03 09:46:27] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 09:46:27] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 09:46:27] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 09:46:27] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/bg.jpg
+[2025-09-03 09:46:34] [[36mDEBUG[0m] [app] [app.before_request:223] Request: POST http://localhost:5000/login from 127.0.0.1
+[2025-09-03 09:46:34] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 302 for POST http://localhost:5000/login
+[2025-09-03 09:46:34] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/ from 127.0.0.1
+[2025-09-03 09:46:34] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/
+[2025-09-03 09:46:35] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 09:46:35] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 09:46:35] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/recent_executions from 127.0.0.1
+[2025-09-03 09:46:35] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/dashboard/data from 127.0.0.1
+[2025-09-03 09:46:35] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 09:46:35] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 09:46:35] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/recent_executions
+[2025-09-03 09:46:35] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/dashboard/data
+[2025-09-03 09:46:41] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/ from 127.0.0.1
+[2025-09-03 09:46:41] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/admin/
+[2025-09-03 09:46:41] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 09:46:41] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 09:46:41] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 09:46:41] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 09:46:44] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/executions from 127.0.0.1
+[2025-09-03 09:46:44] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/admin/executions
+[2025-09-03 09:46:44] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 09:46:44] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 09:46:46] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 09:46:46] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 09:46:56] [[36mDEBUG[0m] [app] [app.before_request:223] Request: POST http://localhost:5000/admin/executions/upload from 127.0.0.1
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:812] File columns: ['S/N ', 'Region', 'State', 'LGA', 'URN', "Retailer's Name", 'Outlet Name', 'Phone', 'Address', 'Outlet Type', 'Table', 'Chair', 'Parasol', 'Hawker Jacket', 'Tarpaulin', 'Feather Banner', 'Umbrella', 'Activation Date', 'Comment ( if any)', 'Name of RO/PSS in Charge', 'RO/PSS PHONE NUMBER', 'Email ID']
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011447, Name=RAMABAS PROPERTIES LIMITED
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011447 (row 1)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011440, Name=FIWAGBOYE PROPERTIES BUILDING MATERIALS
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011440 (row 2)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/22/LO/000459, Name=LOKO VIVIEN
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/22/LO/000459 (row 3)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011443, Name=OKIKI  GLOBAL
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011443 (row 4)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011430, Name=3DJ ENTERPRISES
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011430 (row 5)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011423, Name=BUILDABLES  ENTERPRISES
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011423 (row 6)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011451, Name=ADEWALE PERFECT BUILDING SUPPLIERS
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011451 (row 8)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011417, Name=GOD'S FAVOUR ENTERPRISES
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011417 (row 11)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/22/LO/000351, Name=MR WHITE
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/22/LO/000351 (row 14)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/22/LO/000460, Name=ALHAJI OLUWASEYI OJOMU
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/22/LO/000460 (row 15)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/22/LO/000461, Name=MR JAIYEOBA ABDUL RASHEED
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/22/LO/000461 (row 16)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/22/LO/000462, Name=MR AFOLABI JOHN
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/22/LO/000462 (row 17)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/22/LO/000352, Name=MR AZEEZ BAMGBOLA
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/22/LO/000352 (row 19)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011432, Name=MR EMMANUEL
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011432 (row 20)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011420, Name=PHEMSHO VENTURE
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011420 (row 22)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011414, Name=JIMI LARRY VENTURE
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011414 (row 25)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011422, Name=JIMI LARRY VENTURE 2
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011422 (row 26)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011415, Name=RICHARD ZHOU
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011415 (row 27)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/008942, Name=MR EZE COOLOVE
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/008942 (row 28)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/008941, Name=ODETOLA
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/008941 (row 29)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011448, Name=RISE UP VENTURE
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011448 (row 32)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011418, Name=MRS FLORENCE TONY
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011418 (row 34)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011416, Name=WENIOLA ENTERPRISES
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011416 (row 37)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011441, Name=ADECOOL INVESTMENTS
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011441 (row 47)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011427, Name=KAREEM FAUSAT
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011427 (row 48)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011438, Name=S LARRY
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011438 (row 49)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/22/LO/000353, Name=IFYTEX CONCEPT LTD
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/22/LO/000353 (row 50)
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:956] Created new outlet: URN=DCP/19/LO/011456, Name=HARDKORE
+[2025-09-03 09:46:57] [[32mINFO[0m] [app] [app_admin.execution_upload:1025] Imported execution for URN DCP/19/LO/011456 (row 52)
+[2025-09-03 09:46:58] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 302 for POST http://localhost:5000/admin/executions/upload
+[2025-09-03 09:46:58] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/executions from 127.0.0.1
+[2025-09-03 09:46:58] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/admin/executions
+[2025-09-03 09:47:01] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/executions from 127.0.0.1
+[2025-09-03 09:47:01] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/admin/executions
+[2025-09-03 09:47:01] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 09:47:01] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 09:47:02] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 09:47:02] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 09:47:03] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 09:47:03] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 09:47:23] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/users from 127.0.0.1
+[2025-09-03 09:47:23] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/admin/users
+[2025-09-03 09:47:23] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 09:47:23] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 09:47:24] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 09:47:24] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:05:37] [[32mINFO[0m] [app] [logging_config.setup_logging:191] Comprehensive logging system initialized
+[2025-09-03 14:05:37] [[32mINFO[0m] [app] [logging_config.setup_logging:192] Log directory: C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\logs
+[2025-09-03 14:05:37] [[32mINFO[0m] [app] [logging_config.setup_logging:193] Log level: DEBUG
+[2025-09-03 14:05:37] [[32mINFO[0m] [app] [logging_config.setup_logging:194] JSON logging: False
+[2025-09-03 14:05:37] [[32mINFO[0m] [app] [app.create_app:56] Database initialized successfully
+[2025-09-03 14:05:37] [[32mINFO[0m] [app] [app.register_blueprints:252] Admin blueprint registered
+[2025-09-03 14:05:37] [[32mINFO[0m] [app] [app.register_blueprints:256] Reports blueprint registered
+[2025-09-03 14:05:37] [[32mINFO[0m] [app] [app.create_app:80] Application created successfully in development mode
+[2025-09-03 14:05:37] [[32mINFO[0m] [app] [app.<module>:361] Starting application on 0.0.0.0:5000 (debug=False)
+[2025-09-03 14:05:45] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/users from 127.0.0.1
+[2025-09-03 14:05:45] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 302 for GET http://localhost:5000/admin/users
+[2025-09-03 14:05:45] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/login from 127.0.0.1
+[2025-09-03 14:05:45] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/login
+[2025-09-03 14:05:46] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:05:46] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:05:47] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/bg.jpg from 127.0.0.1
+[2025-09-03 14:05:47] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/bg.jpg
+[2025-09-03 14:05:47] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:05:47] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:05:48] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:05:48] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:05:54] [[36mDEBUG[0m] [app] [app.before_request:223] Request: POST http://localhost:5000/login from 127.0.0.1
+[2025-09-03 14:05:54] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 302 for POST http://localhost:5000/login
+[2025-09-03 14:05:54] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/ from 127.0.0.1
+[2025-09-03 14:05:54] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/
+[2025-09-03 14:05:54] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:05:54] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:05:54] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/dashboard/data from 127.0.0.1
+[2025-09-03 14:05:54] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:05:54] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/recent_executions from 127.0.0.1
+[2025-09-03 14:05:54] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:05:54] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/recent_executions
+[2025-09-03 14:05:54] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/dashboard/data
+[2025-09-03 14:05:59] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/ from 127.0.0.1
+[2025-09-03 14:05:59] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/admin/
+[2025-09-03 14:05:59] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:05:59] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:06:00] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:06:00] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:06:09] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/db-management/auth from 127.0.0.1
+[2025-09-03 14:06:09] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: admin/base.html
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\app_admin.py", line 46, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\app_admin.py", line 1126, in db_management_auth
+    return render_template('admin/db_auth.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\templates\admin\db_auth.html", line 1, in top-level template code
+    {% extends "admin/base.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: admin/base.html
+[2025-09-03 14:06:09] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 500 for GET http://localhost:5000/admin/db-management/auth
+[2025-09-03 14:06:09] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:06:09] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:06:09] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:06:09] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:06:14] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/db-management/auth from 127.0.0.1
+[2025-09-03 14:06:14] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: admin/base.html
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\app_admin.py", line 46, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\app_admin.py", line 1126, in db_management_auth
+    return render_template('admin/db_auth.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\templates\admin\db_auth.html", line 1, in top-level template code
+    {% extends "admin/base.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: admin/base.html
+[2025-09-03 14:06:14] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 500 for GET http://localhost:5000/admin/db-management/auth
+[2025-09-03 14:06:14] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:06:14] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:06:14] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:06:14] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:06:14] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:06:14] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:06:22] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/ from 127.0.0.1
+[2025-09-03 14:06:22] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/
+[2025-09-03 14:06:23] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/dashboard/data from 127.0.0.1
+[2025-09-03 14:06:23] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/dashboard/data
+[2025-09-03 14:06:23] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:06:23] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:06:23] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:06:23] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/recent_executions from 127.0.0.1
+[2025-09-03 14:06:23] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:06:23] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/recent_executions
+[2025-09-03 14:08:29] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/ from 127.0.0.1
+[2025-09-03 14:08:29] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/admin/
+[2025-09-03 14:08:30] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:08:30] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:08:30] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:08:30] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:08:32] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/db-management/auth from 127.0.0.1
+[2025-09-03 14:08:32] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: admin/base.html
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\app_admin.py", line 46, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\app_admin.py", line 1126, in db_management_auth
+    return render_template('admin/db_auth.html')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\templates\admin\db_auth.html", line 1, in top-level template code
+    {% extends "admin/base.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: admin/base.html
+[2025-09-03 14:08:32] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 500 for GET http://localhost:5000/admin/db-management/auth
+[2025-09-03 14:08:33] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:08:33] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:08:33] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:08:33] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:10:59] [[32mINFO[0m] [app] [logging_config.setup_logging:191] Comprehensive logging system initialized
+[2025-09-03 14:10:59] [[32mINFO[0m] [app] [logging_config.setup_logging:192] Log directory: C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\logs
+[2025-09-03 14:10:59] [[32mINFO[0m] [app] [logging_config.setup_logging:193] Log level: DEBUG
+[2025-09-03 14:10:59] [[32mINFO[0m] [app] [logging_config.setup_logging:194] JSON logging: False
+[2025-09-03 14:10:59] [[32mINFO[0m] [app] [app.create_app:56] Database initialized successfully
+[2025-09-03 14:10:59] [[32mINFO[0m] [app] [app.register_blueprints:252] Admin blueprint registered
+[2025-09-03 14:10:59] [[32mINFO[0m] [app] [app.register_blueprints:256] Reports blueprint registered
+[2025-09-03 14:10:59] [[32mINFO[0m] [app] [app.create_app:80] Application created successfully in development mode
+[2025-09-03 14:10:59] [[32mINFO[0m] [app] [app.<module>:361] Starting application on 0.0.0.0:5000 (debug=False)
+[2025-09-03 14:11:28] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/db-management/auth from 127.0.0.1
+[2025-09-03 14:11:28] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 302 for GET http://localhost:5000/admin/db-management/auth
+[2025-09-03 14:11:28] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/login from 127.0.0.1
+[2025-09-03 14:11:28] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/login
+[2025-09-03 14:11:28] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:11:28] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:11:28] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/bg.jpg from 127.0.0.1
+[2025-09-03 14:11:28] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:11:28] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/bg.jpg
+[2025-09-03 14:11:28] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:11:29] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:11:29] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:11:40] [[36mDEBUG[0m] [app] [app.before_request:223] Request: POST http://localhost:5000/login from 127.0.0.1
+[2025-09-03 14:11:40] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 302 for POST http://localhost:5000/login
+[2025-09-03 14:11:40] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/ from 127.0.0.1
+[2025-09-03 14:11:40] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/
+[2025-09-03 14:11:41] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/dashboard/data from 127.0.0.1
+[2025-09-03 14:11:41] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/dashboard/data
+[2025-09-03 14:11:41] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:11:41] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/recent_executions from 127.0.0.1
+[2025-09-03 14:11:41] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:11:41] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:11:41] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/recent_executions
+[2025-09-03 14:11:41] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:11:45] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/ from 127.0.0.1
+[2025-09-03 14:11:45] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/admin/
+[2025-09-03 14:11:45] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:11:45] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:11:46] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:11:46] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:11:48] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/db-management/auth from 127.0.0.1
+[2025-09-03 14:11:48] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/admin/db-management/auth
+[2025-09-03 14:11:59] [[36mDEBUG[0m] [app] [app.before_request:223] Request: POST http://localhost:5000/admin/db-management/auth from 127.0.0.1
+[2025-09-03 14:11:59] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 302 for POST http://localhost:5000/admin/db-management/auth
+[2025-09-03 14:11:59] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/db-management from 127.0.0.1
+[2025-09-03 14:11:59] [[31mERROR[0m] [app] [app.handle_unexpected_error:207] Unexpected error: admin/base.html
+Traceback (most recent call last):
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 880, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 865, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\app_admin.py", line 1103, in decorated_function
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\app_admin.py", line 1164, in db_management_dashboard
+    return render_template('admin/db_management_dashboard.html',
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 150, in render_template
+    return _render(app, template, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 131, in _render
+    rv = template.render(context)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\jinja2\environment.py", line 939, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\templates\admin\db_management_dashboard.html", line 1, in top-level template code
+    {% extends "admin/base.html" %}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 65, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\templating.py", line 99, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: admin/base.html
+[2025-09-03 14:11:59] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 500 for GET http://localhost:5000/admin/db-management
+[2025-09-03 14:12:00] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:12:00] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:12:00] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:12:00] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:13:19] [[32mINFO[0m] [app] [logging_config.setup_logging:191] Comprehensive logging system initialized
+[2025-09-03 14:13:19] [[32mINFO[0m] [app] [logging_config.setup_logging:192] Log directory: C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\logs
+[2025-09-03 14:13:19] [[32mINFO[0m] [app] [logging_config.setup_logging:193] Log level: DEBUG
+[2025-09-03 14:13:19] [[32mINFO[0m] [app] [logging_config.setup_logging:194] JSON logging: False
+[2025-09-03 14:13:19] [[32mINFO[0m] [app] [app.create_app:56] Database initialized successfully
+[2025-09-03 14:13:19] [[32mINFO[0m] [app] [app.register_blueprints:252] Admin blueprint registered
+[2025-09-03 14:13:19] [[32mINFO[0m] [app] [app.register_blueprints:256] Reports blueprint registered
+[2025-09-03 14:13:19] [[32mINFO[0m] [app] [app.create_app:80] Application created successfully in development mode
+[2025-09-03 14:13:19] [[32mINFO[0m] [app] [app.<module>:361] Starting application on 0.0.0.0:5000 (debug=False)
+[2025-09-03 14:13:55] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/db-management from 127.0.0.1
+[2025-09-03 14:13:55] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 302 for GET http://localhost:5000/admin/db-management
+[2025-09-03 14:13:55] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/login from 127.0.0.1
+[2025-09-03 14:13:55] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/login
+[2025-09-03 14:13:55] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:13:55] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:13:56] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/bg.jpg from 127.0.0.1
+[2025-09-03 14:13:56] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/bg.jpg
+[2025-09-03 14:13:56] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:13:56] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:13:56] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:13:56] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:14:04] [[36mDEBUG[0m] [app] [app.before_request:223] Request: POST http://localhost:5000/login from 127.0.0.1
+[2025-09-03 14:14:04] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 302 for POST http://localhost:5000/login
+[2025-09-03 14:14:05] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/ from 127.0.0.1
+[2025-09-03 14:14:05] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/
+[2025-09-03 14:14:05] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:14:05] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:14:05] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/dashboard/data from 127.0.0.1
+[2025-09-03 14:14:05] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/dashboard/data
+[2025-09-03 14:14:06] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/recent_executions from 127.0.0.1
+[2025-09-03 14:14:06] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:14:06] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:14:06] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/recent_executions
+[2025-09-03 14:14:10] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/ from 127.0.0.1
+[2025-09-03 14:14:10] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/admin/
+[2025-09-03 14:14:10] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:14:10] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:14:10] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:14:10] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:14:13] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/db-management/auth from 127.0.0.1
+[2025-09-03 14:14:13] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/admin/db-management/auth
+[2025-09-03 14:14:19] [[36mDEBUG[0m] [app] [app.before_request:223] Request: POST http://localhost:5000/admin/db-management/auth from 127.0.0.1
+[2025-09-03 14:14:19] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 302 for POST http://localhost:5000/admin/db-management/auth
+[2025-09-03 14:14:20] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/db-management from 127.0.0.1
+[2025-09-03 14:14:20] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/admin/db-management
+[2025-09-03 14:14:20] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:14:20] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:14:20] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:14:20] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:14:27] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/db-management/table/executions from 127.0.0.1
+[2025-09-03 14:14:27] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/admin/db-management/table/executions
+[2025-09-03 14:14:27] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:14:27] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:14:28] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:14:28] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:14:33] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/db-management from 127.0.0.1
+[2025-09-03 14:14:33] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/admin/db-management
+[2025-09-03 14:14:41] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/db-management/table/outlets from 127.0.0.1
+[2025-09-03 14:14:41] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/admin/db-management/table/outlets
+[2025-09-03 14:14:42] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:14:42] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:14:42] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:14:42] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:15:07] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/db-management/table/outlets?search=fams&sort_by=&order=DESC&per_page=100 from 127.0.0.1
+[2025-09-03 14:15:07] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/admin/db-management/table/outlets?search=fams&sort_by=&order=DESC&per_page=100
+[2025-09-03 14:15:11] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:15:11] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:15:12] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:15:12] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:15:23] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/ from 127.0.0.1
+[2025-09-03 14:15:23] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/
+[2025-09-03 14:15:24] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-03 14:15:24] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-03 14:15:24] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/dashboard/data from 127.0.0.1
+[2025-09-03 14:15:24] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/dashboard/data
+[2025-09-03 14:15:24] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-03 14:15:24] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/recent_executions from 127.0.0.1
+[2025-09-03 14:15:24] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-03 14:15:24] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/recent_executions

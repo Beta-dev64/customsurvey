@@ -1,0 +1,101 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Database Management{% endblock %}
+
+{% block admin_content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>
+            <i class="fas fa-database text-warning"></i>
+            Database Management
+        </h2>
+        <div>
+            <a href="{{ url_for('admin.db_sql_query') }}" class="btn btn-info me-2">
+                <i class="fas fa-code"></i>
+                SQL Query
+            </a>
+            <a href="{{ url_for('admin.db_info') }}" class="btn btn-secondary me-2">
+                <i class="fas fa-info-circle"></i>
+                Database Info
+            </a>
+            <a href="{{ url_for('admin.db_management_logout') }}" class="btn btn-outline-danger">
+                <i class="fas fa-sign-out-alt"></i>
+                Exit DB Management
+            </a>
+        </div>
+    </div>
+
+    <div class="alert alert-warning">
+        <i class="fas fa-exclamation-triangle"></i>
+        <strong>Warning:</strong> You have direct database access. Please be careful when making changes.
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">
+                <i class="fas fa-table"></i>
+                Database Tables
+            </h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                {% for table in tables %}
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0">
+                                <i class="fas fa-table"></i>
+                                {{ table }}
+                            </h6>
+                            <span class="badge bg-primary">{{ table_stats[table].count }} rows</span>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-2">
+                                <i class="fas fa-columns"></i>
+                                {{ table_stats[table].columns }} columns
+                            </p>
+                            <div class="small text-muted mb-3">
+                                Columns: {{ table_stats[table].column_names[:3]|join(', ') }}
+                                {% if table_stats[table].column_names|length > 3 %}
+                                    +{{ table_stats[table].column_names|length - 3 }} more
+                                {% endif %}
+                            </div>
+                            
+                            <div class="btn-group-vertical w-100">
+                                <a href="{{ url_for('admin.db_table_view', table_name=table) }}" 
+                                   class="btn btn-sm btn-primary">
+                                    <i class="fas fa-eye"></i>
+                                    View Data
+                                </a>
+                                
+                                <a href="{{ url_for('admin.db_record_create', table_name=table) }}" 
+                                   class="btn btn-sm btn-success">
+                                    <i class="fas fa-plus"></i>
+                                    Add Record
+                                </a>
+                                
+                                <a href="{{ url_for('admin.db_export_table', table_name=table) }}" 
+                                   class="btn btn-sm btn-info">
+                                    <i class="fas fa-download"></i>
+                                    Export CSV
+                                </a>
+                                
+                                {% if table_stats[table].count > 0 %}
+                                <form method="POST" action="{{ url_for('admin.db_table_truncate', table_name=table) }}" 
+                                      class="d-inline" onsubmit="return confirm('Are you sure you want to delete ALL data from table {{ table }}?')">
+                                    <button type="submit" class="btn btn-sm btn-danger w-100">
+                                        <i class="fas fa-trash"></i>
+                                        Truncate Table
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

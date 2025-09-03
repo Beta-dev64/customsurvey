@@ -1,0 +1,259 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Database Information{% endblock %}
+
+{% block admin_content %}
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>
+            <i class="fas fa-info-circle text-secondary"></i>
+            Database Information
+        </h2>
+        <div>
+            <a href="{{ url_for('admin.db_management_dashboard') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i>
+                Back to Database
+            </a>
+        </div>
+    </div>
+
+    <!-- Database Statistics -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-bar"></i>
+                        Database Statistics
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <td><i class="fas fa-database text-primary"></i> <strong>SQLite Version:</strong></td>
+                                <td>{{ db_stats.sqlite_version }}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-weight text-info"></i> <strong>Database Size:</strong></td>
+                                <td>{{ "%.2f"|format(db_stats.file_size_mb) }} MB ({{ "{:,}".format(db_stats.file_size) }} bytes)</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-file text-secondary"></i> <strong>Page Count:</strong></td>
+                                <td>{{ "{:,}".format(db_stats.page_count) }}</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-layer-group text-warning"></i> <strong>Page Size:</strong></td>
+                                <td>{{ "{:,}".format(db_stats.page_size) }} bytes</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-calculator text-success"></i> <strong>Total Pages Size:</strong></td>
+                                <td>{{ "%.2f"|format(db_stats.total_pages_mb) }} MB</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-table"></i>
+                        Tables Summary
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Table</th>
+                                    <th class="text-center">Records</th>
+                                    <th class="text-center">Columns</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for table_name, info in table_info.items() %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ url_for('admin.db_table_view', table_name=table_name) }}" 
+                                           class="text-decoration-none">
+                                            <i class="fas fa-table text-primary"></i>
+                                            {{ table_name }}
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="badge bg-primary">{{ "{:,}".format(info.count) }}</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="badge bg-secondary">{{ info.columns }}</span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Details -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-columns"></i>
+                        Table Schemas
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="accordion" id="tablesAccordion">
+                        {% for table_name, info in table_info.items() %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading{{ loop.index }}">
+                                <button class="accordion-button collapsed" type="button" 
+                                        data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" 
+                                        aria-expanded="false" aria-controls="collapse{{ loop.index }}">
+                                    <i class="fas fa-table me-2"></i>
+                                    <strong>{{ table_name }}</strong>
+                                    <span class="ms-auto me-3">
+                                        <span class="badge bg-primary">{{ "{:,}".format(info.count) }} records</span>
+                                        <span class="badge bg-secondary">{{ info.columns }} columns</span>
+                                    </span>
+                                </button>
+                            </h2>
+                            <div id="collapse{{ loop.index }}" class="accordion-collapse collapse" 
+                                 aria-labelledby="heading{{ loop.index }}" data-bs-parent="#tablesAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h6>Column Details</h6>
+                                            <div class="table-responsive">
+                                                <table class="table table-sm table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Column</th>
+                                                            <th>Type</th>
+                                                            <th>Not Null</th>
+                                                            <th>Default</th>
+                                                            <th>Primary Key</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for col in info.column_details %}
+                                                        <tr>
+                                                            <td>
+                                                                <code>{{ col[1] }}</code>
+                                                                {% if col[5] %}
+                                                                    <span class="badge bg-primary ms-1">PK</span>
+                                                                {% endif %}
+                                                            </td>
+                                                            <td><span class="text-muted">{{ col[2] }}</span></td>
+                                                            <td class="text-center">
+                                                                {% if col[3] %}
+                                                                    <i class="fas fa-check text-danger"></i>
+                                                                {% else %}
+                                                                    <i class="fas fa-times text-muted"></i>
+                                                                {% endif %}
+                                                            </td>
+                                                            <td>
+                                                                {% if col[4] %}
+                                                                    <code>{{ col[4] }}</code>
+                                                                {% else %}
+                                                                    <span class="text-muted">None</span>
+                                                                {% endif %}
+                                                            </td>
+                                                            <td class="text-center">
+                                                                {% if col[5] %}
+                                                                    <i class="fas fa-key text-primary"></i>
+                                                                {% else %}
+                                                                    <i class="fas fa-times text-muted"></i>
+                                                                {% endif %}
+                                                            </td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h6>Quick Actions</h6>
+                                            <div class="btn-group-vertical w-100">
+                                                <a href="{{ url_for('admin.db_table_view', table_name=table_name) }}" 
+                                                   class="btn btn-sm btn-primary">
+                                                    <i class="fas fa-eye"></i>
+                                                    View Data
+                                                </a>
+                                                <a href="{{ url_for('admin.db_record_create', table_name=table_name) }}" 
+                                                   class="btn btn-sm btn-success">
+                                                    <i class="fas fa-plus"></i>
+                                                    Add Record
+                                                </a>
+                                                <a href="{{ url_for('admin.db_export_table', table_name=table_name) }}" 
+                                                   class="btn btn-sm btn-info">
+                                                    <i class="fas fa-download"></i>
+                                                    Export CSV
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Database Indexes -->
+    {% if indexes %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-search"></i>
+                        Database Indexes
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Index Name</th>
+                                    <th>Table</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for index in indexes %}
+                                <tr>
+                                    <td>
+                                        <code>{{ index[0] }}</code>
+                                    </td>
+                                    <td>
+                                        <a href="{{ url_for('admin.db_table_view', table_name=index[1]) }}" 
+                                           class="text-decoration-none">
+                                            <i class="fas fa-table text-primary"></i>
+                                            {{ index[1] }}
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
