@@ -252,39 +252,8 @@ def init_db():
                     '© 2025 Dangote Industries Limited. All rights reserved.'
                 ))
 
-            # Check if outlets are already populated
-            c.execute("SELECT COUNT(*) FROM outlets")
-            if c.fetchone()[0] == 0:
-                # Populate sample data
-                outlets = [
-            ('DCP/19/SW/ED/1000001', 'FAMS STEEL COMPANY 2', 'FAMOUS EBESUNUN', '156, USELU LAGOS ROAD, BENIN', '7039539773', 'Shop', 'EGOR', 'EDO', 'SW'),
-            ('DCP/19/SW/ED/1000002', 'FAMS STEEL COMPANY', 'FAMOUS EBESUNUN', '162, USELU LAGOS ROAD, BENIN', '7039539773', 'Shop', 'EGOR', 'EDO', 'SW'),
-            ('DCP/19/SW/ED/1000003', 'IGWE CONSTRUCTION 1', 'IGWE WILFRED', '214, LAGOS/BENIN ROAD, UGBOWO, BENIN', '8052220480', 'Shop', 'EGOR', 'EDO', 'SW'),
-            ('DCP/19/SW/ED/1000004', 'ALEXO HOLDING ENT', 'ALEX CHIDIMA', '3,ISIOR VILLAGE, BESIDE PETOM FILLING STATION.BENIN/LAGOS ROAD', '8182728117', 'Shop', 'EGOR', 'EDO', 'SW'),
-            ('DCP/19/SW/ED/1000005', 'IFE ENT.', 'IFEANYI OKEKE', 'OPP. KONKON FILLING STATION,EVBUOMORE QTRS ,ISIOR BENIN', '8035551600', 'CONTAINER', 'EGOR', 'EDO', 'SW'),
-            ('DCP/19/SW/ED/1000006', 'OGHAS CEMENT', 'TONY UCHE', '13A, LAGOS/BENIN ROAD, ISIOR,BENIN', '8032813962', 'Shop', 'EGOR', 'EDO', 'SW'),
-            ('DCP/19/SW/ED/1000007', 'ONOS CEMENT', 'ONOS SAMUEL', 'AGEN JUNCTION, LAGOS BENIN EXPRESS ROAD', '8037208594', 'CONTAINER', 'OVIA NORTH EAST', 'EDO', 'SW'),
-            ('DCP/19/SW/ED/1000008', 'OSAS K 1', 'OSAS KELVIN', '112, nitel road, off lagos benin road', '8037455230', 'CONTAINER', 'EGOR', 'EDO', 'SW')
-        ]
-
-                for outlet in outlets:
-                    c.execute('''
-                    INSERT INTO outlets (urn, outlet_name, customer_name, address, phone, outlet_type, local_govt, state, region)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    ''', outlet)
-
-                # Add sample users
-                users = [
-                    ('admin', 'admin123', 'Admin User', 'admin', 'ALL'),
-                    ('agent1', 'agent123', 'John Doe', 'field_agent', 'SW'),
-                    ('agent2', 'agent123', 'Jane Smith', 'field_agent', 'SW')
-                ]
-
-                for user in users:
-                    c.execute('''
-                    INSERT INTO users (username, password, full_name, role, region)
-                    VALUES (?, ?, ?, ?, ?)
-                    ''', user)
+            # Tables created successfully - no sample data inserted
+            # Use separate scripts to populate sample/demo data as needed
                     
             # Commit all changes
             conn.commit()
