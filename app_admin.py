@@ -10,6 +10,8 @@ import uuid
 import functools
 from werkzeug.utils import secure_filename
 from contextlib import contextmanager
+import hashlib
+import math
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -973,6 +975,7 @@ def execution_upload():
                     cursor.execute("SELECT id FROM users WHERE role = 'admin' LIMIT 1")
                     agent = cursor.fetchone()
 
+
                     if not agent:
                         cursor.execute("SELECT id FROM users LIMIT 1")
                         agent = cursor.fetchone()
@@ -1080,3 +1083,540 @@ def execution_upload():
         current_app.logger.error(f"Error processing file {file.filename}: {str(e)}")
         flash(f"Error processing file: {str(e)}", 'danger')
         return redirect(request.url)
+
+# ===== DATABASE MANAGEMENT INTERFACE =====
+
+# Special decorator for database management access
+def db_management_required(f):
+    @functools.wraps(f)
+    def decorated_function(*args, **kwargs):
+        # First check admin access
+        if 'user_id' not in session or session.get('role') != 'admin':
+            flash('Admin access required', 'danger')
+            return redirect(url_for('login'))
+
+        # Then check for database management session
+        if not session.get('db_management_authenticated', False):
+            return redirect(url_for('admin.db_management_auth'))
+
+        return f(*args, **kwargs)
+    return decorated_function
+
+def hash_password(password):
+    """Simple password hashing for database access"""
+    return hashlib.sha256(password.encode()).hexdigest()
+
+# Database Management Authentication
+@admin_bp.route('/db-management/auth', methods=['GET', 'POST'])
+@admin_required
+def db_management_auth():
+    """Special authentication for database management interface"""
+    if request.method == 'POST':
+        password = request.form.get('password', '')
+
+        # Check the special password
+        if password == 'brobotDevMadeThisallTime123?':
+            session['db_management_authenticated'] = True
+            flash('Database management access granted', 'success')
+            return redirect(url_for('admin.db_management_dashboard'))
+        else:
+            flash('Invalid database management password', 'danger')
+
+    return render_template('admin/db_auth.html')
+
+@admin_bp.route('/db-management/logout')
+@admin_required
+def db_management_logout():
+    """Logout from database management"""
+    session.pop('db_management_authenticated', None)
+    flash('Database management access revoked', 'info')
+    return redirect(url_for('admin.admin_dashboard'))
+
+# Database Management Dashboard
+@admin_bp.route('/db-management')
+@db_management_required
+def db_management_dashboard():
+    """Database management dashboard"""
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+
+        # Get all tables
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")
+        tables = [row[0] for row in cursor.fetchall()]
+
+        # Get table statistics
+        table_stats = {}
+        for table in tables:
+            cursor.execute(f"SELECT COUNT(*) FROM {table}")
+            count = cursor.fetchone()[0]
+
+            # Get table info
+            cursor.execute(f"PRAGMA table_info({table})")
+            columns = cursor.fetchall()
+
+            table_stats[table] = {
+                'count': count,
+                'columns': len(columns),
+                'column_names': [col[1] for col in columns]
+            }
+
+    return render_template('admin/db_management_dashboard.html',
+                         tables=tables, table_stats=table_stats)
+
+# Database Table Viewer
+@admin_bp.route('/db-management/table/<table_name>')
+@db_management_required
+def db_table_view(table_name):
+    """View table data with pagination"""
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 100, type=int)
+    search = request.args.get('search', '', type=str)
+    sort_by = request.args.get('sort_by', '', type=str)
+    order = request.args.get('order', 'ASC', type=str)
+
+    # Validate per_page options
+    if per_page not in [10, 25, 50, 100, 200, 500]:
+        per_page = 100
+
+    # Validate order
+    if order.upper() not in ['ASC', 'DESC']:
+        order = 'ASC'
+
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+
+            # Verify table exists
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (table_name,))
+            if not cursor.fetchone():
+                flash(f'Table {table_name} does not exist', 'danger')
+                return redirect(url_for('admin.db_management_dashboard'))
+
+            # Get table structure
+            cursor.execute(f"PRAGMA table_info({table_name})")
+            columns = cursor.fetchall()
+            column_names = [col[1] for col in columns]
+            column_types = {col[1]: col[2] for col in columns}
+
+            # Validate sort_by column
+            if sort_by and sort_by not in column_names:
+                sort_by = ''
+
+            # Build base query
+            base_query = f"SELECT * FROM {table_name}"
+            params = []
+
+            # Add search if provided
+            if search:
+                search_conditions = []
+                for col in column_names:
+                    search_conditions.append(f"{col} LIKE ?")
+                    params.append(f"%{search}%")
+                base_query += " WHERE " + " OR ".join(search_conditions)
+
+            # Add sorting
+            if sort_by:
+                base_query += f" ORDER BY {sort_by} {order}"
+            elif 'id' in column_names:
+                base_query += f" ORDER BY id {order}"
+
+            # Get total count
+            count_query = f"SELECT COUNT(*) FROM ({base_query})"
+            cursor.execute(count_query, params)
+            total_records = cursor.fetchone()[0]
+
+            # Calculate pagination
+            total_pages = math.ceil(total_records / per_page)
+            offset = (page - 1) * per_page
+
+            # Get paginated results
+            paginated_query = f"{base_query} LIMIT ? OFFSET ?"
+            cursor.execute(paginated_query, params + [per_page, offset])
+            records = cursor.fetchall()
+
+            # Convert to list of dicts for easier template handling
+            data = []
+            for record in records:
+                row_dict = {}
+                for i, col_name in enumerate(column_names):
+                    row_dict[col_name] = record[i]
+                data.append(row_dict)
+
+    except Exception as e:
+        flash(f'Error accessing table {table_name}: {str(e)}', 'danger')
+        return redirect(url_for('admin.db_management_dashboard'))
+
+    return render_template('admin/db_table_view.html',
+                         table_name=table_name,
+                         columns=column_names,
+                         column_types=column_types,
+                         data=data,
+                         page=page,
+                         per_page=per_page,
+                         total_records=total_records,
+                         total_pages=total_pages,
+                         search=search,
+                         sort_by=sort_by,
+                         order=order)
+
+# Database Record Edit
+@admin_bp.route('/db-management/table/<table_name>/edit/<int:record_id>', methods=['GET', 'POST'])
+@db_management_required
+def db_record_edit(table_name, record_id):
+    """Edit a database record"""
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+
+            # Get table structure
+            cursor.execute(f"PRAGMA table_info({table_name})")
+            columns = cursor.fetchall()
+            column_info = {col[1]: {'type': col[2], 'pk': col[5] == 1, 'not_null': col[3] == 1} for col in columns}
+
+            if request.method == 'POST':
+                # Get form data
+                update_data = {}
+                for col_name in column_info.keys():
+                    if not column_info[col_name]['pk']:  # Don't update primary key
+                        update_data[col_name] = request.form.get(col_name, '')
+
+                # Build update query
+                set_clauses = [f"{col} = ?" for col in update_data.keys()]
+                update_query = f"UPDATE {table_name} SET {', '.join(set_clauses)} WHERE id = ?"
+
+                cursor.execute(update_query, list(update_data.values()) + [record_id])
+                conn.commit()
+
+                flash(f'Record {record_id} updated successfully', 'success')
+                return redirect(url_for('admin.db_table_view', table_name=table_name))
+
+            # Get current record
+            cursor.execute(f"SELECT * FROM {table_name} WHERE id = ?", (record_id,))
+            record = cursor.fetchone()
+
+            if not record:
+                flash(f'Record {record_id} not found in table {table_name}', 'danger')
+                return redirect(url_for('admin.db_table_view', table_name=table_name))
+
+            # Convert to dict
+            record_data = {}
+            column_names = [col[1] for col in columns]
+            for i, col_name in enumerate(column_names):
+                record_data[col_name] = record[i]
+
+    except Exception as e:
+        flash(f'Error editing record: {str(e)}', 'danger')
+        return redirect(url_for('admin.db_table_view', table_name=table_name))
+
+    return render_template('admin/db_record_edit.html',
+                         table_name=table_name,
+                         record_id=record_id,
+                         record_data=record_data,
+                         column_info=column_info)
+
+# Database Record Create
+@admin_bp.route('/db-management/table/<table_name>/create', methods=['GET', 'POST'])
+@db_management_required
+def db_record_create(table_name):
+    """Create a new database record"""
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+
+            # Get table structure
+            cursor.execute(f"PRAGMA table_info({table_name})")
+            columns = cursor.fetchall()
+            column_info = {col[1]: {'type': col[2], 'pk': col[5] == 1, 'not_null': col[3] == 1, 'default': col[4]} for col in columns}
+
+            if request.method == 'POST':
+                # Get form data
+                insert_data = {}
+                for col_name, col_props in column_info.items():
+                    if not col_props['pk'] or col_props['pk'] and request.form.get(col_name):  # Skip auto-increment PKs unless provided
+                        insert_data[col_name] = request.form.get(col_name, '')
+
+                # Build insert query
+                columns_list = list(insert_data.keys())
+                placeholders = ['?' for _ in columns_list]
+                insert_query = f"INSERT INTO {table_name} ({', '.join(columns_list)}) VALUES ({', '.join(placeholders)})"
+
+                cursor.execute(insert_query, list(insert_data.values()))
+                conn.commit()
+
+                new_id = cursor.lastrowid
+                flash(f'New record created with ID {new_id}', 'success')
+                return redirect(url_for('admin.db_table_view', table_name=table_name))
+
+    except Exception as e:
+        flash(f'Error creating record: {str(e)}', 'danger')
+        return redirect(url_for('admin.db_table_view', table_name=table_name))
+
+    return render_template('admin/db_record_create.html',
+                         table_name=table_name,
+                         column_info=column_info)
+
+# Database Record Delete
+@admin_bp.route('/db-management/table/<table_name>/delete/<int:record_id>', methods=['POST'])
+@db_management_required
+def db_record_delete(table_name, record_id):
+    """Delete a database record"""
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+
+            # Prevent deletion of current user
+            if table_name == 'users' and record_id == session.get('user_id'):
+                flash('Cannot delete your own user account', 'danger')
+                return redirect(url_for('admin.db_table_view', table_name=table_name))
+
+            cursor.execute(f"DELETE FROM {table_name} WHERE id = ?", (record_id,))
+
+            if cursor.rowcount > 0:
+                conn.commit()
+                flash(f'Record {record_id} deleted successfully', 'success')
+            else:
+                flash(f'Record {record_id} not found', 'warning')
+
+    except Exception as e:
+        flash(f'Error deleting record: {str(e)}', 'danger')
+
+    return redirect(url_for('admin.db_table_view', table_name=table_name))
+
+# Bulk Operations
+@admin_bp.route('/db-management/table/<table_name>/bulk-delete', methods=['POST'])
+@db_management_required
+def db_bulk_delete(table_name):
+    """Bulk delete selected records"""
+    selected_ids = request.form.getlist('selected_records')
+
+    if not selected_ids:
+        flash('No records selected', 'warning')
+        return redirect(url_for('admin.db_table_view', table_name=table_name))
+
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+
+            # Prevent deletion of current user
+            if table_name == 'users' and str(session.get('user_id')) in selected_ids:
+                selected_ids = [id for id in selected_ids if int(id) != session.get('user_id')]
+                flash('Skipped deletion of your own user account', 'warning')
+
+            if not selected_ids:
+                flash('No valid records to delete', 'warning')
+                return redirect(url_for('admin.db_table_view', table_name=table_name))
+
+            # Delete records
+            placeholders = ','.join(['?' for _ in selected_ids])
+            cursor.execute(f"DELETE FROM {table_name} WHERE id IN ({placeholders})", selected_ids)
+
+            deleted_count = cursor.rowcount
+            conn.commit()
+
+            flash(f'Successfully deleted {deleted_count} records', 'success')
+
+    except Exception as e:
+        flash(f'Error during bulk delete: {str(e)}', 'danger')
+
+    return redirect(url_for('admin.db_table_view', table_name=table_name))
+
+# Table Management
+@admin_bp.route('/db-management/table/<table_name>/truncate', methods=['POST'])
+@db_management_required
+def db_table_truncate(table_name):
+    """Truncate (delete all data from) a table"""
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+
+            # Get record count first
+            cursor.execute(f"SELECT COUNT(*) FROM {table_name}")
+            count = cursor.fetchone()[0]
+
+            if count == 0:
+                flash(f'Table {table_name} is already empty', 'info')
+                return redirect(url_for('admin.db_table_view', table_name=table_name))
+
+            # Prevent truncating users table if it would delete current user
+            if table_name == 'users':
+                cursor.execute(f"SELECT COUNT(*) FROM {table_name} WHERE id != ?", (session.get('user_id'),))
+                safe_delete_count = cursor.fetchone()[0]
+                if safe_delete_count == 0:
+                    flash('Cannot truncate users table - would delete your own account', 'danger')
+                    return redirect(url_for('admin.db_table_view', table_name=table_name))
+
+            # Delete all records
+            cursor.execute(f"DELETE FROM {table_name}")
+
+            # Reset auto-increment counter
+            cursor.execute("DELETE FROM sqlite_sequence WHERE name=?", (table_name,))
+
+            deleted_count = cursor.rowcount
+            conn.commit()
+
+            flash(f'Successfully truncated table {table_name} - deleted {deleted_count} records', 'success')
+
+    except Exception as e:
+        flash(f'Error truncating table {table_name}: {str(e)}', 'danger')
+
+    return redirect(url_for('admin.db_table_view', table_name=table_name))
+
+# SQL Query Interface
+@admin_bp.route('/db-management/sql-query', methods=['GET', 'POST'])
+@db_management_required
+def db_sql_query():
+    """Execute custom SQL queries"""
+    results = None
+    error = None
+    query = ''
+
+    if request.method == 'POST':
+        query = request.form.get('query', '').strip()
+
+        if not query:
+            flash('Please enter a SQL query', 'warning')
+        else:
+            try:
+                with get_db_connection() as conn:
+                    cursor = conn.cursor()
+
+                    # Execute query
+                    cursor.execute(query)
+
+                    # Check if it's a SELECT query
+                    if query.strip().upper().startswith('SELECT'):
+                        results = cursor.fetchall()
+                        # Get column names
+                        columns = [description[0] for description in cursor.description] if cursor.description else []
+
+                        # Convert to list of dicts
+                        if results and columns:
+                            results = [dict(zip(columns, row)) for row in results]
+
+                        flash(f'Query executed successfully. {len(results)} rows returned.', 'success')
+                    else:
+                        # For non-SELECT queries
+                        affected_rows = cursor.rowcount
+                        conn.commit()
+                        flash(f'Query executed successfully. {affected_rows} rows affected.', 'success')
+
+            except Exception as e:
+                error = str(e)
+                flash(f'SQL Error: {error}', 'danger')
+
+    return render_template('admin/db_sql_query.html',
+                         query=query,
+                         results=results,
+                         error=error)
+
+# Database Export
+@admin_bp.route('/db-management/export/<table_name>')
+@db_management_required
+def db_export_table(table_name):
+    """Export table data to CSV"""
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+
+            # Get all data
+            cursor.execute(f"SELECT * FROM {table_name}")
+            data = cursor.fetchall()
+
+            # Get column names
+            cursor.execute(f"PRAGMA table_info({table_name})")
+            columns = cursor.fetchall()
+            column_names = [col[1] for col in columns]
+
+            # Create CSV
+            output = io.StringIO()
+            writer = csv.writer(output)
+
+            # Write header
+            writer.writerow(column_names)
+
+            # Write data
+            for row in data:
+                writer.writerow(row)
+
+            # Prepare response
+            csv_data = output.getvalue()
+            output.close()
+
+            # Create response
+            response = current_app.response_class(
+                csv_data,
+                mimetype='text/csv',
+                headers={"Content-disposition": f"attachment; filename={table_name}_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"}
+            )
+
+            return response
+
+    except Exception as e:
+        flash(f'Error exporting table {table_name}: {str(e)}', 'danger')
+        return redirect(url_for('admin.db_table_view', table_name=table_name))
+
+# Database Information
+@admin_bp.route('/db-management/info')
+@db_management_required
+def db_info():
+    """Show database information and statistics"""
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+
+            # Database file info
+            import os
+            db_path = 'maindatabase.db'
+            db_size = os.path.getsize(db_path) if os.path.exists(db_path) else 0
+            db_size_mb = db_size / (1024 * 1024)
+
+            # Get SQLite version
+            cursor.execute("SELECT sqlite_version()")
+            sqlite_version = cursor.fetchone()[0]
+
+            # Get page count and size
+            cursor.execute("PRAGMA page_count")
+            page_count = cursor.fetchone()[0]
+
+            cursor.execute("PRAGMA page_size")
+            page_size = cursor.fetchone()[0]
+
+            # Get all tables with their info
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")
+            tables = [row[0] for row in cursor.fetchall()]
+
+            table_info = {}
+            for table in tables:
+                cursor.execute(f"SELECT COUNT(*) FROM {table}")
+                count = cursor.fetchone()[0]
+
+                cursor.execute(f"PRAGMA table_info({table})")
+                columns = cursor.fetchall()
+
+                table_info[table] = {
+                    'count': count,
+                    'columns': len(columns),
+                    'column_details': columns
+                }
+
+            # Get indexes
+            cursor.execute("SELECT name, tbl_name FROM sqlite_master WHERE type='index' ORDER BY tbl_name, name")
+            indexes = cursor.fetchall()
+
+            db_stats = {
+                'file_size': db_size,
+                'file_size_mb': db_size_mb,
+                'sqlite_version': sqlite_version,
+                'page_count': page_count,
+                'page_size': page_size,
+                'total_pages_mb': (page_count * page_size) / (1024 * 1024)
+            }
+
+    except Exception as e:
+        flash(f'Error getting database info: {str(e)}', 'danger')
+        return redirect(url_for('admin.db_management_dashboard'))
+
+    return render_template('admin/db_info.html',
+                         db_stats=db_stats,
+                         table_info=table_info,
+                         indexes=indexes)

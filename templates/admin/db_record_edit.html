@@ -1,0 +1,172 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Edit Record - {{ table_name }}{% endblock %}
+
+{% block admin_content %}
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>
+            <i class="fas fa-edit text-primary"></i>
+            Edit Record in {{ table_name }}
+        </h2>
+        <div>
+            <a href="{{ url_for('admin.db_table_view', table_name=table_name) }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i>
+                Back to Table
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-form"></i>
+                        Record ID: {{ record_id }}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="row">
+                            {% for col_name, col_props in column_info.items() %}
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ col_name }}" class="form-label">
+                                    {{ col_name }}
+                                    {% if col_props.pk %}
+                                        <span class="badge bg-primary">PK</span>
+                                    {% endif %}
+                                    {% if col_props.not_null %}
+                                        <span class="text-danger">*</span>
+                                    {% endif %}
+                                </label>
+                                
+                                {% if col_props.pk %}
+                                    <input type="text" class="form-control" value="{{ record_data[col_name] }}" readonly>
+                                    <div class="form-text">Primary key (read-only)</div>
+                                {% else %}
+                                    {% set field_value = record_data[col_name] %}
+                                    {% if col_props.type.lower() in ['text', 'varchar', 'char'] %}
+                                        {% if field_value and field_value|string|length > 100 %}
+                                            <textarea class="form-control" id="{{ col_name }}" name="{{ col_name }}" 
+                                                    rows="4" {% if col_props.not_null %}required{% endif %}>{{ field_value if field_value is not none else '' }}</textarea>
+                                        {% else %}
+                                            <input type="text" class="form-control" id="{{ col_name }}" name="{{ col_name }}" 
+                                                   value="{{ field_value if field_value is not none else '' }}" 
+                                                   {% if col_props.not_null %}required{% endif %}>
+                                        {% endif %}
+                                    {% elif col_props.type.lower() in ['integer', 'int'] %}
+                                        <input type="number" class="form-control" id="{{ col_name }}" name="{{ col_name }}" 
+                                               value="{{ field_value if field_value is not none else '' }}" 
+                                               {% if col_props.not_null %}required{% endif %}>
+                                    {% elif col_props.type.lower() in ['real', 'float', 'double'] %}
+                                        <input type="number" step="any" class="form-control" id="{{ col_name }}" name="{{ col_name }}" 
+                                               value="{{ field_value if field_value is not none else '' }}" 
+                                               {% if col_props.not_null %}required{% endif %}>
+                                    {% elif col_props.type.lower() in ['date'] %}
+                                        <input type="date" class="form-control" id="{{ col_name }}" name="{{ col_name }}" 
+                                               value="{{ field_value if field_value is not none else '' }}" 
+                                               {% if col_props.not_null %}required{% endif %}>
+                                    {% elif col_props.type.lower() in ['datetime', 'timestamp'] %}
+                                        <input type="datetime-local" class="form-control" id="{{ col_name }}" name="{{ col_name }}" 
+                                               value="{{ field_value if field_value is not none else '' }}" 
+                                               {% if col_props.not_null %}required{% endif %}>
+                                    {% elif col_props.type.lower() in ['boolean', 'bool'] %}
+                                        <select class="form-select" id="{{ col_name }}" name="{{ col_name }}" 
+                                                {% if col_props.not_null %}required{% endif %}>
+                                            <option value="">Select...</option>
+                                            <option value="1" {% if field_value == 1 or field_value == '1' or field_value == 'true' %}selected{% endif %}>True</option>
+                                            <option value="0" {% if field_value == 0 or field_value == '0' or field_value == 'false' %}selected{% endif %}>False</option>
+                                        </select>
+                                    {% else %}
+                                        <input type="text" class="form-control" id="{{ col_name }}" name="{{ col_name }}" 
+                                               value="{{ field_value if field_value is not none else '' }}" 
+                                               {% if col_props.not_null %}required{% endif %}>
+                                    {% endif %}
+                                    
+                                    <div class="form-text">
+                                        Type: {{ col_props.type }}
+                                        {% if col_props.not_null %} | Required{% endif %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('admin.db_table_view', table_name=table_name) }}" 
+                               class="btn btn-secondary">
+                                <i class="fas fa-times"></i>
+                                Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i>
+                                Update Record
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-info-circle"></i>
+                        Column Information
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Column</th>
+                                    <th>Type</th>
+                                    <th>Constraints</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for col_name, col_props in column_info.items() %}
+                                <tr>
+                                    <td>{{ col_name }}</td>
+                                    <td><small>{{ col_props.type }}</small></td>
+                                    <td>
+                                        {% if col_props.pk %}
+                                            <span class="badge bg-primary">PK</span>
+                                        {% endif %}
+                                        {% if col_props.not_null %}
+                                            <span class="badge bg-warning">NOT NULL</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-exclamation-triangle text-danger"></i>
+                        Actions
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('admin.db_record_delete', table_name=table_name, record_id=record_id) }}" 
+                          onsubmit="return confirm('Are you sure you want to delete this record? This action cannot be undone.')">
+                        <button type="submit" class="btn btn-danger btn-sm w-100">
+                            <i class="fas fa-trash"></i>
+                            Delete This Record
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

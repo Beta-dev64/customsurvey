@@ -116,6 +116,12 @@
                         <span>Last Update</span>
                         <span>{{ now.strftime('%Y-%m-%d') }}</span>
                     </li>
+                    <li class="list-group-item">
+                        <a href="{{ url_for('admin.db_management_auth') }}" class="btn btn-warning btn-sm w-100">
+                            <i class="fas fa-database me-2"></i>Database Management
+                        </a>
+                        <small class="text-muted">Advanced database operations</small>
+                    </li>
                 </ul>
             </div>
         </div>

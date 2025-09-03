@@ -1,0 +1,183 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Create Record - {{ table_name }}{% endblock %}
+
+{% block admin_content %}
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>
+            <i class="fas fa-plus text-success"></i>
+            Create New Record in {{ table_name }}
+        </h2>
+        <div>
+            <a href="{{ url_for('admin.db_table_view', table_name=table_name) }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i>
+                Back to Table
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-form"></i>
+                        New Record Form
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="row">
+                            {% for col_name, col_props in column_info.items() %}
+                            <div class="col-md-6 mb-3">
+                                <label for="{{ col_name }}" class="form-label">
+                                    {{ col_name }}
+                                    {% if col_props.pk %}
+                                        <span class="badge bg-primary">PK</span>
+                                    {% endif %}
+                                    {% if col_props.not_null %}
+                                        <span class="text-danger">*</span>
+                                    {% endif %}
+                                </label>
+                                
+                                {% if col_props.pk and col_props.type.lower() in ['integer', 'int'] %}
+                                    <input type="text" class="form-control" placeholder="Auto-generated" readonly>
+                                    <div class="form-text">Primary key (auto-generated)</div>
+                                {% else %}
+                                    {% if col_props.type.lower() in ['text', 'varchar', 'char'] %}
+                                        <input type="text" class="form-control" id="{{ col_name }}" name="{{ col_name }}" 
+                                               placeholder="Enter {{ col_name }}" 
+                                               {% if col_props.not_null %}required{% endif %}>
+                                    {% elif col_props.type.lower() in ['integer', 'int'] %}
+                                        <input type="number" class="form-control" id="{{ col_name }}" name="{{ col_name }}" 
+                                               placeholder="Enter {{ col_name }}" 
+                                               {% if col_props.not_null %}required{% endif %}>
+                                    {% elif col_props.type.lower() in ['real', 'float', 'double'] %}
+                                        <input type="number" step="any" class="form-control" id="{{ col_name }}" name="{{ col_name }}" 
+                                               placeholder="Enter {{ col_name }}" 
+                                               {% if col_props.not_null %}required{% endif %}>
+                                    {% elif col_props.type.lower() in ['date'] %}
+                                        <input type="date" class="form-control" id="{{ col_name }}" name="{{ col_name }}" 
+                                               {% if col_props.not_null %}required{% endif %}>
+                                    {% elif col_props.type.lower() in ['datetime', 'timestamp'] %}
+                                        <input type="datetime-local" class="form-control" id="{{ col_name }}" name="{{ col_name }}" 
+                                               {% if col_props.not_null %}required{% endif %}>
+                                    {% elif col_props.type.lower() in ['boolean', 'bool'] %}
+                                        <select class="form-select" id="{{ col_name }}" name="{{ col_name }}" 
+                                                {% if col_props.not_null %}required{% endif %}>
+                                            <option value="">Select...</option>
+                                            <option value="1">True</option>
+                                            <option value="0">False</option>
+                                        </select>
+                                    {% else %}
+                                        <input type="text" class="form-control" id="{{ col_name }}" name="{{ col_name }}" 
+                                               placeholder="Enter {{ col_name }}" 
+                                               {% if col_props.not_null %}required{% endif %}>
+                                    {% endif %}
+                                    
+                                    <div class="form-text">
+                                        Type: {{ col_props.type }}
+                                        {% if col_props.not_null %} | Required{% endif %}
+                                        {% if col_props.default %} | Default: {{ col_props.default }}{% endif %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('admin.db_table_view', table_name=table_name) }}" 
+                               class="btn btn-secondary">
+                                <i class="fas fa-times"></i>
+                                Cancel
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-plus"></i>
+                                Create Record
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-info-circle"></i>
+                        Table Schema
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Column</th>
+                                    <th>Type</th>
+                                    <th>Constraints</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for col_name, col_props in column_info.items() %}
+                                <tr>
+                                    <td>{{ col_name }}</td>
+                                    <td><small>{{ col_props.type }}</small></td>
+                                    <td>
+                                        {% if col_props.pk %}
+                                            <span class="badge bg-primary">PK</span>
+                                        {% endif %}
+                                        {% if col_props.not_null %}
+                                            <span class="badge bg-warning">NOT NULL</span>
+                                        {% endif %}
+                                        {% if col_props.default %}
+                                            <span class="badge bg-info">DEFAULT</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h6 class="mb-0">
+                        <i class="fas fa-lightbulb"></i>
+                        Tips
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled small">
+                        <li><i class="fas fa-star text-danger"></i> Required fields are marked with *</li>
+                        <li><i class="fas fa-key text-primary"></i> Primary key fields are auto-generated</li>
+                        <li><i class="fas fa-clock text-info"></i> Date/time fields use your local timezone</li>
+                        <li><i class="fas fa-check text-success"></i> Boolean fields accept True/False values</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Auto-fill current datetime for datetime fields
+document.addEventListener('DOMContentLoaded', function() {
+    const datetimeFields = document.querySelectorAll('input[type="datetime-local"]');
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    const currentDateTime = now.toISOString().slice(0, 16);
+    
+    datetimeFields.forEach(field => {
+        if (!field.value && field.name.toLowerCase().includes('date')) {
+            field.value = currentDateTime;
+        }
+    });
+});
+</script>
+{% endblock %}
