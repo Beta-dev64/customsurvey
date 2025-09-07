@@ -1202,6 +1202,63 @@ def init_routes(app):
                             local_govt=filters['local_govt'],
                             outlet_type=filters['outlet_type'])
 
+    @app.route('/debug/session')
+    @login_required
+    def debug_session():
+        """Debug route to check session data and role filtering - remove in production"""
+        user_info = get_session_user_info()
+        
+        # Test query for role-based filtering
+        with get_db_cursor() as (conn, cursor):
+            # Test the same query as all_visitation route
+            base_query = """
+                SELECT o.id, o.outlet_name, o.region, o.state FROM outlets o
+                WHERE o.id NOT IN (
+                    SELECT DISTINCT outlet_id FROM executions
+                    WHERE execution_date >= datetime('now', '-7 days')
+                    AND status = 'Completed'
+                )
+            """
+            
+            params = []
+            debug_info = {
+                'session_data': dict(session),
+                'user_info': user_info,
+                'original_query': base_query
+            }
+            
+            # Apply role-based filter like in all_visitation
+            if user_info['role'] == 'field_agent':
+                base_query += " AND o.region = ?"
+                params.append(user_info['region'])
+                debug_info['role_filter_applied'] = True
+                debug_info['filtered_query'] = base_query
+                debug_info['filter_params'] = params
+                
+                if user_info['state']:
+                    base_query += " AND o.state = ?"
+                    params.append(user_info['state'])
+            else:
+                debug_info['role_filter_applied'] = False
+            
+            # Execute and count results
+            base_query += " LIMIT 10"  # Limit for debug
+            cursor.execute(base_query, params)
+            outlets = cursor.fetchall()
+            
+            debug_info['query_results_count'] = len(outlets)
+            debug_info['sample_outlets'] = [dict(row) for row in outlets[:5]]
+            
+            # Also check total outlets for this user
+            if user_info['role'] == 'field_agent':
+                cursor.execute("SELECT COUNT(*) FROM outlets WHERE region = ?", (user_info['region'],))
+            else:
+                cursor.execute("SELECT COUNT(*) FROM outlets")
+            
+            debug_info['total_outlets_for_user'] = cursor.fetchone()[0]
+        
+        return jsonify(debug_info)
+
     @app.route('/assign_execution/<int:outlet_id>')
     def assign_execution(outlet_id):
         if 'user_id' not in session:

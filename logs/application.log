@@ -590,3 +590,60 @@
 [2025-09-07 09:43:21] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/favicon.ico from 127.0.0.1
 [2025-09-07 09:43:21] [[32mINFO[0m] [app] [app.not_found:141] 404 error: http://localhost:5000/favicon.ico
 [2025-09-07 09:43:21] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 404 for GET http://localhost:5000/favicon.ico
+[2025-09-07 22:19:23] [[32mINFO[0m] [app] [logging_config.setup_logging:191] Comprehensive logging system initialized
+[2025-09-07 22:19:23] [[32mINFO[0m] [app] [logging_config.setup_logging:192] Log directory: C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\logs
+[2025-09-07 22:19:23] [[32mINFO[0m] [app] [logging_config.setup_logging:193] Log level: DEBUG
+[2025-09-07 22:19:23] [[32mINFO[0m] [app] [logging_config.setup_logging:194] JSON logging: False
+[2025-09-07 22:19:23] [[32mINFO[0m] [app] [app.create_app:56] Database initialized successfully
+[2025-09-07 22:19:24] [[32mINFO[0m] [app] [app.register_blueprints:252] Admin blueprint registered
+[2025-09-07 22:19:24] [[32mINFO[0m] [app] [app.register_blueprints:256] Reports blueprint registered
+[2025-09-07 22:19:24] [[32mINFO[0m] [app] [app.create_app:80] Application created successfully in development mode
+[2025-09-07 22:19:24] [[32mINFO[0m] [app] [app.<module>:361] Starting application on 0.0.0.0:5000 (debug=False)
+[2025-09-07 22:25:45] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/db-management/auth from 127.0.0.1
+[2025-09-07 22:28:10] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/admin/db-management/auth from 127.0.0.1
+[2025-09-07 22:28:16] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/ from 127.0.0.1
+[2025-09-07 22:29:07] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 302 for GET http://localhost:5000/admin/db-management/auth
+[2025-09-07 22:29:07] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 302 for GET http://localhost:5000/admin/db-management/auth
+[2025-09-07 22:29:07] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 302 for GET http://localhost:5000/
+[2025-09-07 22:29:07] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/login from 127.0.0.1
+[2025-09-07 22:29:14] [[32mINFO[0m] [app] [logging_config.setup_logging:191] Comprehensive logging system initialized
+[2025-09-07 22:29:14] [[32mINFO[0m] [app] [logging_config.setup_logging:192] Log directory: C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\logs
+[2025-09-07 22:29:14] [[32mINFO[0m] [app] [logging_config.setup_logging:193] Log level: DEBUG
+[2025-09-07 22:29:14] [[32mINFO[0m] [app] [logging_config.setup_logging:194] JSON logging: False
+[2025-09-07 22:29:15] [[32mINFO[0m] [app] [app.create_app:56] Database initialized successfully
+[2025-09-07 22:29:15] [[32mINFO[0m] [app] [app.register_blueprints:252] Admin blueprint registered
+[2025-09-07 22:29:15] [[32mINFO[0m] [app] [app.register_blueprints:256] Reports blueprint registered
+[2025-09-07 22:29:15] [[32mINFO[0m] [app] [app.create_app:80] Application created successfully in development mode
+[2025-09-07 22:29:15] [[32mINFO[0m] [app] [app.<module>:361] Starting application on 0.0.0.0:5000 (debug=False)
+[2025-09-07 22:31:20] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/login from 127.0.0.1
+[2025-09-07 22:31:21] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/login
+[2025-09-07 22:31:21] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-07 22:31:21] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-07 22:31:22] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/bg.jpg from 127.0.0.1
+[2025-09-07 22:31:22] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/bg.jpg
+[2025-09-07 22:31:22] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-07 22:31:22] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-07 22:31:23] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-07 22:31:23] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-07 22:33:54] [[36mDEBUG[0m] [app] [app.before_request:223] Request: POST http://localhost:5000/login from 127.0.0.1
+[2025-09-07 22:33:54] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 302 for POST http://localhost:5000/login
+[2025-09-07 22:33:54] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/ from 127.0.0.1
+[2025-09-07 22:33:54] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/
+[2025-09-07 22:33:55] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-07 22:33:55] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-07 22:33:55] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/dashboard/data from 127.0.0.1
+[2025-09-07 22:33:55] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/recent_executions from 127.0.0.1
+[2025-09-07 22:33:55] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-07 22:33:55] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-07 22:33:55] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/recent_executions
+[2025-09-07 22:33:55] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/dashboard/data
+[2025-09-07 22:38:05] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/all_visitation from 127.0.0.1
+[2025-09-07 22:38:06] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 200 for GET http://localhost:5000/all_visitation
+[2025-09-07 22:38:06] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/dangote-logo.png from 127.0.0.1
+[2025-09-07 22:38:06] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/dangote-logo.png
+[2025-09-07 22:38:06] [[36mDEBUG[0m] [app] [app.before_request:223] Request: GET http://localhost:5000/static/img/favicon.png from 127.0.0.1
+[2025-09-07 22:38:06] [[36mDEBUG[0m] [app] [app.after_request:233] Response: 304 for GET http://localhost:5000/static/img/favicon.png
+[2025-09-07 22:44:56] [[32mINFO[0m] [flask_app_deploy] [logging_config.setup_logging:191] Comprehensive logging system initialized
+[2025-09-07 22:44:56] [[32mINFO[0m] [flask_app_deploy] [logging_config.setup_logging:192] Log directory: C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\logs
+[2025-09-07 22:44:56] [[32mINFO[0m] [flask_app_deploy] [logging_config.setup_logging:193] Log level: DEBUG
+[2025-09-07 22:44:56] [[32mINFO[0m] [flask_app_deploy] [logging_config.setup_logging:194] JSON logging: False
