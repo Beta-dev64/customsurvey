@@ -334,6 +334,18 @@ def init_routes(app):
                          form_data['latitude'], form_data['longitude'], form_data['notes'], products_json, 'Completed')
                     )
                 
+                # After completing the execution, delete any OTHER pending executions for the same outlet by different agents
+                # This prevents conflicts when multiple agents start executions for the same outlet
+                cursor.execute(
+                    """DELETE FROM executions 
+                       WHERE outlet_id = ? AND status = 'Pending' AND agent_id != ?""",
+                    (outlet_id, user_info['user_id'])
+                )
+                
+                deleted_pending = cursor.rowcount
+                if deleted_pending > 0:
+                    print(f"Deleted {deleted_pending} pending execution(s) for outlet {outlet_id} by other agents")
+                
                 conn.commit()
 
             flash('Visitation recorded successfully', 'success')
@@ -1098,6 +1110,97 @@ def init_routes(app):
                 })
 
         return jsonify({'executions': executions})
+
+    @app.route('/all_visitation')
+    @login_required
+    def all_visitation():
+        # Get filter and pagination parameters
+        filters = {
+            'region': request.args.get('region', ''),
+            'state': request.args.get('state', ''),
+            'local_govt': request.args.get('local_govt', ''),
+            'outlet_type': request.args.get('outlet_type', ''),
+            'search': request.args.get('search', '')
+        }
+
+        page = request.args.get('page', 1, type=int)
+        per_page = min(request.args.get('per_page', DEFAULT_PER_PAGE, type=int), MAX_PER_PAGE)
+        offset = (page - 1) * per_page
+
+        with get_db_cursor() as (conn, cursor):
+            # Get outlets that have NOT been visited in the last 7 days
+            base_query = """
+                SELECT o.* FROM outlets o
+                WHERE o.id NOT IN (
+                    SELECT DISTINCT outlet_id FROM executions
+                    WHERE execution_date >= datetime('now', '-7 days')
+                    AND status = 'Completed'
+                )
+            """
+            count_query = """
+                SELECT COUNT(*) FROM outlets o
+                WHERE o.id NOT IN (
+                    SELECT DISTINCT outlet_id FROM executions
+                    WHERE execution_date >= datetime('now', '-7 days')
+                    AND status = 'Completed'
+                )
+            """
+
+            params = []
+            count_params = []
+
+            # Role-based filter for field agents
+            user_info = get_session_user_info()
+            if user_info['role'] == 'field_agent':
+                base_query += " AND o.region = ?"
+                count_query += " AND o.region = ?"
+                params.append(user_info['region'])
+                count_params.append(user_info['region'])
+
+                if user_info['state']:
+                    base_query += " AND o.state = ?"
+                    count_query += " AND o.state = ?"
+                    params.append(user_info['state'])
+                    count_params.append(user_info['state'])
+
+            # User selected filter
+            query, params = build_filter_query(base_query, {
+                'o.region': filters['region'],
+                'o.state': filters['state'],
+                'o.local_govt': filters['local_govt'],
+                'o.outlet_type': filters['outlet_type'],
+                'search': filters['search']
+            }, params)
+
+            count_query, count_params = build_filter_query(count_query, {
+                'o.region': filters['region'],
+                'o.state': filters['state'],
+                'o.local_govt': filters['local_govt'],
+                'o.outlet_type': filters['outlet_type'],
+                'search': filters['search']
+            }, count_params)
+
+            cursor.execute(count_query, count_params)
+            total_outlets = cursor.fetchone()[0]
+
+            # Pagination
+            query += " ORDER BY o.outlet_name ASC LIMIT ? OFFSET ?"
+            params.extend([per_page, offset])
+
+            cursor.execute(query, params)
+            outlets = cursor.fetchall()
+
+        pagination = calculate_pagination(total_outlets, page, per_page)
+
+        return render_template('all_visitation.html',
+                            outlets=outlets,
+                            page=pagination.get('current_page', page),
+                            total_pages=pagination.get('total_pages'),
+                            total_outlets=total_outlets,
+                            region=filters['region'],
+                            state=filters['state'],
+                            local_govt=filters['local_govt'],
+                            outlet_type=filters['outlet_type'])
 
     @app.route('/assign_execution/<int:outlet_id>')
     def assign_execution(outlet_id):

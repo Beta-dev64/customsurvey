@@ -301,6 +301,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ url_for('all_visitation') }}" class="nav-link {% if request.path == url_for('all_visitation') %}active{% endif %}">
+                                All Visitation  <i class="fas fa-exclamation-triangle me-2"></i> 
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ url_for('executions') }}" class="nav-link {% if request.path == url_for('executions') %}active{% endif %}">
                                 Visits  <i class="fas fa-clipboard-check me-2"></i> 
                             </a>
@@ -346,20 +351,25 @@
                     </a>
                     <a href="{{ url_for('outlets') }}" class="mobile-nav-item {% if request.path == url_for('outlets') %}active{% endif %}">
                         <i class="fas fa-store"></i>
-                        <span>Retail Points</span>
+                        <span>Outlets</span>
+                    </a>
+                    <a href="{{ url_for('all_visitation') }}" class="mobile-nav-item {% if request.path == url_for('all_visitation') %}active{% endif %}">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Visitation</span>
                     </a>
                     <a href="{{ url_for('executions') }}" class="mobile-nav-item {% if request.path == url_for('executions') %}active{% endif %}">
                         <i class="fas fa-clipboard-check"></i>
                         <span>Visits</span>
                     </a>
-                    <a href="{{ url_for('reports') }}" class="mobile-nav-item {% if request.path == url_for('reports') %}active{% endif %}">
-                        <i class="fas fa-file-alt"></i>
-                        <span>Analytics</span>
-                    </a>
                     {% if session.role == 'admin' %}
                     <a href="{{ url_for('admin.admin_dashboard') }}" class="mobile-nav-item {% if '/admin' in request.path %}active{% endif %}">
                         <i class="fas fa-cogs"></i>
                         <span>Settings</span>
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('reports') }}" class="mobile-nav-item {% if request.path == url_for('reports') %}active{% endif %}">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Analytics</span>
                     </a>
                     {% endif %}
                 </div>
