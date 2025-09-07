@@ -150,15 +150,25 @@ def init_routes(app):
                 user = cursor.fetchone()
 
                 if user:
-                    session.update({
-                        'user_id': user['id'],
-                        'username': user['username'],
-                        'role': user['role'],
-                        'full_name': user['full_name'],
-                        'region': user['region'],
-                        'state': user['state'] or "",
-                        'lga': user['lga'] or ""
-                    })
+                    # Clear any existing session data first
+                    session.clear()
+                    
+                    # Set session data with explicit values
+                    session['user_id'] = user['id']
+                    session['username'] = user['username']
+                    session['role'] = user['role']
+                    session['full_name'] = user['full_name']
+                    session['region'] = user['region']
+                    session['state'] = user['state'] or ""
+                    session['lga'] = user['lga'] or ""
+                    
+                    # Force session to be saved
+                    session.permanent = True
+                    
+                    # Log session data for debugging (remove in production)
+                    print(f"DEBUG - Login successful for user: {user['username']}, role: {user['role']}, region: {user['region']}")
+                    print(f"DEBUG - Session data set: {dict(session)}")
+                    
                     return redirect(url_for('index'))
                 else:
                     flash('Invalid credentials', 'danger')

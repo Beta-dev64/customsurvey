@@ -100,7 +100,7 @@ except ImportError:
 
 class SimpleConfig:
     """Fallback configuration class"""
-    SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production-' + str(os.urandom(16).hex()))
     TESTING = False
     LOG_LEVEL = 'INFO'
     RATELIMIT_ENABLED = False
@@ -108,9 +108,21 @@ class SimpleConfig:
     CACHE_DEFAULT_TIMEOUT = 300
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB max file upload
     
+    # Session configuration for better reliability
+    SESSION_COOKIE_SECURE = False  # Set to True if using HTTPS
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = 'Lax'
+    SESSION_PERMANENT = False
+    PERMANENT_SESSION_LIFETIME = 3600  # 1 hour
+    
     @staticmethod
     def init_app(app):
-        pass
+        # Configure session settings
+        app.config['SESSION_COOKIE_SECURE'] = SimpleConfig.SESSION_COOKIE_SECURE
+        app.config['SESSION_COOKIE_HTTPONLY'] = SimpleConfig.SESSION_COOKIE_HTTPONLY
+        app.config['SESSION_COOKIE_SAMESITE'] = SimpleConfig.SESSION_COOKIE_SAMESITE
+        app.config['SESSION_PERMANENT'] = SimpleConfig.SESSION_PERMANENT
+        app.config['PERMANENT_SESSION_LIFETIME'] = SimpleConfig.PERMANENT_SESSION_LIFETIME
 
 def create_app(config_name=None):
     """Application factory pattern for creating Flask app with better error handling"""
