@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [2025-09-08 00:23:02] [[31mERROR[0m] [flask_app_deploy] [app.log_exception:838] Exception on / [GET]
 Traceback (most recent call last):
   File "C:\Users\Brobot\AppData\Local\Programs\Python\Python312\Lib\site-packages\flask\app.py", line 1473, in wsgi_app
@@ -99,3 +100,15 @@ NameError: name 'e' is not defined
 [2025-09-08 00:38:56] [[32mINFO[0m] [flask_app] [logging_config.setup_logging:192] Log directory: C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\logs
 [2025-09-08 00:38:56] [[32mINFO[0m] [flask_app] [logging_config.setup_logging:193] Log level: DEBUG
 [2025-09-08 00:38:56] [[32mINFO[0m] [flask_app] [logging_config.setup_logging:194] JSON logging: False
+=======
+[2025-09-07 00:26:59] [[36mDEBUG[0m] [flask_app] [flask_app.before_request:362] Request: GET https://grandpro.innovateprotech.online/
+[2025-09-07 00:26:59] [[36mDEBUG[0m] [flask_app] [flask_app.before_request:362] Request: GET https://grandpro.innovateprotech.online/login
+>>>>>>> d13a9100c99397dfb13e2682ea79d7e47bd1a07c
+[2025-09-08 07:50:48] [[32mINFO[0m] [flask_app] [logging_config.setup_logging:191] Comprehensive logging system initialized
+[2025-09-08 07:50:48] [[32mINFO[0m] [flask_app] [logging_config.setup_logging:192] Log directory: C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\logs
+[2025-09-08 07:50:48] [[32mINFO[0m] [flask_app] [logging_config.setup_logging:193] Log level: DEBUG
+[2025-09-08 07:50:48] [[32mINFO[0m] [flask_app] [logging_config.setup_logging:194] JSON logging: False
+[2025-09-08 08:03:09] [[32mINFO[0m] [flask_app] [logging_config.setup_logging:191] Comprehensive logging system initialized
+[2025-09-08 08:03:09] [[32mINFO[0m] [flask_app] [logging_config.setup_logging:192] Log directory: C:\Users\Brobot\Documents\Onprojects\femkupoluyi\surveytray\logs
+[2025-09-08 08:03:09] [[32mINFO[0m] [flask_app] [logging_config.setup_logging:193] Log level: DEBUG
+[2025-09-08 08:03:09] [[32mINFO[0m] [flask_app] [logging_config.setup_logging:194] JSON logging: False
